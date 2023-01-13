@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.my-border-shadow {
+  box-shadow: inset 0px 0px 34px rgba(0, 0, 0, 0.25);
+}
+.my-banner-height {
+  height: 35rem;
+}
+
+.my-navbar-color {
+
+}
+
+.my-banner-image {
+  background-image: url("https://images.memphistours.com/large/326409118_Petra.jpg");
+  background-size: 100%;
+}
