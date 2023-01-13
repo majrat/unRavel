@@ -1,19 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-import AuthorizedNav from "../components/navigation/AuthorizedNav";
-import DashboardPage from "../components/pages/Dashboard";
-
+import HomePage from "../components/pages/Home";
+import Banner from "../components/Banner/Banner";
 export default function AuthorizedRoutes() {
   return (
     <Router>
-      <AuthorizedNav />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Navbar />} />
+        <Route
+          path="/"
+          element={
+            <div className="pt-14">
+              <HomePage />
+              <Banner />
+            </div>
+          }
+        />
         <Route
           path="*"
           element={
-            <main>
-              <p>Not found.</p>
+            <main className="p-40">
+              <h1>Not found.</h1>
             </main>
           }
         />

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import UnauthorizedNav from "../components/navigation/UnauthorizedNav";
+import Banner from "../components/Banner/Banner";
+import Navbar from "../components/Navbar/Navbar";
 import HomePage from "../components/pages/Home";
 import SignInPage from "../components/pages/SignIn";
 import SignUpPage from "../components/pages/SignUp";
@@ -7,9 +8,17 @@ import SignUpPage from "../components/pages/SignUp";
 export default function UnauthorizedRoutes() {
   return (
     <Router>
-      <UnauthorizedNav />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <div className="pt-14">
+              <HomePage />
+              <Banner />
+            </div>
+          }
+        />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route

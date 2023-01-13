@@ -33,7 +33,7 @@ function App() {
   }, [authStateListener]);
 
   return (
-    <div className="App" style={{ padding: 16 }}>
+    <div>
       {loading ? (
         <p>Loading...</p>
       ) : authorized ? (

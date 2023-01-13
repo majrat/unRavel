@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function SignUpPage() {
   const [fields, setFields] = useState({
@@ -46,14 +47,15 @@ export default function SignUpPage() {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
+    <div className="pt-32 text-center">
+      <h1 className="font-bold text-3xl mb-5">Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email Address</label>
         </div>
         <div>
           <input
+            className="bg-emerald-300"
             type="email"
             name="email"
             value={fields.email}
@@ -66,6 +68,7 @@ export default function SignUpPage() {
         </div>
         <div>
           <input
+            className="bg-emerald-300"
             type="text"
             name="name"
             value={fields.name}
@@ -78,6 +81,7 @@ export default function SignUpPage() {
         </div>
         <div>
           <input
+            className="bg-emerald-300"
             type="password"
             name="password"
             value={fields.password}
@@ -90,6 +94,7 @@ export default function SignUpPage() {
         </div>
         <div>
           <input
+            className="bg-emerald-300"
             type="password"
             name="confirmPassword"
             value={fields.confirmPassword}
@@ -100,9 +105,10 @@ export default function SignUpPage() {
 
         {error ? <p style={{ color: "red" }}>Error: {error}</p> : null}
         <div style={{ marginTop: "1rem" }}>
-          <button type="submit">Sign Up</button>
+          <button className="bg-orange-500 p-2 rounded-lg mb-8" type="submit">Sign Up</button>
         </div>
       </form>
+      <Link className="bg-slate-300 rounded p-1 mt-6" to="/signin">Already have an account</Link>
     </div>
   );
 }
