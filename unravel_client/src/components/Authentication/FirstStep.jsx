@@ -1,75 +1,119 @@
 import React from "react";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import LoginBg from "./LoginBg";
 
 const FirstStep = (props) => {
   let navigate = useNavigate();
+  let location = useLocation();
+  const { user } = props;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: user.name,
+      username: user.username,
+    },
+  });
 
   const onSubmit = (data) => {
+    props.updateUser(data);
     navigate("/signup/2");
     console.log(data);
   };
   return (
     <>
-      <Header />
+      <Header {...props} router={{ location }} />
       <form
-        className="p-24 justify-center flex"
+        className="p-20 justify-center flex"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div>
+        <motion.div
+          initial={{ x: "-100vw" }}
+          animate={{ x: 0 }}
+          transition={{ stiffness: 100 }}
+        >
           <div className="group relative">
-            <label className="absolute form--label">First Name</label>
+            <label className="absolute form--label">Name</label>
             <input
-              className={`form--input ${
-                errors.first_name ? "input-error" : ""
-              }`}
+              className={`form--input ${errors.name ? "input-error" : ""}`}
               type="text"
-              placeholder="Enter your first name"
+              placeholder={
+                errors.name ? errors.name.message : "Enter your name"
+              }
               autoComplete="off"
-              {...register("first_name", {
-                required: "First name is required.",
+              {...register("name", {
+                required: "Name is required.",
                 pattern: {
                   value: /^[a-zA-Z]+$/,
-                  message: "First name should contain only characters.",
+                  message: "Name should contain only characters.",
                 },
               })}
             />
-            {errors.first_name && (
-              <p className="errorMsg ml-1">{errors.first_name.message}</p>
-            )}
           </div>
 
-          <div className="group relative mt-6 ">
-            <label className="absolute form--label">Last Name</label>
+          <div className="group relative mt-6">
+            <label className="absolute form--label">User Name</label>
             <input
-              className={`form--input ${errors.last_name ? "input-error" : ""}`}
+              className={`form--input ${errors.username ? "input-error" : ""}`}
               type="text"
-              placeholder="Enter your last name"
+              placeholder={
+                errors.username
+                  ? errors.username.message
+                  : "Enter your username"
+              }
               autoComplete="off"
-              {...register("last_name", {
-                required: "Last name is required.",
+              {...register("username", {
+                required: "username is required.",
                 pattern: {
-                  value: /^[a-zA-Z]+$/,
-                  message: "Last name should contain only characters.",
+                  value: /^[a-zA-Z0-9]+$/,
+                  message:
+                    "username should contain only characters and number.",
                 },
               })}
             />
-            {errors.last_name && (
-              <p className="errorMsg ml-1">{errors.last_name.message}</p>
-            )}
           </div>
-
-          <button className="btn mt-6 btn--primary" type="submit">
-            Next
-          </button>
-        </div>
+          <div className="flex justify-between mt-4">
+            <button className="btn btn--primary" type="submit">
+              Next
+            </button>
+            <Link className="btn my-5 btn--secondary" to="/signin">
+              Already have an account
+            </Link>
+          </div>
+        </motion.div>
       </form>
+
+      {/* Waves Container */}
+      <div>
+        <svg
+          className="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shapeRendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g className="parallax">
+            <use xlinkHref="#gentle-wave" x="48" y="0" fill="#c19892" />
+            <use xlinkHref="#gentle-wave" x="48" y="3" fill="#d8d7d7" />
+            <use xlinkHref="#gentle-wave" x="48" y="5" fill="#bebfbd" />
+            <use xlinkHref="#gentle-wave" x="48" y="7" fill="#f3f1ef" />
+          </g>
+        </svg>
+      </div>
+      {/* Waves end */}
     </>
   );
 };

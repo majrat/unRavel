@@ -10,9 +10,17 @@ router.get("/", authenticate, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { email, name, password } = req.body;
-
-  if (!email || !name || !password) {
+  const { email, name, username, password, country, state, city } = req.body;
+  console.log("req.body", req.body);
+  if (
+    !email ||
+    !name ||
+    !password ||
+    !username ||
+    !country ||
+    !state ||
+    !city
+  ) {
     return res.status(400).json({
       error:
         "Invalid request body. Must contain email, password, and name for user.",
@@ -25,11 +33,18 @@ router.post("/", async (req, res) => {
       password,
     });
 
+    const created_date = Date.now();
+
     if (newFirebaseUser) {
       const newUser = new userModel({
-        "user_email.email": email,
+        email,
         name,
-        firebaseId: newFirebaseUser.uid,
+        username,
+        "location.country": country,
+        "location.state": state,
+        "location.city": city,
+        firebase_id: newFirebaseUser.uid,
+        created_date,
       });
       newUser.save().then(console.log("New user created"));
     }

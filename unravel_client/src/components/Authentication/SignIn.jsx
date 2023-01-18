@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import firebaseService from "../../services/firebase";
+import { motion } from "framer-motion";
 import { setAuthorized } from "../../features/authorizer/authorizerSlice";
-import { Link } from "react-router-dom";
 import Header from "./Header";
 
-export default function SignInPage() {
+export default function SignInPage(props) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,51 +43,66 @@ export default function SignInPage() {
 
   return (
     <>
-      <Header />
-      <main className="pt-32 text-center">
-        {location.state && location.state.message ? (
-          <p style={{ color: "green" }}>{location.state.message}</p>
-        ) : null}
-        <h1 className="font-bold text-3xl mb-5">Sign In</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email Address</label>
-          </div>
-          <div>
-            <input
-              className="bg-emerald-300"
-              type="email"
-              name="email"
-              value={fields.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div style={{ marginTop: "1rem" }}>
-            <label htmlFor="password">Password</label>
-          </div>
-          <div>
-            <input
-              className="bg-emerald-300"
-              type="password"
-              name="password"
-              value={fields.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          {error ? <p style={{ color: "red" }}>Error: {error}</p> : null}
-          <div style={{ marginTop: "1rem" }}>
-            <button className="bg-orange-500 p-2 rounded-lg mb-8" type="submit">
-              Sign In
-            </button>
-          </div>
-        </form>
-
-        <Link className="bg-slate-300 rounded p-1 m-6" to="/signup">
-          Create an Account
-        </Link>
-      </main>
+      <Header {...props} router={{ location }} />
+      <motion.div
+        className="p-24 justify-center flex"
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
+        transition={{ stiffness: 100 }}
+      >
+        <main>
+          {location.state && location.state.message ? (
+            <p style={{ color: "green" }}>{location.state.message}</p>
+          ) : null}
+          <form onSubmit={handleSubmit}>
+            <div className="group relative">
+              <div>
+                <label className="absolute form--label" htmlFor="email">
+                  Email Address
+                </label>
+              </div>
+              <div>
+                <input
+                  className="form--input"
+                  type="email"
+                  name="email"
+                  value={fields.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="group relative mt-6">
+              <div style={{ marginTop: "1rem" }}>
+                <label className="absolute form--label" htmlFor="password">
+                  Password
+                </label>
+              </div>
+              <div>
+                <input
+                  className="form--input"
+                  type="password"
+                  name="password"
+                  value={fields.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            {error ? <p style={{ color: "red" }}>Error: {error}</p> : null}
+            <div className="flex justify-between mt-4">
+              <div>
+                <button className="btn btn--primary" type="submit">
+                  Sign In
+                </button>
+              </div>
+              <Link className="btn btn--secondary" to="/signup/1">
+                Create an Account
+              </Link>
+            </div>
+          </form>
+        </main>
+      </motion.div>
     </>
   );
 }

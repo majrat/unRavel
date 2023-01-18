@@ -11,18 +11,16 @@ export default function Navbar() {
   const getUser = async () => {
     try {
       const token = await firebaseService.auth.currentUser.getIdToken(true);
-      console.log(token);
       const req = await axios.get("http://localhost:8080/api/user", {
         headers: {
           authorization: `Bearer ${token}`,
         },
       });
-      console.log(req.data);
       if (req.data) {
         setUser(req.data);
       }
     } catch (err) {
-      console.error(err);
+      console.error("User might be logged out --"+err);
     }
   };
 

@@ -1,20 +1,11 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    return <Component {...props} router={{ location, navigate }} />;
-  }
-
-  return ComponentWithRouterProp;
-}
-
-const Progress = ({ location: { pathname } }) => {
-  const isFirstStep = pathname === "/";
-  const isSecondStep = pathname === "/second";
-  const isThirdStep = pathname === "/third";
+const Progress = (props) => {
+  const pathname = props.router.location.pathname;
+  const isFirstStep = pathname === "/signup/1";
+  const isSecondStep = pathname === "/signup/2";
+  const isThirdStep = pathname === "/signup/3";
 
   return (
     <React.Fragment>
@@ -23,7 +14,7 @@ const Progress = ({ location: { pathname } }) => {
           <div>1</div>
           <div>
             {isSecondStep || isThirdStep ? (
-              <Link to="/">Step 1</Link>
+              <Link to="/signup/1">Step 1</Link>
             ) : (
               "Step 1"
             )}
@@ -31,9 +22,9 @@ const Progress = ({ location: { pathname } }) => {
         </div>
         <div className={`${isSecondStep ? "step active" : "step"}`}>
           <div>2</div>
-          <div>{isThirdStep ? <Link to="/second">Step 2</Link> : "Step 2"}</div>
+          <div>{isThirdStep ? <Link to="/signup/2">Step 2</Link> : "Step 2"}</div>
         </div>
-        <div className={`${pathname === "/third" ? "step active" : "step"}`}>
+        <div className={`${pathname === "/signup/3" ? "step active" : "step"}`}>
           <div>3</div>
           <div>Step 3</div>
         </div>
@@ -42,4 +33,4 @@ const Progress = ({ location: { pathname } }) => {
   );
 };
 
-export default withRouter(Progress);
+export default Progress;

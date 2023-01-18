@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import unravel_loading from "/unravel_loading.gif";
 import UnauthorizedRoutes from "./router/UnauthorizeRoutes";
 import AuthorizedRoutes from "./router/AuthorizedRoutes";
 import firebaseService from "./services/firebase";
@@ -34,7 +35,7 @@ function App() {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <div className="circle-ripple unravel_loading"></div>
       ) : authorized ? (
         <AuthorizedRoutes />
       ) : (

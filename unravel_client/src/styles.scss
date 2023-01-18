@@ -1,5 +1,6 @@
 $base-color: #e67e22;
 $blue-color: #22ac11;
+$color: #65ff78;
 
 * {
   margin: 0;
@@ -102,6 +103,29 @@ h1 {
   color: $blue-color;
   padding: 5px 0;
   margin-bottom: 1rem;
+}
+
+.circle-ripple {
+  background-color: #35ffc3;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  animation: ripple 0.7s linear infinite;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color, 0.3),
+                0 0 0 1em rgba($color, 0.3),
+                0 0 0 3em rgba($color, 0.3),
+                0 0 0 5em rgba($color, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 1em rgba($color, 0.3),
+                0 0 0 3em rgba($color, 0.3),
+                0 0 0 5em rgba($color, 0.3),
+                0 0 0 8em rgba($color, 0);
+  }
 }
 
 @media screen and (max-width: 1200px) {
