@@ -1,8 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import UnauthorizedRoutes from "./routes/UnauthorizeRoutes";
-import AuthorizedRoutes from "./routes/AuthorizedRoutes";
+import UnauthorizedRoutes from "./router/UnauthorizeRoutes";
+import AuthorizedRoutes from "./router/AuthorizedRoutes";
 import firebaseService from "./services/firebase";
 import {
   setAuthorized,
@@ -11,7 +11,6 @@ import {
 
 function App() {
   const [loading, setLoading] = useState(true);
-  // const [data, setData] = useState();
 
   const authorized = useSelector((state) => state.authorizer.authorized);
   const dispatch = useDispatch();
