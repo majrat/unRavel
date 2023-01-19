@@ -28,10 +28,10 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const newFirebaseUser = await firebaseAdmin.auth.createUser({
-      email,
-      password,
-    });
+    // const newFirebaseUser = await firebaseAdmin.auth.createUser({
+    //   email,
+    //   password,
+    // });
 
     const created_date = Date.now();
 

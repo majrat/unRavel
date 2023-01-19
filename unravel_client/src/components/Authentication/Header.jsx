@@ -14,7 +14,7 @@ const Header = (props) => {
           <Progress {...props} />
         </>
       ) : (
-        <h1 className="font-bold text-3xl mb-5 text-gray-600">Sign In to unRavel</h1>
+        <h1 className="font-bold text-3xl mb-5 mt-11 text-gray-600">Sign In to unRavel</h1>
       )}
     </div>
   );

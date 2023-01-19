@@ -11,7 +11,7 @@ export default function AuthorizedRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage login={true} />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="*" element={<Error404 />} />
         <Route path="/signin" element={<Navigate replace to="/" />} />
         <Route path="/signup/1" element={<Navigate replace to="/" />} />

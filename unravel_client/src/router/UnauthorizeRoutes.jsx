@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../components/pages/Home";
+import VerifyEmailPage from "../components/Authentication/VerifyEmail";
 import Error404 from "../components/pages/404";
 import SignInPage from "../components/Authentication/SignIn";
 // import SignUpPage from "../components/Authentication/SignUp";
@@ -21,7 +22,8 @@ export default function UnauthorizedRoutes(props) {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage login={false} />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="//verify_email" element={<VerifyEmailPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route
           path="/signup/1"

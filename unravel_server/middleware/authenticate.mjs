@@ -4,7 +4,8 @@ import userModel from "../models/user.mjs";
 export default async function (req, res, next) {
   try {
     const firebaseToken = req.headers.authorization?.split(" ")[1];
-    
+    console.log("inside firebase authenticate--------------------------------------------------------------------------");
+    console.log(firebaseToken);
     let firebaseUser;
     if (firebaseToken) {
       firebaseUser = await firebaseAdmin.auth.verifyIdToken(firebaseToken);

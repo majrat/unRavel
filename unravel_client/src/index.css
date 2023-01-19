@@ -35,7 +35,7 @@ canvas {
 }
 
 .form--input {
-  @apply focus:ring-2 focus:ring-accentColor focus:outline-none appearance-none w-full text-sm leading-6 text-gray-800 placeholder-slate-400 rounded-md py-2 pl-60 ring-1 ring-secondaryColor shadow-sm;
+  @apply focus:ring-2 focus:ring-accentColor focus:outline-none appearance-none w-full text-sm leading-6 text-gray-800 placeholder-slate-400 rounded-md py-2 mr-56 pl-32 ring-1 ring-secondaryColor shadow-sm;
 }
 
 .form--label {
@@ -65,6 +65,34 @@ canvas {
   min-height: 100px;
   max-height: 150px;
 }
+
+/*verify-email */
+.verifyEmail {
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0px 0px 4px hsl(210, 12%, 75%);
+  text-align: center;
+  padding: 40px 20px;
+  background-color: hsl(210, 10%, 98%);
+}
+
+.verifyEmail h1 {
+  font-weight: 300;
+  margin-top: 0;
+}
+
+.verifyEmail > p {
+  line-height: 25px;
+}
+
+.verifyEmail > span {
+  color: gray;
+}
+
+.verifyEmail > button {
+  margin-top: 35px;
+}
+
 /* Animation */
 
 .parallax > use {

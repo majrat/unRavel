@@ -1,29 +1,32 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import unravel_loading from "/unravel_loading.gif";
 import UnauthorizedRoutes from "./router/UnauthorizeRoutes";
 import AuthorizedRoutes from "./router/AuthorizedRoutes";
-import firebaseService from "./services/firebase";
+import { auth } from "./services/firebase";
 import {
   setAuthorized,
   setUnauthorized,
 } from "./features/authorizer/authorizerSlice";
+import { onAuthStateChanged } from "firebase/auth";
+import { setCurrentUserInfo } from "./features/currentUser/currentUserSlice";
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   const authorized = useSelector((state) => state.authorizer.authorized);
+  const currentUser = useSelector((state) => state.currentUser.currentUserInfo);
+
   const dispatch = useDispatch();
 
   const authStateListener = () => {
-    firebaseService.auth.onAuthStateChanged(async (user) => {
-      if (!user) {
+    onAuthStateChanged(auth, (user) => {
+      if (!user || !currentUser?.emailVerified) {
         setLoading(false);
         return dispatch(setUnauthorized());
       }
-
       setLoading(false);
+      dispatch(setCurrentUserInfo(user))
       return dispatch(setAuthorized());
     });
   };

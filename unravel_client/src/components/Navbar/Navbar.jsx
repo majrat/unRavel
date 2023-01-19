@@ -1,31 +1,38 @@
 import unravel_logo from "/unravel.svg";
 import { useEffect, useState } from "react";
-import firebaseService from "../../services/firebase";
+import { auth } from "../../services/firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getIdToken, onAuthStateChanged } from "firebase/auth";
 
 export default function Navbar() {
   const authorized = useSelector((state) => state.authorizer.authorized);
   const [user, setUser] = useState("");
+
   const getUser = async () => {
     try {
-      const token = await firebaseService.auth.currentUser.getIdToken(true);
-      const req = await axios.get("http://localhost:8080/api/user", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const token = await getIdToken(user);
+          // const token = await firebaseService.auth.currentUser.getIdToken(true);
+          const req = await axios.get("http://localhost:8080/api/user", {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          if (req.data) {
+            setUser(req.data);
+          }
+        }
       });
-      if (req.data) {
-        setUser(req.data);
-      }
     } catch (err) {
-      console.error("User might be logged out --"+err);
+      console.error("User might be logged out --" + err);
     }
   };
 
   const logUserOut = async () => {
-    await firebaseService.auth.signOut();
+    await signOut(auth);
   };
 
   useEffect(() => {
