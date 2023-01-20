@@ -5,6 +5,29 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
+{
+  /*     <p>Search</p>
+        <p>Shop</p>
+        <p>Locations</p>
+        <p>Create</p>
+        <p>Favourites</p> */
+}
+
+const navigation = [
+  { name: "Search", href: "#", current: false },
+  { name: "Shop", href: "#", current: false },
+  { name: "Locations", href: "#", current: false },
+  { name: "Favourites", href: "#", current: false },
+  { name: "Create", href: "#", current: false },
+];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Navbar() {
   const authorized = useSelector((state) => state.authorizer.authorized);
@@ -47,24 +70,169 @@ export default function Navbar() {
   }, []);
 
   return (
-    <>
-      <div className="my-navbar-color bg-white bg-opacity-80 backdrop-blur z-10 text-black font-bold px-6 py-3 mb-2 shadow-lg rounded flex top-0 justify-between fixed w-full overflow-hidden">
-        <Link to="/">
-          <img src={unravel_logo} alt="unRavel" className="h-9" />
-        </Link>
-        <p>Search</p>
-        <p>Shop</p>
-        <p>Locations</p>
-        <p>Create</p>
-        <p>Favourites</p>
-        {authorized ? (
+    <div className="justify-center flex">
+      <Disclosure
+        as="nav"
+        className="bg-lightColor top-0 mt-3 w-11/12 fixed z-10 rounded-lg"
+      >
+        {({ open }) => (
           <>
-            <p>{user.name}</p> <p onClick={logUserOut}>LogOut</p>
+            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <div className="relative flex h-16 items-center justify-between">
+                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                  {/* Mobile menu button*/}
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-accentColor hover:bg-secondaryColor hover:text-lightColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
+                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex flex-shrink-0 items-center">
+                    <img
+                      className="block h-8 w-auto pl-16 lg:hidden"
+                      src={unravel_logo}
+                      alt="Your Company"
+                    />
+                    <img
+                      className="hidden h-8 w-auto lg:block"
+                      src={unravel_logo}
+                      alt="Your Company"
+                    />
+                  </div>
+                  <div className="hidden sm:ml-6 sm:block">
+                    <div className="flex space-x-4">
+                      {navigation.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "bg-secondaryColor text-lightColor shadow-lg"
+                              : "text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {authorized ? (
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <button
+                      type="button"
+                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+
+                    {/* Profile dropdown */}
+
+                    <Menu as="div" className="relative ml-3">
+                      <div>
+                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                          <span className="sr-only">Open user menu</span>
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt=""
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Your Profile
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Settings
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                onClick={logUserOut}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Sign out
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </div>
+                ) : (
+                  <Link
+                    to="/signin"
+                    className="text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pt-2 pb-3">
+                {navigation.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "bg-secondaryColor text-lightColor shadow-lg"
+                        : "text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor",
+                      "block px-3 py-2 rounded-md text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+              </div>
+            </Disclosure.Panel>
           </>
-        ) : (
-          <Link to="/signin">Sign In</Link>
         )}
-      </div>
-    </>
+      </Disclosure>
+    </div>
   );
 }

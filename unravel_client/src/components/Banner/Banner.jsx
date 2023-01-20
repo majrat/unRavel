@@ -1,6 +1,6 @@
 export default function Banner() {
   return (
-    <div className="my-banner-height my-border-shadow rounded py-3 mb-14 overflow-clip relative my-banner-image">
+    <div className="shadow-black/20 shadow-inner py-3 mb-14 overflow-clip relative h-screen my-banner-image">
       <div className="w-96">
         <div className="mt-16 mx-4 bg-white bg-opacity-50 backdrop-blur-sm rounded p-5">
           <h4 className="text-3xl">

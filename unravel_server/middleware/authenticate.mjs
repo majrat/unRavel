@@ -7,17 +7,13 @@ export default async function (req, res, next) {
     console.log(
       "inside firebase authenticate--------------------------------------------------------------------------"
     );
-    console.log("firebaseToken ===> " + firebaseToken);
     let firebaseUser;
     if (firebaseToken) {
-      console.log(
-        "inside ftoken if-----------------------------------------------------------"
-      );
+      
       await firebaseAdmin.auth
         .verifyIdToken(firebaseToken)
         .then((decodedToken) => {
           firebaseUser = decodedToken;
-          console.log("firebaseUser ===> " + JSON.stringify(decodedToken));
         });
     }
     if (!firebaseUser) {
@@ -26,7 +22,7 @@ export default async function (req, res, next) {
       return res.sendStatus(401);
     }
     
-    console.log("authorized");
+    console.log("node authorized");
 
     const user = await userModel.findOne({
       firebase_id: firebaseUser.user_id,

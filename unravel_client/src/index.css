@@ -22,10 +22,14 @@ canvas {
   transform: translate(-50%, -50%);
   width: 100vh;
 }
+
 .btn {
   @apply text-base font-medium rounded-lg my-3 py-3 px-5;
 }
 
+.btn--sm {
+  @apply text-base font-medium rounded-lg my-1 py-1 px-5;
+}
 .btn--primary {
   @apply bg-primaryColor text-gray-800 border-gray-500 border hover:border-accentColor hover:bg-gray-700 hover:text-primaryColor;
 }
@@ -40,17 +44,6 @@ canvas {
 
 .form--label {
   @apply left-3 top-4 -mt-2.5 text-slate-600 pointer-events-none group-focus-within:text-accentColor;
-}
-
-.my-border-shadow {
-  box-shadow: inset 0px 0px 34px rgba(0, 0, 0, 0.25);
-}
-.my-banner-height {
-  height: 35rem;
-}
-
-.accent--color--bg {
-  background-color: #c19892;
 }
 
 .my-banner-image {

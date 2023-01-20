@@ -11,7 +11,6 @@ router.get("/", authenticate, async (req, res) => {
 router.post("/", async (req, res) => {
   const { email, name, username, password, country, state, city, uid } =
     req.body;
-  console.log("req.body", req.body);
   if (
     !email ||
     !name ||
@@ -57,7 +56,6 @@ router.post("/", async (req, res) => {
 
 router.post("/verify_email", async (req, res) => {
   const { userUid } = req.body;
-  console.log("userUid ===> "+userUid);
   if (!userUid) {
     console.log("Invalid request body. Must contain uid.");
     return res.status(400).json({
@@ -65,7 +63,6 @@ router.post("/verify_email", async (req, res) => {
     });
   }
   try {
-    console.log("Inside post(/verify_email) ======>>>");
     await userModel.updateOne(
       { firebase_id: userUid },
       { $set: { email_verified: true } }
