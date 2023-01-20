@@ -9,24 +9,23 @@ import {
   setUnauthorized,
 } from "./features/authorizer/authorizerSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import { setCurrentUserInfo } from "./features/currentUser/currentUserSlice";
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   const authorized = useSelector((state) => state.authorizer.authorized);
-  const currentUser = useSelector((state) => state.currentUser.currentUserInfo);
 
   const dispatch = useDispatch();
 
   const authStateListener = () => {
     onAuthStateChanged(auth, (user) => {
-      if (!user || !currentUser?.emailVerified) {
+      if (!user || !user.emailVerified) {
+        console.log("==================Unauthorized=============");
         setLoading(false);
         return dispatch(setUnauthorized());
       }
+      console.log("==================Authorized=============");
       setLoading(false);
-      dispatch(setCurrentUserInfo(user))
       return dispatch(setAuthorized());
     });
   };

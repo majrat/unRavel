@@ -4,7 +4,7 @@ import { auth } from "../../services/firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getIdToken, onAuthStateChanged } from "firebase/auth";
+import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function Navbar() {
   const authorized = useSelector((state) => state.authorizer.authorized);
@@ -15,12 +15,19 @@ export default function Navbar() {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          // const token = await firebaseService.auth.currentUser.getIdToken(true);
-          const req = await axios.get("http://localhost:8080/api/user", {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          });
+          const req = await axios
+            .get("http://localhost:8080/api/user", {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            })
+            .catch(function (error) {
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              }
+            });
           if (req.data) {
             setUser(req.data);
           }

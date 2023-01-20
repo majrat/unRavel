@@ -12,9 +12,9 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
+import { setCurrentUserInfo } from "../../features/currentUser/currentUserSlice";
 
 const ThirdStep = (props) => {
-  console.log(props);
   const dispatch = useDispatch();
   let location = useLocation();
   let navigate = useNavigate();
@@ -93,7 +93,7 @@ const ThirdStep = (props) => {
     getCities();
   }, [selectedState]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     try {
       const { user } = props;
@@ -105,31 +105,34 @@ const ThirdStep = (props) => {
           states.find((state) => state.isoCode === selectedState)?.name || "",
         city: selectedCity,
       };
-      console.log(auth);
       let email = user.email;
       let password = user.password;
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           sendEmailVerification(auth.currentUser)
-            .then(() => {
+            .then(async () => {
+              dispatch(setCurrentUserInfo(auth.currentUser));
+              let uid = auth.currentUser.uid;
+              await axios.post("http://localhost:8080/api/user", {
+                uid,
+                ...user,
+                ...updatedData,
+              });
               dispatch(setTimerActivatorOn());
-              navigate("/verify-email");
+              navigate("/verify_email");
             })
             .catch((err) => alert(err.message));
         })
         .catch((err) => alert(err.message));
-      // await axios.post("http://localhost:8080/api/user", {
-      //   ...user,
-      //   ...updatedData,
-      // });
-      Swal.fire("Awesome!", "You're successfully registered!", "success").then(
-        (result) => {
-          if (result.isConfirmed || result.isDismissed) {
-            props.resetUser();
-            navigate("/signin");
-          }
-        }
-      );
+
+      // Swal.fire("Awesome!", "You're successfully registered!", "success").then(
+      //   (result) => {
+      //     if (result.isConfirmed || result.isDismissed) {
+      //       props.resetUser();
+      //       navigate("/signin");
+      //     }
+      //   }
+      // );
     } catch (error) {
       if (error.response) {
         Swal.fire({

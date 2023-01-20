@@ -6,8 +6,8 @@ export const currentUserSlice = createSlice({
     currentUserInfo: null,
   },
   reducers: {
-    setCurrentUserInfo: (state, data) => {
-      state.currentUserInfo = data.payload;
+    setCurrentUserInfo: (state, user) => {
+      state.currentUserInfo = user.payload;
     },
     removeCurrentUserInfo: (state) => {
       state.currentUserInfo = null;
@@ -15,6 +15,8 @@ export const currentUserSlice = createSlice({
   },
 });
 
-export const { setCurrentUserInfo, removeCurrentUserInfo } =
-  currentUserSlice.actions;
+export const {
+  setCurrentUserInfo,
+  removeCurrentUserInfo,
+} = currentUserSlice.actions;
 export default currentUserSlice.reducer;

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { auth } from "../../services/firebase";
-import { sendEmailVerification } from "firebase/auth";
+import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTimerActivatorOff,
@@ -10,20 +12,31 @@ import {
 
 function VerifyEmail() {
   const [time, setTime] = useState(60);
+  const [userUid, setUserUid] = useState("");
   const currentUser = useSelector((state) => state.currentUser.currentUserInfo);
+  console.log("currentUser ===> " + JSON.stringify(currentUser));
   const timeActive = useSelector((state) => state.timerActivator.timerActive);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  async function updateVerifiedInDB() {
+    await axios.post("http://localhost:8080/api/user/verify_email", {
+      userUid: currentUser.uid,
+    });
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       currentUser
         ?.reload()
         .then(() => {
-          if (currentUser?.emailVerified) {
-            clearInterval(interval);
-            navigate("/");
-          }
+          onAuthStateChanged(auth, (user) => {
+            if (user?.emailVerified) {
+              updateVerifiedInDB();
+              clearInterval(interval);
+              navigate("/");
+            }
+          });
         })
         .catch((err) => {
           alert(err.message);
@@ -56,7 +69,7 @@ function VerifyEmail() {
   };
 
   return (
-    <div className="center">
+    <div className="flex pt-32 flex-col items-center">
       <div className="verifyEmail">
         <h1>Verify your Email Address</h1>
         <p>

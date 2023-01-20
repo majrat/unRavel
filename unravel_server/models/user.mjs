@@ -34,6 +34,10 @@ const users = new Schema({
       }
     },
   },
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
   profile_photo: String,
   bio: String,
   social_media: {

@@ -23,7 +23,7 @@ export default function UnauthorizedRoutes(props) {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="//verify_email" element={<VerifyEmailPage />} />
+        <Route path="/verify_email" element={<VerifyEmailPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route
           path="/signup/1"

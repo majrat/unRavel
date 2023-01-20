@@ -17,6 +17,7 @@ export default function AuthorizedRoutes() {
         <Route path="/signup/1" element={<Navigate replace to="/" />} />
         <Route path="/signup/2" element={<Navigate replace to="/" />} />
         <Route path="/signup/3" element={<Navigate replace to="/" />} />
+        <Route path="/verify_email" element={<Navigate replace to="/" />} />
       </Routes>
     </Router>
   );
