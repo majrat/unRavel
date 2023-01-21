@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.675995"
-     inkscape:cx="459.32292"
-     inkscape:cy="284.02577"
+     inkscape:zoom="0.47800065"
+     inkscape:cx="24.058545"
+     inkscape:cy="460.25042"
      inkscape:window-width="1366"
      inkscape:window-height="699"
      inkscape:window-x="0"
@@ -47,7 +47,7 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#3f3d56"
      id="path6"
-     style="fill:#bebfbd;fill-opacity:1" />
+     style="fill:#b7b78a;fill-opacity:1" />
   <polygon
      points="391.582 259.678 306.558 259.678 348.296 199.052 351.3 194.685 352.802 192.502 356.589 199.052 391.582 259.678"
      opacity="0.2"
@@ -57,14 +57,14 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#3f3d56"
      id="path10"
-     style="fill:#bebfbd;fill-opacity:1" />
+     style="fill:#b7b78a;fill-opacity:1" />
   <circle
      cx="593.46332"
      cy="210.81982"
      r="15.29649"
      fill="#6c63ff"
      id="circle12"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
   <polygon
      points="594.938 256.894 591.805 256.894 593.233 208.516 594.938 256.894"
      fill="#3f3d56"
@@ -83,7 +83,7 @@
      r="15.29649"
      fill="#6c63ff"
      id="circle20"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
   <polygon
      points="735.254 256.894 732.121 256.894 733.55 208.516 735.254 256.894"
      fill="#3f3d56"
@@ -102,7 +102,7 @@
      r="22.59164"
      fill="#6c63ff"
      id="circle28"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
   <polygon
      points="639.952 256.894 635.325 256.894 637.434 185.444 639.952 256.894"
      fill="#3f3d56"
@@ -121,7 +121,7 @@
      r="22.59164"
      fill="#6c63ff"
      id="circle36"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
   <polygon
      points="695.046 256.894 690.419 256.894 692.528 185.444 695.046 256.894"
      fill="#3f3d56"
@@ -140,7 +140,7 @@
      r="22.59164"
      fill="#6c63ff"
      id="circle44"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
   <polygon
      points="552.146 256.894 547.519 256.894 549.629 185.444 552.146 256.894"
      fill="#3f3d56"
@@ -158,7 +158,7 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#e6e6e6"
      id="path52"
-     style="fill:#d8d7d7;fill-opacity:1" />
+     style="fill:#dddddd;fill-opacity:1" />
   <rect
      x="82.70435"
      y="272.8999"
@@ -352,7 +352,7 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#e6e6e6"
      id="path110"
-     style="fill:#f3f1ef;fill-opacity:1" />
+     style="fill:#eeeeee;fill-opacity:1" />
   <path
      d="M777.58705,338.05522a28.99214,28.99214,0,0,1,6.04507-5.70351H771.00833A21.11388,21.11388,0,0,1,777.58705,338.05522Z"
      transform="translate(-156.82437 -204.18443)"
@@ -378,7 +378,7 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#e6e6e6"
      id="path120"
-     style="fill:#f3f1ef;fill-opacity:1" />
+     style="fill:#eeeeee;fill-opacity:1" />
   <rect
      x="910.97675"
      y="662.3144"
@@ -392,7 +392,7 @@
      transform="translate(-156.82437 -204.18443)"
      fill="#6c63ff"
      id="path124"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#b7b78a;fill-opacity:1" />
   <circle
      cx="647.00933"
      cy="458.0675"
@@ -469,11 +469,11 @@
      r="50.0579"
      fill="#3f3d56"
      id="circle152"
-     style="fill:#bebfbd;fill-opacity:1" />
+     style="fill:#dddddd;fill-opacity:1" />
   <path
      d="M207.09056,480.18425l-25.05073-25.05073a4.35315,4.35315,0,0,1,6.15628-6.15628L206.674,467.45511l58.96394-67.23927a4.35271,4.35271,0,0,1,6.54523,5.7397Z"
      transform="translate(-156.82437 -204.18443)"
      fill="#6c63ff"
      id="path154"
-     style="fill:#c19892;fill-opacity:1" />
+     style="fill:#658864;fill-opacity:1" />
 </svg>

@@ -73,7 +73,7 @@ export default function Navbar() {
     <div className="justify-center flex">
       <Disclosure
         as="nav"
-        className="bg-lightColor top-0 mt-3 w-11/12 fixed z-10 rounded-lg"
+        className="bg-secondaryColor top-0 shadow-xl shadow-primaryColor/30 mt-3 w-11/12 fixed z-10 rounded-lg"
       >
         {({ open }) => (
           <>
@@ -81,7 +81,7 @@ export default function Navbar() {
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-accentColor hover:bg-secondaryColor hover:text-lightColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-accentColor hover:bg-primaryColor hover:text-lightColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lightColor">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -93,7 +93,7 @@ export default function Navbar() {
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-8 w-auto pl-16 lg:hidden"
+                      className="block h-8 w-auto lg:hidden"
                       src={unravel_logo}
                       alt="Your Company"
                     />
@@ -111,8 +111,8 @@ export default function Navbar() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-secondaryColor text-lightColor shadow-lg"
-                              : "text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor",
+                              ? "bg-accentColor text-lightColor shadow-lg"
+                              : "text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -127,7 +127,7 @@ export default function Navbar() {
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button
                       type="button"
-                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="rounded-full bg-lightColor p-1 text-accentColor hover:text-lightColor hover:bg-accentColor focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-secondaryColor"
                     >
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -137,7 +137,7 @@ export default function Navbar() {
 
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <Menu.Button className="flex rounded-full bg-secondaryColor text-sm focus:outline-none focus:ring-2 focus:ring-lightColor focus:ring-offset-2 focus:ring-offset-accentColor">
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
@@ -155,14 +155,14 @@ export default function Navbar() {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-lightColor py-1 shadow-lg ring-1 ring-primaryColor ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="#"
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 Your Profile
@@ -174,8 +174,8 @@ export default function Navbar() {
                               <a
                                 href="#"
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 Settings
@@ -187,8 +187,8 @@ export default function Navbar() {
                               <a
                                 onClick={logUserOut}
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
                                 )}
                               >
                                 Sign out
@@ -202,7 +202,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     to="/signin"
-                    className="text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Sign In
                   </Link>
@@ -219,8 +219,8 @@ export default function Navbar() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-secondaryColor text-lightColor shadow-lg"
-                        : "text-accentColor hover:bg-secondaryColor hover:shadow-lg hover:text-lightColor",
+                        ? "bg-accentColor text-lightColor shadow-lg"
+                        : "text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
                       "block px-3 py-2 rounded-md text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}

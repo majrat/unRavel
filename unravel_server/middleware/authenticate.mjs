@@ -1,5 +1,5 @@
 import firebaseAdmin from "../services/firebase.mjs";
-import userModel from "../models/user.mjs";
+import userModel from "../model/user.mjs";
 
 export default async function (req, res, next) {
   try {

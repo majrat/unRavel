@@ -1,25 +1,42 @@
 export default function Banner() {
   return (
-    <div className="shadow-black/20 shadow-inner py-3 mb-14 overflow-clip relative h-screen my-banner-image">
-      <div className="w-96">
-        <div className="mt-16 mx-4 bg-white bg-opacity-50 backdrop-blur-sm rounded p-5">
-          <h4 className="text-3xl">
-            32 <span className="text-lg">Groups are planning to go here</span>
-          </h4>
-          <h4 className="text-lg text-blue-800">Join them now</h4>
+    <div id="parallax-world-of-ugg">
+      <section>
+        <div className="title text-accentColor">
+          <h3>unRavel the</h3>
+          <h1>WORLD</h1>
         </div>
+      </section>
 
-        <div className="mt-6 mx-4 bg-white bg-opacity-50 backdrop-blur-sm rounded p-5">
-          <h4 className="text-3xl">
-            23 <span className="text-lg">Groups went here</span>
-          </h4>
-          <h4 className="text-lg text-blue-800">Checkout there experience</h4>
+      <section>
+        <div className="parallax-one bg-[url('https://images.unsplash.com/photo-1415018255745-0ec3f7aee47b?dpr=1&auto=format&fit=crop&w=1500&h=938&q=80&cs=tinysrgb&crop=')]">
+          <h2>SOUTHERN CALIFORNIA</h2>
         </div>
-      </div>
-      <div className="absolute bottom-0 mt-6 mx-4 mb-9 text-center text-black p-5 rounded bg-opacity-50 w-96 backdrop-blur-sm bg-white">
-        <h1 className="text-3xl">Maldives</h1>
-        <p>Nothing screams "paradise" quite like the Maldives, a 26-atoll chain of islands with powdery beaches, turquoise waters, and dreamy overwater bungalow resorts.</p>
-      </div>
+      </section>
+
+      <section>
+        <div className="block"></div>
+      </section>
+
+      <section>
+        <div className="parallax-two bg-[url('https://images.unsplash.com/photo-1432163230927-a32e4fd5a326?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=')]">
+          <h2>NEW YORK</h2>
+        </div>
+      </section>
+
+      <section>
+        <div className="block"></div>
+      </section>
+
+      <section>
+        <div className="parallax-three bg-[url('https://images.unsplash.com/photo-1440688807730-73e4e2169fb8?dpr=1&auto=format&fit=crop&w=1500&h=1001&q=80&cs=tinysrgb&crop=')]">
+          <h2>ENCHANTED FOREST</h2>
+        </div>
+      </section>
+
+      <section>
+        <div className="block"></div>
+      </section>
     </div>
   );
 }

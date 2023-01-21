@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import LoginBg from "./LoginBg";
+import LoginWave from "./Loginwave";
 
 const FirstStep = (props) => {
   let navigate = useNavigate();
@@ -105,31 +106,7 @@ const FirstStep = (props) => {
           </form>
         </div>
       </div>
-      {/* Waves Container */}
-      <div>
-        <svg
-          className="waves"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          viewBox="0 24 150 28"
-          preserveAspectRatio="none"
-          shapeRendering="auto"
-        >
-          <defs>
-            <path
-              id="gentle-wave"
-              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-            />
-          </defs>
-          <g className="parallax">
-            <use xlinkHref="#gentle-wave" x="48" y="0" fill="#c19892" />
-            <use xlinkHref="#gentle-wave" x="48" y="3" fill="#d8d7d7" />
-            <use xlinkHref="#gentle-wave" x="48" y="5" fill="#bebfbd" />
-            <use xlinkHref="#gentle-wave" x="48" y="7" fill="#f3f1ef" />
-          </g>
-        </svg>
-      </div>
-      {/* Waves end */}
+      <LoginWave />
     </>
   );
 };
