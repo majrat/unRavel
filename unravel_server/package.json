@@ -17,5 +17,8 @@
     "firebase-admin": "^11.4.1",
     "mongoose": "^6.8.3",
     "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "eslint": "^8.32.0"
   }
 }

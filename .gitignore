@@ -2,3 +2,11 @@ node_modules
 unravel-88b40-firebase-adminsdk-shzr2-f1ac488e02.json
 .env
 .env
+unravel_server/.eslintrc.json
+unravel_server/TODO.txt
+unravel_client/.eslintignore
+unravel_client/.eslintrc.json
+unravel_client/.prettierignore
+unravel_client/.prettierrc.json
+unravel_client/.stylelintrc.json
+unravel_client/TODO.txt
