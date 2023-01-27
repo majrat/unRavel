@@ -1,13 +1,13 @@
-import unravel_logo from "/unravel.svg";
-import { useEffect, useState } from "react";
-import { auth } from "../../services/firebase";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import unravel_logo from '/unravel.svg'
+import { useEffect, useState } from 'react'
+import { auth } from '../../services/firebase'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getIdToken, onAuthStateChanged, signOut } from 'firebase/auth'
+import { Fragment } from 'react'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 {
   /*     <p>Search</p>
@@ -18,62 +18,61 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 }
 
 const navigation = [
-  { name: "Search", href: "#", current: false },
-  { name: "Shop", href: "#", current: false },
-  { name: "Locations", href: "#", current: false },
-  { name: "Favourites", href: "#", current: false },
-  { name: "Create", href: "#", current: false },
-];
+  { name: 'Search', href: '#', current: false },
+  { name: 'Shop', href: '#', current: false },
+  { name: 'Locations', href: '#', current: false },
+  { name: 'Favourites', href: '#', current: false },
+]
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
-  const authorized = useSelector((state) => state.authorizer.authorized);
-  const [user, setUser] = useState("");
+  const authorized = useSelector((state) => state.authorizer.authorized)
+  const [user, setUser] = useState('')
 
   const getUser = async () => {
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
-          const token = await getIdToken(user);
+          const token = await getIdToken(user)
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get('http://localhost:8080/api/user', {
               headers: {
                 authorization: `Bearer ${token}`,
               },
             })
             .catch(function (error) {
               if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                console.log(error.response.data)
+                console.log(error.response.status)
+                console.log(error.response.headers)
               }
-            });
+            })
           if (req.data) {
-            setUser(req.data);
+            setUser(req.data)
           }
         }
-      });
+      })
     } catch (err) {
-      console.error("User might be logged out --" + err);
+      console.error('User might be logged out --' + err)
     }
-  };
+  }
 
   const logUserOut = async () => {
-    await signOut(auth);
-  };
+    await signOut(auth)
+  }
 
   useEffect(() => {
-    getUser();
-  }, []);
+    getUser()
+  }, [])
 
   return (
     <div className="justify-center flex">
       <Disclosure
         as="nav"
-        className="bg-secondaryColor top-0 shadow-xl shadow-primaryColor/30 mt-3 w-11/12 fixed z-10 rounded-lg"
+        className="bg-secondaryColor top-0 shadow-xl shadow-primaryColor/30 mt-3 w-11/12 fixed z-50 rounded-lg"
       >
         {({ open }) => (
           <>
@@ -92,16 +91,18 @@ export default function Navbar() {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <img
-                      className="block h-8 w-auto lg:hidden"
-                      src={unravel_logo}
-                      alt="Your Company"
-                    />
-                    <img
-                      className="hidden h-8 w-auto lg:block"
-                      src={unravel_logo}
-                      alt="Your Company"
-                    />
+                    <a href="/">
+                      <img
+                        className="block h-8 w-auto lg:hidden"
+                        src={unravel_logo}
+                        alt="Your Company"
+                      />
+                      <img
+                        className="hidden h-8 w-auto lg:block"
+                        src={unravel_logo}
+                        alt="Your Company"
+                      />
+                    </a>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
@@ -110,16 +111,80 @@ export default function Navbar() {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current
-                              ? "bg-accentColor text-lightColor shadow-lg"
-                              : "text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
-                            "px-3 py-2 rounded-md text-sm font-medium"
+                            'text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
+                            'px-3 py-2 rounded-md text-sm font-medium'
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={item.current ? 'page' : undefined}
                         >
                           {item.name}
                         </a>
                       ))}
+                      <Menu as="div" className="relative">
+                        <div>
+                          <Menu.Button
+                            className="text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor
+                            px-3 py-2 rounded-md text-sm font-medium"
+                          >
+                            <span>Create</span>
+                          </Menu.Button>
+                        </div>
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-lightColor py-1 shadow-lg ring-1 ring-primaryColor ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href={authorized ? '/create/group' : '/signin'}
+                                className={classNames(
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                )}
+                              >
+                                New Group
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href={authorized ? '/create/trip' : '/signin'}
+                                className={classNames(
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                )}
+                              >
+                                New Trip
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href={authorized ? '/create/blog' : '/signin'}
+                                className={classNames(
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
+                                )}
+                              >
+                                New Blog
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href={
+                                  authorized ? '/add/location' : '/add/location'
+                                }
+                                className={classNames(
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
+                                )}
+                              >
+                                New Location
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Menu>
                     </div>
                   </div>
                 </div>
@@ -160,7 +225,7 @@ export default function Navbar() {
                             <span
                               href="#"
                               className={classNames(
-                                "block px-4 py-2 text-lg text-accentColor cursor-default"
+                                'block px-4 py-2 text-lg text-accentColor cursor-default'
                               )}
                             >
                               Hi, {user.name}
@@ -171,8 +236,8 @@ export default function Navbar() {
                               <a
                                 href="#"
                                 className={classNames(
-                                  active ? "bg-primaryColor" : "",
-                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 Your Profile
@@ -184,8 +249,8 @@ export default function Navbar() {
                               <a
                                 href="#"
                                 className={classNames(
-                                  active ? "bg-primaryColor" : "",
-                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 Settings
@@ -197,8 +262,8 @@ export default function Navbar() {
                               <a
                                 onClick={logUserOut}
                                 className={classNames(
-                                  active ? "bg-primaryColor" : "",
-                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
                                 )}
                               >
                                 Sign out
@@ -229,11 +294,11 @@ export default function Navbar() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-accentColor text-lightColor shadow-lg"
-                        : "text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
-                      "block px-3 py-2 rounded-md text-base font-medium"
+                        ? 'bg-accentColor text-lightColor shadow-lg'
+                        : 'text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
+                      'block px-3 py-2 rounded-md text-base font-medium'
                     )}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={item.current ? 'page' : undefined}
                   >
                     {item.name}
                   </Disclosure.Button>
@@ -244,5 +309,5 @@ export default function Navbar() {
         )}
       </Disclosure>
     </div>
-  );
+  )
 }

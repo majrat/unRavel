@@ -2,13 +2,13 @@ import userModel from "../model/user.mjs";
 
 export default {
   sign_up: (req, res) => {
-    const { email, name, username, password, country, state, city, uid } =
+    const { email, first_name, last_name, password, country, state, city, uid } =
       req.body;
     if (
       !email ||
-      !name ||
+      !first_name ||
       !password ||
-      !username ||
+      !last_name ||
       !country ||
       !state ||
       !city
@@ -25,8 +25,8 @@ export default {
       const created_date = Date.now();
       new userModel({
         email,
-        name,
-        username,
+        first_name,
+        last_name,
         "location.country": country,
         "location.state": state,
         "location.city": city,

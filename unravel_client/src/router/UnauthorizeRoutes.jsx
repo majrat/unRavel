@@ -1,23 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "../components/pages/Home";
-import VerifyEmailPage from "../components/Authentication/VerifyEmail";
-import Error404 from "../components/pages/404";
-import SignInPage from "../components/Authentication/SignIn";
-import FirstStep from "../components/Authentication/FirstStep";
-import SecondStep from "../components/Authentication/SecondStep";
-import ThirdStep from "../components/Authentication/ThirdStep";
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import HomePage from '../components/pages/Home'
+import VerifyEmailPage from '../components/Authentication/VerifyEmail'
+import Error404 from '../components/pages/404'
+import SignInPage from '../components/Authentication/SignIn'
+import FirstStep from '../components/Authentication/FirstStep'
+import SecondStep from '../components/Authentication/SecondStep'
+import ThirdStep from '../components/Authentication/ThirdStep'
+import { useState } from 'react'
+import NewLocation from '../components/Create/NewLocation'
+import NewGroup from '../components/Create/NewGroup'
 
 export default function UnauthorizedRoutes(props) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({})
 
   const updateUser = (data) => {
-    setUser((prevUser) => ({ ...prevUser, ...data }));
-  };
+    setUser((prevUser) => ({ ...prevUser, ...data }))
+  }
 
   const resetUser = () => {
-    setUser({});
-  };
+    setUser({})
+  }
   return (
     <Router>
       <Routes>
@@ -48,5 +50,5 @@ export default function UnauthorizedRoutes(props) {
         <Route path="*" element={<Error404 />} />
       </Routes>
     </Router>
-  );
+  )
 }

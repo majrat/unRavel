@@ -1,15 +1,14 @@
 import React from 'react'
-import Header from './Header'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import LoginBg from './LoginBg'
-import LoginWave from './Loginwave'
+import Navbar from '../Navbar/Navbar'
 
-const FirstStep = (props) => {
+const NewTrip = (props) => {
   let navigate = useNavigate()
   let location = useLocation()
-  const { user } = props
+
+  const newTrip = {}
 
   const {
     register,
@@ -17,34 +16,47 @@ const FirstStep = (props) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: user.first_name,
-      last_name: user.last_name,
+      tripDate: newTrip.tripDate,
+      joinBefore: newTrip.joinBefore,
+      grpId: newTrip.grpId,
+      locationId: newTrip.locationId,
+      type: newTrip.type,
+      modeOfTravel: newTrip.modeOfTravel,
+      stay: newTrip.stay,
+      food: newTrip.food,
     },
   })
 
   const onSubmit = (data) => {
-    props.updateUser(data)
-    navigate('/signup/2')
+    // props.updateUser(data)
+    // navigate('/signup/2')
     console.log(data)
   }
   return (
     <>
-      <div className="grid grid-cols-12">
+    <Navbar/>
+      <div className="grid grid-cols-12 overflow-hidden mt-16">
         <motion.div
           initial={{ x: '-100vw' }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
           className="col-span-5 justify-center items-center flex flex-col"
-        >
-          <img className="w-36" src="/unravel.svg" alt="icon_img" />
-          <p className="text-gray-700">Join the community</p>
+          >
+        <div className='text-center'>
+          <p className="text-gray-700">Invite the community</p>
           <p className="text-gray-700">Explore the world together</p>
-          <img className="w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+        </div>
+          <img
+            className="w-96 rounded-md"
+            src="/42070-travel-is-fun.gif"
+            alt="bg_img"
+            />
         </motion.div>
         <div className="col-span-7">
-          <Header {...props} router={{ location }} />
+          <h1>Create new Trip</h1>
+          {/* <Header {...props} router={{ location }} /> */}
           <form
-            className="p-20 justify-center flex"
+            className="pb-20 px-16 pt-6 justify-center flex"
             onSubmit={handleSubmit(onSubmit)}
           >
             <motion.div
@@ -53,64 +65,65 @@ const FirstStep = (props) => {
               transition={{ stiffness: 100 }}
             >
               <div className="group relative">
-                <label className="absolute form--label">First Name</label>
+                <label className="absolute form--label">Group Name</label>
                 <input
                   className={`form--input ${
-                    errors.first_name ? 'input-error' : ''
+                    errors.grpName ? 'input-error' : ''
                   }`}
                   type="text"
                   placeholder={
-                    errors.first_name
-                      ? errors.first_name.message
-                      : 'Enter your name'
+                    errors.locationId
+                      ? errors.newTrip.message
+                      : 'select a place'
                   }
                   autoComplete="off"
-                  {...register('first_name', {
+                  {...register('name', {
                     required: 'Name is required.',
                     pattern: {
-                      value: /^[a-zA-Z ]+$/,
+                      value: /^[a-zA-Z]+$/,
                       message: 'Name should contain only characters.',
                     },
                   })}
                 />
               </div>
 
-              <div className="group relative mt-6">
-                <label className="absolute form--label">Last Name</label>
-                <input
-                  className={`form--input ${
-                    errors.last_name ? 'input-error' : ''
+              <div className="mt-6">
+                <p className="mb-3">Group Description</p>
+                <textarea
+                  className={`h-40 w-full ${
+                    errors.grpDesc ? 'input-error' : ''
                   }`}
                   type="text"
                   placeholder={
-                    errors.last_name
-                      ? errors.last_name.message
-                      : 'Enter your last_name'
+                    errors.grpDesc
+                      ? errors.grpDesc.message
+                      : 'eg: A group focused on party trips....'
                   }
                   autoComplete="off"
-                  {...register('last_name', {
+                  {...register('username', {
+                    required: 'username is required.',
                     pattern: {
-                      value: /^[a-zA-Z ]+$/,
-                      message: 'username should contain only characters.',
+                      value: /^[a-zA-Z0-9]+$/,
+                      message:
+                        'username should contain only characters and number.',
                     },
                   })}
                 />
               </div>
               <div className="flex justify-between mt-4">
                 <button className="btn btn--primary" type="submit">
-                  Next
+                  Done
                 </button>
-                <Link className="btn my-5 btn--secondary" to="/signin">
+                {/* <Link className="btn my-5 btn--secondary" to="/signin">
                   Already have an account
-                </Link>
+                </Link> */}
               </div>
             </motion.div>
           </form>
         </div>
       </div>
-      <LoginWave />
     </>
   )
 }
 
-export default FirstStep
+export default NewTrip

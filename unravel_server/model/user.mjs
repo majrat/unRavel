@@ -4,14 +4,12 @@ const Schema = mongoose.Schema;
 
 const users = new Schema({
   firebase_id: String,
-  name: {
+  first_name: {
     type: String,
     required: true,
   },
-  username: {
+  last_name: {
     type: String,
-    required: true,
-    trim: true,
   },
   age: Number,
   gender: String,

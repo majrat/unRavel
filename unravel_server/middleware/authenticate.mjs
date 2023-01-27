@@ -3,13 +3,15 @@ import userModel from "../model/user.mjs";
 
 export default async function (req, res, next) {
   try {
-    const firebaseToken = req.headers.authorization?.split(" ")[1];
+    let firebaseToken = req.headers.authorization?.split(" ")[1];
+    if (firebaseToken === undefined) {
+      firebaseToken = req.body.headers.authorization?.split(" ")[1];
+    }
     console.log(
       "inside firebase authenticate--------------------------------------------------------------------------"
     );
     let firebaseUser;
     if (firebaseToken) {
-      
       await firebaseAdmin.auth
         .verifyIdToken(firebaseToken)
         .then((decodedToken) => {
@@ -18,10 +20,10 @@ export default async function (req, res, next) {
     }
     if (!firebaseUser) {
       // Unauthorized
-      console.log("Unauthorized");
+      console.log("Unauthorized - no firebase user FOUND");
       return res.sendStatus(401);
     }
-    
+
     console.log("node authorized");
 
     const user = await userModel.findOne({
