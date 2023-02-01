@@ -46,20 +46,20 @@ const users = new Schema({
   connections: {
     following: {
       users: {
-        type: [Schema.Types.ObjectId],
+        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
       },
       groups: {
-        type: [Schema.Types.ObjectId],
+        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
       },
     },
     followers: {
       users: {
-        type: [Schema.Types.ObjectId],
+        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
       },
     },
     friends: {
       users: {
-        type: [Schema.Types.ObjectId],
+        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
       },
     },
   },

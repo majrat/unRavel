@@ -3,7 +3,6 @@ import Header from './Header'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import LoginBg from './LoginBg'
 import LoginWave from './Loginwave'
 
 const FirstStep = (props) => {

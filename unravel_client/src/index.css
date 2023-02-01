@@ -13,6 +13,56 @@ canvas {
   display: block;
 }
 
+/* a {
+  font-size: 1.5rem;
+  padding: 1rem 3rem;
+  color: #f4f4f4;
+  text-transform: uppercase;
+} */
+
+.nav-btn {
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, #dddddd, transparent);
+  transition: all 650ms;
+}
+
+.nav-btn:hover:before {
+  left: 100%;
+}
+
+/* PremiumSymbol */
+.premium-symbol {
+  width: 0;
+  height: 0;
+  border-top: 50px solid #dfae33;
+  border-right: 50px solid transparent;
+}
+/* BudgetSymbol */
+.budget-symbol {
+  width: 0;
+  height: 0;
+  border-top: 50px solid #60C558;
+  border-right: 50px solid transparent;
+}
+/* unknownSymbol */
+.unknown-symbol {
+  width: 0;
+  height: 0;
+  border-top: 50px solid #5F5F5F;
+  border-right: 50px solid transparent;
+}
+
 .leaflet-container {
   width: 100%;
   height: 50vh;
@@ -55,7 +105,7 @@ canvas {
 }
 
 .my-banner-image {
-  background-image: url('https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg?cs=srgb&dl=pexels-asad-photo-maldives-1483053.jpg&fm=jpg');
+  background-image: url("https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg?cs=srgb&dl=pexels-asad-photo-maldives-1483053.jpg&fm=jpg");
   background-size: 100%;
 }
 
@@ -162,8 +212,16 @@ canvas {
 
 /* Typography */
 /**************************/
+.sub_title {
+  font-family: "Oswald", sans-serif;
+  font-size: 35px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin: 0;
+  padding-top: 100px;
+}
 .parallax-world-of-ugg h1 {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 24px;
   font-weight: 400;
   text-transform: uppercase;
@@ -171,7 +229,7 @@ canvas {
   margin: 0;
 }
 .parallax-world-of-ugg h2 {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 70px;
   letter-spacing: 10px;
   text-align: center;
@@ -181,7 +239,7 @@ canvas {
   opacity: 0.9;
 }
 .parallax-world-of-ugg h3 {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 14px;
   line-height: 0;
   font-weight: 400;
@@ -189,7 +247,7 @@ canvas {
   text-transform: uppercase;
 }
 .parallax-world-of-ugg p {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
@@ -202,7 +260,7 @@ canvas {
   padding-top: 4px;
   padding-right: 8px;
   padding-left: 3px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .sc {
@@ -267,8 +325,8 @@ canvas {
   background-position: top center;
 }
 .parallax-world-of-ugg .parallax-two {
-  padding-top: 200px;
-  padding-bottom: 200px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -277,7 +335,13 @@ canvas {
   -moz-background-size: cover;
   -webkit-background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 .parallax-world-of-ugg .parallax-three {
   padding-top: 200px;
@@ -321,7 +385,6 @@ canvas {
     padding: 30px;
   }
   .parallax-world-of-ugg .parallax-one,
-  .parallax-world-of-ugg .parallax-two,
   .parallax-world-of-ugg .parallax-three {
     padding-top: 100px;
     padding-bottom: 100px;

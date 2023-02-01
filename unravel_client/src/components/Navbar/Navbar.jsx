@@ -9,19 +9,10 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
-{
-  /*     <p>Search</p>
-        <p>Shop</p>
-        <p>Locations</p>
-        <p>Create</p>
-        <p>Favourites</p> */
-}
-
 const navigation = [
-  { name: 'Search', href: '#', current: false },
-  { name: 'Shop', href: '#', current: false },
-  { name: 'Locations', href: '#', current: false },
-  { name: 'Favourites', href: '#', current: false },
+  { name: 'Search', to: '/', current: false },
+  { name: 'Locations', to: '/locations', current: false },
+  { name: 'Favourites', to: '/', current: false },
 ]
 
 function classNames(...classes) {
@@ -91,7 +82,7 @@ export default function Navbar() {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <a href="/">
+                    <Link to="/">
                       <img
                         className="block h-8 w-auto lg:hidden"
                         src={unravel_logo}
@@ -102,27 +93,36 @@ export default function Navbar() {
                         src={unravel_logo}
                         alt="Your Company"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
+                      <a
+                        href="https://travel.cyclic.app/"
+                        className={classNames(
+                          'text-accentColor nav-btn hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
+                          'px-3 py-2 rounded-md text-sm font-medium'
+                        )}
+                      >
+                        Shop
+                      </a>
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.to}
                           className={classNames(
-                            'text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
+                            'text-accentColor nav-btn hover:bg-accentColor hover:text-lightColor',
                             'px-3 py-2 rounded-md text-sm font-medium'
                           )}
                           aria-current={item.current ? 'page' : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                       <Menu as="div" className="relative">
                         <div>
                           <Menu.Button
-                            className="text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor
+                            className="text-accentColor nav-btn hover:bg-accentColor hover:shadow-lg hover:text-lightColor
                             px-3 py-2 rounded-md text-sm font-medium"
                           >
                             <span>Create</span>
@@ -131,56 +131,54 @@ export default function Navbar() {
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-lightColor py-1 shadow-lg ring-1 ring-primaryColor ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href={authorized ? '/create/group' : '/signin'}
+                              <Link
+                                to={authorized ? '/create/group' : '/signin'}
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 New Group
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href={authorized ? '/create/trip' : '/signin'}
+                              <Link
+                                to={authorized ? '/create/trip' : '/signin'}
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 New Trip
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
+                          {/* <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href={authorized ? '/create/blog' : '/signin'}
+                              <Link
+                                to={authorized ? '/create/blog' : '/signin'}
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
                                 )}
                               >
                                 New Blog
-                              </a>
+                              </Link>
                             )}
-                          </Menu.Item>
+                          </Menu.Item> */}
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href={
-                                  authorized ? '/add/location' : '/add/location'
-                                }
+                              <Link
+                                to={authorized ? '/add/location' : '/signin'}
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
                                 )}
                               >
                                 New Location
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>
@@ -190,13 +188,13 @@ export default function Navbar() {
                 </div>
                 {authorized ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button
+                    {/*TODO: <button
                       type="button"
                       className="rounded-full bg-lightColor p-1 text-accentColor hover:text-lightColor hover:bg-accentColor focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-secondaryColor"
                     >
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    </button> */}
 
                     {/* Profile dropdown */}
 
@@ -233,28 +231,28 @@ export default function Navbar() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                to="/profile"
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 Your Profile
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                to="/"
                                 className={classNames(
                                   active ? 'bg-primaryColor' : '',
                                   'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
                                 )}
                               >
                                 Settings
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
@@ -291,7 +289,7 @@ export default function Navbar() {
                   <Disclosure.Button
                     key={item.name}
                     as="a"
-                    href={item.href}
+                    to={item.to}
                     className={classNames(
                       item.current
                         ? 'bg-accentColor text-lightColor shadow-lg'

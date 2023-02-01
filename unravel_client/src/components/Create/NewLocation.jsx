@@ -5,51 +5,55 @@ import {
   MapContainer,
   useMapEvents,
   useMap,
-} from 'react-leaflet'
-import { Icon } from 'leaflet'
-import L from 'leaflet'
-import 'leaflet-control-geocoder/dist/Control.Geocoder.css'
-import 'leaflet-control-geocoder/dist/Control.Geocoder.js'
-import { Link } from 'react-router-dom'
-import React, { useState, useEffect } from 'react'
-import { Country, State, City } from 'country-state-city'
-import { useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { motion } from 'framer-motion'
-import Swal from 'sweetalert2'
-import Navbar from '../Navbar/Navbar'
+} from "react-leaflet";
+import { Icon } from "leaflet";
+import L from "leaflet";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css";
+import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Country, State, City } from "country-state-city";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import Navbar from "../Navbar/Navbar";
+import { getIdToken, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../services/firebase";
 
 function LocationMarker() {
-  const [position, setPosition] = useState(null)
+  const [position, setPosition] = useState(null);
   const map = useMapEvents({
     click() {
-      map.locate()
+      map.locate();
     },
     locationfound(e) {
-      setPosition(e.latlng)
-      map.flyTo(e.latlng, map.getZoom())
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
     },
-  })
-  console.log(position)
+  });
+  console.log(position);
   return position === null ? null : (
     <Marker position={position}>
       <Popup>You are here</Popup>
     </Marker>
-  )
+  );
 }
 
 export default function NewLocation() {
   // const map = useMap()
   const [positionInfos, setPositionInfos] = useState({
-    address: '',
-  })
+    address: "",
+    spot: "",
+  });
   const handleChange = (e) => {
-    setPositionInfos({ ...positionInfos, [e.target.address]: e.target.value })
-  }
+    setPositionInfos({ ...positionInfos, [e.target.name]: e.target.value });
+    console.log(positionInfos);
+  };
   const handleSearch = (e) => {
-    e.preventDefault()
-    console.log(positionInfos.address)
-  }
+    e.preventDefault();
+    console.log(positionInfos.address);
+  };
   // useEffect(() => {
   //   // creaet Geocoder nominatim
   //   var geocoder = L.Control.Geocoder.nominatim()
@@ -71,114 +75,125 @@ export default function NewLocation() {
   //     }
   //   })
   // }, [positionInfos])
-  let location = useLocation()
-  let navigate = useNavigate()
-  const [countries, setCountries] = useState([])
-  const [states, setStates] = useState([])
-  const [cities, setCities] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  let location = useLocation();
+  let navigate = useNavigate();
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [selectedState, setSelectedState] = useState('')
-  const [selectedCity, setSelectedCity] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     const getCountries = () => {
       try {
-        setIsLoading(true)
-        const result = Country.getAllCountries()
-        let allCountries = []
+        setIsLoading(true);
+        const result = Country.getAllCountries();
+        let allCountries = [];
         allCountries = result?.map(({ isoCode, name }) => ({
           isoCode,
           name,
-        }))
-        const [{ isoCode: firstCountry } = {}] = allCountries
-        setCountries(allCountries)
-        setSelectedCountry(firstCountry)
-        setIsLoading(false)
+        }));
+        const [{ isoCode: firstCountry } = {}] = allCountries;
+        setCountries(allCountries);
+        setSelectedCountry(firstCountry);
+        setIsLoading(false);
       } catch (error) {
-        setCountries([])
-        setIsLoading(false)
+        setCountries([]);
+        setIsLoading(false);
       }
-    }
-    getCountries()
-  }, [])
+    };
+    getCountries();
+  }, []);
 
   useEffect(() => {
     const getStates = () => {
       try {
-        const result = State.getStatesOfCountry(selectedCountry)
-        let allStates = []
+        const result = State.getStatesOfCountry(selectedCountry);
+        let allStates = [];
         allStates = result?.map(({ isoCode, name }) => ({
           isoCode,
           name,
-        }))
-        console.log({ allStates })
-        const [{ isoCode: firstState = '' } = {}] = allStates
-        setCities([])
-        setSelectedCity('')
-        setStates(allStates)
-        setSelectedState(firstState)
+        }));
+        console.log({ allStates });
+        const [{ isoCode: firstState = "" } = {}] = allStates;
+        setCities([]);
+        setSelectedCity("");
+        setStates(allStates);
+        setSelectedState(firstState);
       } catch (error) {
-        setStates([])
-        setCities([])
-        setSelectedCity('')
+        setStates([]);
+        setCities([]);
+        setSelectedCity("");
       }
-    }
+    };
 
-    getStates()
-  }, [selectedCountry])
+    getStates();
+  }, [selectedCountry]);
 
   useEffect(() => {
     const getCities = () => {
       try {
-        const result = City.getCitiesOfState(selectedCountry, selectedState)
-        let allCities = []
+        const result = City.getCitiesOfState(selectedCountry, selectedState);
+        let allCities = [];
         allCities = result?.map(({ name }) => ({
           name,
-        }))
-        const [{ name: firstCity = '' } = {}] = allCities
-        setCities(allCities)
-        setSelectedCity(firstCity)
+        }));
+        const [{ name: firstCity = "" } = {}] = allCities;
+        setCities(allCities);
+        setSelectedCity(firstCity);
       } catch (error) {
-        setCities([])
+        setCities([]);
       }
-    }
+    };
 
-    getCities()
-  }, [selectedState])
+    getCities();
+  }, [selectedState]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       const updatedData = {
+        spot: positionInfos.spot,
         country: countries.find(
           (country) => country.isoCode === selectedCountry
         )?.name,
         state:
-          states.find((state) => state.isoCode === selectedState)?.name || '',
+          states.find((state) => state.isoCode === selectedState)?.name || "",
         city: selectedCity,
-      }
-
-        // await axios
-        //   .post('http://localhost:8080/api/add/location', {
-        //     uid,
-        //     ...user,
-        //     ...updatedData,
-        //   })
-
-        .catch((err) => alert(err.message))
-    } catch (error) {
-      if (error.response) {
+      };
+      console.log(updatedData);
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const token = await getIdToken(user);
+          console.log(token);
+          await axios
+            .post("http://localhost:8080/api/user/add_location", {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+              ...updatedData,
+            })
+            .then(() => {
+              navigate("/");
+              console.log("success");
+            })
+            .catch((err) => alert(err.message));
+        }
+      });
+    } catch (err) {
+      if (err.response) {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error.response.data,
-        })
-        console.log('error', error.response.data)
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data,
+        });
+        console.log("error", err.response.data);
       }
     }
-  }
+  };
 
   return (
     <>
@@ -187,7 +202,7 @@ export default function NewLocation() {
         <h1 className="pb-10">Add New Location</h1>
         <div className="grid grid-cols-12">
           <motion.div
-            initial={{ x: '-100vw' }}
+            initial={{ x: "-100vw" }}
             animate={{ x: 0 }}
             transition={{ stiffness: 100 }}
             className="col-span-5 justify-center items-center flex flex-col"
@@ -212,11 +227,28 @@ export default function NewLocation() {
               onSubmit={handleSubmit}
             >
               <motion.div
-                initial={{ x: '100vw' }}
+                initial={{ x: "100vw" }}
                 animate={{ x: 0 }}
                 transition={{ stiffness: 100 }}
               >
                 <div className="justify-start">
+                  <div className="group relative">
+                    <div>
+                      <label className="absolute form--label" htmlFor="email">
+                        Spot
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        className="form--input"
+                        type="text"
+                        name="spot"
+                        value={positionInfos.spot}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
                   <div className="pb-6">
                     {isLoading && (
                       <p className="loading">
@@ -224,7 +256,7 @@ export default function NewLocation() {
                       </p>
                     )}
                     <p className="text-gray-700 text-lg font-medium mr-7">
-                      Country:{' '}
+                      Country:{" "}
                     </p>
                     <select
                       className="p-3 w-full"
@@ -308,5 +340,5 @@ export default function NewLocation() {
         </form>
       </div>
     </>
-  )
+  );
 }

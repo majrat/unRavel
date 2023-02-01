@@ -21,6 +21,7 @@
     "framer-motion": "^8.4.2",
     "leaflet": "^1.9.3",
     "leaflet-control-geocoder": "^2.4.0",
+    "moment": "^2.29.4",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,6 +29,7 @@
     "react-leaflet": "^4.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
+    "react-use-scroll-snap": "^0.0.4",
     "sweetalert2": "^11.7.0",
     "tw-elements": "^1.0.0-alpha13"
   },
