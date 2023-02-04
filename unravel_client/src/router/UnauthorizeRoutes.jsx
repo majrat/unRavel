@@ -67,6 +67,6 @@ export default function UnauthorizedRoutes(props) {
         <Route path="/profile" element={<Navigate replace to="/signin" />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
-    </Router>
+    </Router>      
   );
 }

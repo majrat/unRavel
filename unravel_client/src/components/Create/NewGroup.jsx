@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 
 const NewGroup = (props) => {
   let navigate = useNavigate();
-  let location = useLocation();
 
   const group = {};
 

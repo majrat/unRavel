@@ -49,18 +49,14 @@ const users = new Schema({
         type: [{ type: Schema.Types.ObjectId, ref: "users" }],
       },
       groups: {
-        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
+        type: [{ type: Schema.Types.ObjectId, ref: "groups" }],
       },
     },
     followers: {
-      users: {
-        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
-      },
+      type: [{ type: Schema.Types.ObjectId, ref: "users" }],
     },
     friends: {
-      users: {
-        type: [{ type: Schema.Types.ObjectId, ref: "users" }],
-      },
+      type: [{ type: Schema.Types.ObjectId, ref: "users" }],
     },
   },
   created_date: Date,

@@ -9,8 +9,6 @@ import moment from "moment";
 
 export default function Banner() {
   const [trips, setTrips] = useState([]);
-  const truncate = (input) =>
-    input?.length > 30 ? `${input.substring(0, 27)}...` : input;
 
   console.log(trips);
 
@@ -18,8 +16,8 @@ export default function Banner() {
     await axios
       .get("http://localhost:8080/api/user/get_all_trips")
       .then((res) => {
-        if (res.data) {
-          setTrips(res.data);
+        if (res?.data) {
+          setTrips(res?.data);
         } else {
           Swal.fire({
             title: "No trips found in the database",
@@ -137,13 +135,13 @@ export default function Banner() {
       <section className="parallax-two bg-[url('https://images.unsplash.com/photo-1432163230927-a32e4fd5a326?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=')] ">
         {trips.map((trip) => (
           <div
-            key={trip._id}
+            key={trip?._id}
             className="relative z-10 min-w-max bg-secondaryColor mx-4 rounded shadow-accentColor/40 shadow-lg"
           >
             <div className="flex px-3 justify-end">
               <div className="w-10 h-10 my-4 bg-accentColor rounded-full absolute left-4"></div>
 
-              {trip.expected_expense === "luxury" ? (
+              {trip?.expected_expense === "luxury" ? (
                 <>
                   <div className="premium-symbol absolute left-0"></div>
                   <img
@@ -152,7 +150,7 @@ export default function Banner() {
                     alt="luxury"
                   />
                 </>
-              ) : trip.expected_expense === "budget" ? (
+              ) : trip?.expected_expense === "budget" ? (
                 <>
                   <div className="budget-symbol absolute left-0"></div>
                   <img
@@ -175,16 +173,22 @@ export default function Banner() {
 
               <div className="mt-3 mr-4 ml-2 flex-col flex absolute left-14">
                 <span className="text-sm font-semibold">
-                  {trip.group_id.name}
+                  {trip?.group_id?.name}
                 </span>
 
-                {trip.group_id.members.length === 1 ? (
-                  <span className="text-sm">
-                    {trip.group_id.members.length} member
-                  </span>
+                {trip?.group_id?.members.length ? (
+                  trip?.group_id?.members.length === 1 ? (
+                    <span className="text-sm">
+                      {trip?.group_id?.members.length} member
+                    </span>
+                  ) : (
+                    <span className="text-sm">
+                      {trip?.group_id?.members.length} members
+                    </span>
+                  )
                 ) : (
-                  <span className="text-sm">
-                    {trip.group_id.members.length} members
+                  <span className="text-xs mt-3">
+                    group no longer exists !!
                   </span>
                 )}
               </div>
@@ -193,7 +197,7 @@ export default function Banner() {
                 <span className="right-0 mr-1 mt-1 absolute">12</span>
               </div>
             </div>
-            {trip.trip_location?.images.length === 0 || null || undefined ? (
+            {trip?.trip_location?.images.length === 0 || null || undefined ? (
               <img
                 src="/no-image.gif"
                 alt="img"
@@ -201,7 +205,7 @@ export default function Banner() {
               />
             ) : (
               <img
-                src={trip.trip_location?.images[0]}
+                src={trip?.trip_location?.images[0]}
                 alt="img"
                 className="w-96 px-3 h-64 object-cover"
               />
@@ -209,27 +213,23 @@ export default function Banner() {
 
             <div>
               <div className="flex flex-col">
-                <span className="text-accentColor mx-4 mt-2">
+                <span className="text-accentColor truncate w-72 mx-4 mt-2">
                   From{" "}
-                  {truncate(
-                    trip.group_id?.group_admin?.location.city +
-                      " " +
-                      trip.group_id?.group_admin?.location.state +
-                      " " +
-                      trip.group_id?.group_admin?.location.country
-                  )}
+                  {trip?.group_id?.group_admin?.location.city +
+                    " " +
+                    trip?.group_id?.group_admin?.location.state +
+                    " " +
+                    trip?.group_id?.group_admin?.location.country}
                 </span>
-                <span className="text-gray-600 mx-4 mt-1 text-lg font-semibold">
+                <span className="text-gray-600 truncate w-72 mx-4 mt-1 text-lg font-semibold">
                   To{" "}
-                  {truncate(
-                    trip.trip_location.address.spot +
-                      " " +
-                      trip.trip_location.address.city +
-                      " " +
-                      trip.trip_location.address.state +
-                      " " +
-                      trip.trip_location.address.country
-                  )}
+                  {trip?.trip_location?.address?.spot +
+                    " " +
+                    trip?.trip_location?.address?.city +
+                    " " +
+                    trip?.trip_location?.address?.state +
+                    " " +
+                    trip?.trip_location?.address?.country}
                 </span>
                 <HeartIcon
                   className="h-10 w-10 absolute right-5 mt-4 cursor-pointer"
@@ -240,7 +240,7 @@ export default function Banner() {
                   {/*TODO: <span>3 months trip</span> */}
                   <span>
                     <span className="font-light">Posted on</span>{" "}
-                    {moment(trip.created_date).format("ll")}
+                    {moment(trip?.created_date).format("ll")}
                   </span>
                 </div>
               </div>

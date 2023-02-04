@@ -13,12 +13,9 @@ canvas {
   display: block;
 }
 
-/* a {
-  font-size: 1.5rem;
-  padding: 1rem 3rem;
-  color: #f4f4f4;
-  text-transform: uppercase;
-} */
+/* Socail media connect button  */
+
+/* Socail media connect button  */
 
 .nav-btn {
   text-decoration: none;
@@ -52,14 +49,14 @@ canvas {
 .budget-symbol {
   width: 0;
   height: 0;
-  border-top: 50px solid #60C558;
+  border-top: 50px solid #60c558;
   border-right: 50px solid transparent;
 }
 /* unknownSymbol */
 .unknown-symbol {
   width: 0;
   height: 0;
-  border-top: 50px solid #5F5F5F;
+  border-top: 50px solid #5f5f5f;
   border-right: 50px solid transparent;
 }
 

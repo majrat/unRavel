@@ -46,8 +46,18 @@ export default {
     }
   },
 
-  get_group_info: async (req, res) => {
-    const all_group = await groupModel.find();
-    res.status(200).json(all_group);
+  user_group_info: async (req, res) => {
+    await groupModel
+      .find()
+      .then((all_group) => {
+        res.status(200).json(all_group);
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json(
+            `whether user is not in any group or something else gone wrong ${err}`
+          );
+      });
   },
 };
