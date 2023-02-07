@@ -12,6 +12,7 @@ import { setAuthorized } from "../../features/authorizer/authorizerSlice";
 import Header from "./Header";
 import { setTimerActivatorOn } from "../../features/timerAvtivator/timerActivatorSlice";
 import LoginWave from "./Loginwave";
+import Swal from "sweetalert2";
 // --------------------------------------------------
 
 export default function SignInPage(props) {
@@ -39,7 +40,14 @@ export default function SignInPage(props) {
                 dispatch(setTimerActivatorOn());
                 navigate("/verify_email");
               })
-              .catch((err) => alert(err.message));
+              .catch((err) => {
+                Swal.fire({
+                  icon: "error",
+                  title: err.message,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              });
           } else {
             dispatch(setAuthorized());
             navigate("/");
@@ -47,7 +55,12 @@ export default function SignInPage(props) {
         })
         .catch((err) => setError(err.message));
     } catch (err) {
-      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: err,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       setError("Invalid email address or password.");
     }
   };
@@ -87,7 +100,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input"
+                      className="form--input mr-56"
                       type="email"
                       name="email"
                       value={fields.email}
@@ -104,7 +117,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input"
+                      className="form--input mr-56"
                       type="password"
                       name="password"
                       value={fields.password}

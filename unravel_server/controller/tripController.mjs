@@ -2,8 +2,7 @@ import tripsModel from "../model/trips.mjs";
 
 export default {
   create_new_trip: (req, res) => {
-    console.log("reached");
-    console.log(req.user);
+    console.log("reached created new trip");
 
     const {
       date,
@@ -17,8 +16,6 @@ export default {
       other_details,
     } = req.body;
 
-    console.log(req.body);
-
     if (!group_id || !trip_location) {
       return res.status(400).json({
         error: "Invalid request body. Must contain group and location info.",
@@ -27,9 +24,6 @@ export default {
 
     try {
       const created_date = Date.now();
-      //   const group_admin = req.user._id;
-
-      //   const group_id = groupModel.findOne({ group_admin });
 
       new tripsModel({
         group_id,
@@ -51,14 +45,13 @@ export default {
             .json({ success: "Trip created successfully." });
         })
         .catch((err) => {
-          console.log(err);
           return res
             .status(500)
-            .json({ error: "Something went wrong. Please try again" });
+            .json({ error: `Something went wrong, ${err}, Please try again` });
         });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Server error. Please try again" });
+      return res.status(500).json({ error: `Server error.${error}, Please try again` });
     }
   },
   get_all_trips: async (req, res) => {
@@ -67,8 +60,6 @@ export default {
       .find()
       .populate("trip_location")
       .populate({ path: "group_id", populate: { path: "group_admin" } });
-
-    console.log(all_trips);
     res.status(200).json(all_trips);
   },
 };

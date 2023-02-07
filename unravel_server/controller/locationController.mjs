@@ -2,7 +2,6 @@ import locationModel from "../model/location.mjs";
 
 export default {
   add_location: (req, res) => {
-    console.log(req.body);
 
     const { spot, country, city, state } = req.body;
 

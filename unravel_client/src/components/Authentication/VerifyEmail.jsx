@@ -34,12 +34,21 @@ function VerifyEmail() {
             if (user?.emailVerified) {
               updateVerifiedInDB();
               clearInterval(interval);
-              navigate("/");
+              Swal.fire({
+                icon: "success",
+                title: "Email verified",
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(navigate("/"));
             }
           });
         })
         .catch((err) => {
-          alert(err.message);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.message,
+          });
         });
     }, 1000);
   }, [navigate, currentUser]);
@@ -64,7 +73,11 @@ function VerifyEmail() {
         dispatch(setTimerActivatorOn());
       })
       .catch((err) => {
-        alert(err.message);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
       });
   };
 

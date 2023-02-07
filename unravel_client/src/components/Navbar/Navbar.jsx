@@ -1,63 +1,72 @@
-import unravel_logo from '/unravel.svg'
-import { useEffect, useState } from 'react'
-import { auth } from '../../services/firebase'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { getIdToken, onAuthStateChanged, signOut } from 'firebase/auth'
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import unravel_logo from "/unravel.svg";
+import { useEffect, useState } from "react";
+import { auth } from "../../services/firebase";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Swal from "sweetalert2";
 
 const navigation = [
-  { name: 'Search', to: '/', current: false },
-  { name: 'Locations', to: '/locations', current: false },
-  { name: 'Favourites', to: '/', current: false },
-]
+  { name: "Search", to: "/", current: false },
+  { name: "Locations", to: "/locations", current: false },
+  { name: "Favourites", to: "/", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const authorized = useSelector((state) => state.authorizer.authorized)
-  const [user, setUser] = useState('')
+  const authorized = useSelector((state) => state.authorizer.authorized);
+  const [user, setUser] = useState("");
 
   const getUser = async () => {
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
-          const token = await getIdToken(user)
+          const token = await getIdToken(user);
           const req = await axios
-            .get('http://localhost:8080/api/user', {
+            .get("http://localhost:8080/api/user", {
               headers: {
                 authorization: `Bearer ${token}`,
               },
             })
             .catch(function (error) {
               if (error.response) {
-                console.log(error.response.data)
-                console.log(error.response.status)
-                console.log(error.response.headers)
+                Swal.fire({
+                  icon: "error",
+                  title: error.response.data,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
               }
-            })
+            });
           if (req.data) {
-            setUser(req.data)
+            setUser(req.data);
           }
         }
-      })
+      });
     } catch (err) {
-      console.error('User might be logged out --' + err)
+      Swal.fire({
+        icon: "error",
+        title: "User might be logged out --" + err,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
-  }
+  };
 
   const logUserOut = async () => {
-    await signOut(auth)
-  }
+    await signOut(auth);
+  };
 
   useEffect(() => {
-    getUser()
-  }, [])
+    getUser();
+  }, []);
 
   return (
     <div className="justify-center flex">
@@ -100,8 +109,8 @@ export default function Navbar() {
                       <a
                         href="https://travel.cyclic.app/"
                         className={classNames(
-                          'text-accentColor nav-btn hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          "text-accentColor nav-btn hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
+                          "px-3 py-2 rounded-md text-sm font-medium"
                         )}
                       >
                         Shop
@@ -111,10 +120,10 @@ export default function Navbar() {
                           key={item.name}
                           to={item.to}
                           className={classNames(
-                            'text-accentColor nav-btn hover:bg-accentColor hover:text-lightColor',
-                            'px-3 py-2 rounded-md text-sm font-medium'
+                            "text-accentColor nav-btn hover:bg-accentColor hover:text-lightColor",
+                            "px-3 py-2 rounded-md text-sm font-medium"
                           )}
-                          aria-current={item.current ? 'page' : undefined}
+                          aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
                         </Link>
@@ -132,10 +141,10 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to={authorized ? '/create/group' : '/signin'}
+                                to={authorized ? "/create/group" : "/signin"}
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 New Group
@@ -145,10 +154,10 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to={authorized ? '/create/trip' : '/signin'}
+                                to={authorized ? "/create/trip" : "/signin"}
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 New Trip
@@ -171,10 +180,10 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to={authorized ? '/add/location' : '/signin'}
+                                to={authorized ? "/add/location" : "/signin"}
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
                                 )}
                               >
                                 New Location
@@ -223,7 +232,7 @@ export default function Navbar() {
                             <span
                               href="#"
                               className={classNames(
-                                'block px-4 py-2 text-lg text-accentColor cursor-default'
+                                "block px-4 py-2 text-lg text-accentColor cursor-default"
                               )}
                             >
                               Hi, {user.last_name}
@@ -234,8 +243,8 @@ export default function Navbar() {
                               <Link
                                 to="/profile"
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 Your Profile
@@ -247,8 +256,8 @@ export default function Navbar() {
                               <Link
                                 to="/"
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
                                 )}
                               >
                                 Settings
@@ -260,8 +269,8 @@ export default function Navbar() {
                               <a
                                 onClick={logUserOut}
                                 className={classNames(
-                                  active ? 'bg-primaryColor' : '',
-                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
                                 )}
                               >
                                 Sign out
@@ -285,6 +294,15 @@ export default function Navbar() {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
+                <a
+                  href="https://travel.cyclic.app/"
+                  className={classNames(
+                    "text-accentColor cursor-pointer hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                >
+                  Shop
+                </a>
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
@@ -292,20 +310,84 @@ export default function Navbar() {
                     to={item.to}
                     className={classNames(
                       item.current
-                        ? 'bg-accentColor text-lightColor shadow-lg'
-                        : 'text-accentColor hover:bg-accentColor hover:shadow-lg hover:text-lightColor',
-                      'block px-3 py-2 rounded-md text-base font-medium'
+                        ? "bg-accentColor text-lightColor shadow-lg"
+                        : "text-accentColor cursor-pointer hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
+                      "block px-3 py-2 rounded-md text-base font-medium"
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}
                   </Disclosure.Button>
                 ))}
+                <Menu as="div" className="relative">
+                  <div>
+                    <Menu.Button
+                      className="text-accentColor nav-btn hover:bg-accentColor hover:shadow-lg hover:text-lightColor
+                            px-3 py-2 rounded-md text-base font-medium"
+                    >
+                      <span>Create</span>
+                    </Menu.Button>
+                  </div>
+                  <Menu.Items className="absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-lightColor py-1 shadow-lg ring-1 ring-primaryColor ring-opacity-5 focus:outline-none">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          to={authorized ? "/create/group" : "/signin"}
+                          className={classNames(
+                            active ? "bg-primaryColor" : "",
+                            "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
+                          )}
+                        >
+                          New Group
+                        </Link>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          to={authorized ? "/create/trip" : "/signin"}
+                          className={classNames(
+                            active ? "bg-primaryColor" : "",
+                            "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
+                          )}
+                        >
+                          New Trip
+                        </Link>
+                      )}
+                    </Menu.Item>
+                    {/* <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to={authorized ? '/create/blog' : '/signin'}
+                                className={classNames(
+                                  active ? 'bg-primaryColor' : '',
+                                  'block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor'
+                                )}
+                              >
+                                New Blog
+                              </Link>
+                            )}
+                          </Menu.Item> */}
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          to={authorized ? "/add/location" : "/signin"}
+                          className={classNames(
+                            active ? "bg-primaryColor" : "",
+                            "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
+                          )}
+                        >
+                          New Location
+                        </Link>
+                      )}
+                    </Menu.Item>
+                  </Menu.Items>
+                </Menu>
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
     </div>
-  )
+  );
 }

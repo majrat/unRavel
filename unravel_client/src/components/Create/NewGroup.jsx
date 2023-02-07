@@ -29,7 +29,6 @@ const NewGroup = (props) => {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          console.log(token);
           await axios
             .post("http://localhost:8080/api/user/create_group", {
               headers: {
@@ -37,12 +36,23 @@ const NewGroup = (props) => {
               },
               ...data,
             })
-            .then(() => {
+            .then((res) => {
               navigate("/");
-              console.log("success");
+              Swal.fire({
+                icon: "success",
+                title: res.data.success,
+                showConfirmButton: false,
+                timer: 1500,
+              });
             })
-            .catch((err) => alert(err.message));
-          console.log(data);
+            .catch((err) =>
+              Swal.fire({
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                timer: 1500,
+              })
+            );
         }
       });
     } catch (err) {
@@ -52,23 +62,21 @@ const NewGroup = (props) => {
           title: "Oops...",
           text: err.response.data,
         });
-        console.log("error", err.response.data);
       }
     }
   };
   return (
     <>
       <Navbar />
-      <div className="flex justify-center">
-        <img src="/create_group_bg.jpg" alt="bg" />
-        <div className="mt-24 backdrop-blur-sm bg-accentColor/60 shadow-lg shadow-black/70 rounded-md absolute">
+      <div className="bg-[url('/create_group_bg.jpg')] my-full-bg-image bg-cover sm:bg-center bg-right">
+        <div className="sm:left-28 sm:top-28 top-36 sm:mx-0 mx-3 backdrop-blur-sm bg-secondaryColor/50 shadow-lg shadow-black/70 rounded-md absolute">
           <motion.div
             initial={{ x: "-100vw" }}
             animate={{ x: 0 }}
             transition={{ stiffness: 100 }}
             className="justify-center items-center flex flex-col parallax-world-of-ugg"
           >
-            <div className="text-center mt-4 text-lightColor">
+            <div className="text-center mt-4 text-accentColor">
               <h1>Create new Group</h1>
               <h3 className="mt-4">Explore the world together</h3>
             </div>
@@ -76,7 +84,7 @@ const NewGroup = (props) => {
           <div className="">
             {/* <Header {...props} router={{ location }} /> */}
             <form
-              className="pb-20 px-16 pt-6 justify-center flex"
+              className="pb-4 px-16 pt-6 justify-center flex"
               onSubmit={handleSubmit(onSubmit)}
             >
               <motion.div
@@ -85,7 +93,7 @@ const NewGroup = (props) => {
                 transition={{ stiffness: 100 }}
               >
                 <div className="mt-1">
-                  <label className="">Group Name</label>
+                  <label className="text-gray-800 font-bold underline">Group Name</label>
                   <input
                     className={`h-10 mt-2 px-5 w-full rounded-md ${
                       errors.grpName ? "input-error" : ""
@@ -108,7 +116,7 @@ const NewGroup = (props) => {
                 </div>
 
                 <div className="mt-6">
-                  <p className="mb-3">Group Description</p>
+                  <p className="mb-3 text-gray-800 font-bold underline">Group Description</p>
                   <textarea
                     className={`h-40 px-5 w-full rounded-md ${
                       errors.grpDesc ? "input-error" : ""

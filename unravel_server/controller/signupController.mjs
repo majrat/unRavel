@@ -69,7 +69,7 @@ export default {
         { $set: { email_verified: true } }
       );
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({ error: `Server error, ${error}, Please try again` });
     }
   },
 };

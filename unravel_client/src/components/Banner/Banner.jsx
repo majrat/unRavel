@@ -10,8 +10,6 @@ import moment from "moment";
 export default function Banner() {
   const [trips, setTrips] = useState([]);
 
-  console.log(trips);
-
   const get_trips = async () => {
     await axios
       .get("http://localhost:8080/api/user/get_all_trips")
@@ -29,8 +27,7 @@ export default function Banner() {
         }
       });
   };
-  // const posted_date = trips.created_date;
-  // console.log(posted_date);
+
   const scrollRef = useRef(null);
   useScrollSnap({ ref: scrollRef, duration: 50, delay: 0.1 });
 

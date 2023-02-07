@@ -54,7 +54,7 @@ const FirstStep = (props) => {
               <div className="group relative">
                 <label className="absolute form--label">First Name</label>
                 <input
-                  className={`form--input ${
+                  className={`form--input mr-56 ${
                     errors.first_name ? 'input-error' : ''
                   }`}
                   type="text"
@@ -77,7 +77,7 @@ const FirstStep = (props) => {
               <div className="group relative mt-6">
                 <label className="absolute form--label">Last Name</label>
                 <input
-                  className={`form--input ${
+                  className={`form--input mr-56 ${
                     errors.last_name ? 'input-error' : ''
                   }`}
                   type="text"

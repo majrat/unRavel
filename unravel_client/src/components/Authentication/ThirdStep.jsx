@@ -120,20 +120,30 @@ const ThirdStep = (props) => {
                 ...updatedData,
               });
               dispatch(setTimerActivatorOn());
-              navigate("/verify_email");
+              Swal.fire({
+                icon: "success",
+                title: "Verfiy your email address",
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(navigate("/verify_email"));
             })
-            .catch((err) => alert(err.message));
+            .catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
         })
-        .catch((err) => alert(err.message));
-
-      // Swal.fire("Awesome!", "You're successfully registered!", "success").then(
-      //   (result) => {
-      //     if (result.isConfirmed || result.isDismissed) {
-      //       props.resetUser();
-      //       navigate("/signin");
-      //     }
-      //   }
-      // );
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: err.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
     } catch (error) {
       if (error.response) {
         Swal.fire({
@@ -141,7 +151,6 @@ const ThirdStep = (props) => {
           title: "Oops...",
           text: error.response.data,
         });
-        console.log("error", error.response.data);
       }
     }
   };
@@ -177,7 +186,7 @@ const ThirdStep = (props) => {
                     Country:{" "}
                   </p>
                   <select
-                    className="p-3 w-full"
+                    className="p-3 w-full mr-56"
                     as="select"
                     name="country"
                     value={selectedCountry}
@@ -195,7 +204,7 @@ const ThirdStep = (props) => {
                     State:
                   </p>
                   <select
-                    className="p-3 w-full"
+                    className="p-3 w-full mr-56"
                     as="select"
                     name="state"
                     value={selectedState}
@@ -219,7 +228,7 @@ const ThirdStep = (props) => {
                     City:
                   </p>
                   <select
-                    className="p-3 w-full"
+                    className="p-3 w-full mr-56"
                     as="select"
                     name="city"
                     value={selectedCity}

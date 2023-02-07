@@ -58,16 +58,14 @@ export default {
               .json({ success: "User Updated successfully." });
           })
           .catch((err) => {
-            console.log(err);
             return res
               .status(500)
-              .json({ error: "Something went wrong. Please try again" });
+              .json({ error: `Something went wrong. ${err} Please try again` });
           });
       } catch (error) {
-        console.log(error);
         return res
           .status(500)
-          .json({ error: "Server error. Please try again" });
+          .json({ error: `Server error. ${error}, Please try again` });
       }
     }
   },

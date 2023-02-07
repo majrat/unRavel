@@ -1,16 +1,5 @@
-import {
-  Marker,
-  Popup,
-  TileLayer,
-  MapContainer,
-  useMapEvents,
-  useMap,
-} from "react-leaflet";
-import { Icon } from "leaflet";
-import L from "leaflet";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
-import { Link } from "react-router-dom";
+import { TileLayer, MapContainer } from "react-leaflet";
+
 import React, { useState, useEffect } from "react";
 import { Country, State, City } from "country-state-city";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,27 +10,7 @@ import Navbar from "../Navbar/Navbar";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../services/firebase";
 
-function LocationMarker() {
-  const [position, setPosition] = useState(null);
-  const map = useMapEvents({
-    click() {
-      map.locate();
-    },
-    locationfound(e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    },
-  });
-  console.log(position);
-  return position === null ? null : (
-    <Marker position={position}>
-      <Popup>You are here</Popup>
-    </Marker>
-  );
-}
-
 export default function NewLocation() {
-  // const map = useMap()
   const [positionInfos, setPositionInfos] = useState({
     address: "",
     spot: "",
@@ -50,32 +19,7 @@ export default function NewLocation() {
     setPositionInfos({ ...positionInfos, [e.target.name]: e.target.value });
     console.log(positionInfos);
   };
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log(positionInfos.address);
-  };
-  // useEffect(() => {
-  //   // creaet Geocoder nominatim
-  //   var geocoder = L.Control.Geocoder.nominatim()
-  //   // for every positionInfo
-  //   // get the geocordinates of the address in the positionInfo
-  //   // use the latitude and longitude to create a marker
-  //   // and add it the map
-  //   positionInfos.map((positionInfo) => {
-  //     const address = positionInfo.address
-  //     if (address) {
-  //       geocoder.geocode(address, (resultArray) => {
-  //         if (resultArray.length > 0) {
-  //           const result = resultArray[0]
-  //           const latlng = result.center
-  //           L.marker(latlng, { Icon }).addTo(map).bindPopup(result.name)
-  //           map.fitBounds(result.bbox)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }, [positionInfos])
-  let location = useLocation();
+
   let navigate = useNavigate();
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -134,7 +78,7 @@ export default function NewLocation() {
   }, [selectedCountry]);
 
   useEffect(() => {
-    const getCities = () => {
+    const getCities = async () => {
       try {
         const result = City.getCitiesOfState(selectedCountry, selectedState);
         let allCities = [];
@@ -164,11 +108,9 @@ export default function NewLocation() {
           states.find((state) => state.isoCode === selectedState)?.name || "",
         city: selectedCity,
       };
-      console.log(updatedData);
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          console.log(token);
           await axios
             .post("http://localhost:8080/api/user/add_location", {
               headers: {
@@ -176,21 +118,33 @@ export default function NewLocation() {
               },
               ...updatedData,
             })
-            .then(() => {
+            .then((res) => {
               navigate("/");
-              console.log("success");
+              Swal.fire({
+                icon: "success",
+                title: res.data.success,
+                showConfirmButton: false,
+                timer: 1500,
+              });
             })
-            .catch((err) => alert(err.message));
+            .catch((err) =>
+              Swal.fire({
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                timer: 1500,
+              })
+            );
         }
       });
     } catch (err) {
       if (err.response) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
-          text: err.response.data,
+          title: err.response.data,
+          showConfirmButton: false,
+          timer: 1500,
         });
-        console.log("error", err.response.data);
       }
     }
   };
@@ -198,146 +152,119 @@ export default function NewLocation() {
   return (
     <>
       <Navbar />
-      <div className="px-28 mt-20">
-        <h1 className="pb-10">Add New Location</h1>
-        <div className="grid grid-cols-12">
-          <motion.div
-            initial={{ x: "-100vw" }}
-            animate={{ x: 0 }}
-            transition={{ stiffness: 100 }}
-            className="col-span-5 justify-center items-center flex flex-col"
-          >
-            <link
-              rel="stylesheet"
-              href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-              integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-              crossOrigin=""
-            />
-            <MapContainer center={[33.778175, 76.576172]} zoom={12}>
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              />
-              <LocationMarker />
-            </MapContainer>
-          </motion.div>
-          <div className="col-span-7">
-            <form
-              className="items-center flex-col flex"
-              onSubmit={handleSubmit}
-            >
-              <motion.div
-                initial={{ x: "100vw" }}
-                animate={{ x: 0 }}
-                transition={{ stiffness: 100 }}
+      <motion.div
+        initial={{ x: "100vw" }}
+        animate={{ x: 0 }}
+        transition={{ stiffness: 100 }}
+        className="absolute z-10 h-full w-full px-10 sm:px-32 pt-20 bg-accentColor/50"
+      >
+        <h1 className="">Add New Location</h1>
+        <form className="" onSubmit={handleSubmit}>
+          <div className="">
+            <div className="pb-6">
+              <div>
+                <label
+                  className="text-gray-800 font-bold text-lg underline"
+                  htmlFor="email"
+                >
+                  Spot
+                </label>
+              </div>
+              <div>
+                <input
+                  className="form--input bg-secondaryColor"
+                  type="text"
+                  name="spot"
+                  value={positionInfos.spot}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="pb-6">
+              {isLoading && (
+                <p className="loading">Loading countries. Please wait...</p>
+              )}
+              <p className="text-gray-800 font-bold text-lg underline">
+                Country:{" "}
+              </p>
+              <select
+                className="p-3 w-full bg-secondaryColor rounded-md"
+                as="select"
+                name="country"
+                value={selectedCountry}
+                onChange={(event) => setSelectedCountry(event.target.value)}
               >
-                <div className="justify-start">
-                  <div className="group relative">
-                    <div>
-                      <label className="absolute form--label" htmlFor="email">
-                        Spot
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        className="form--input"
-                        type="text"
-                        name="spot"
-                        value={positionInfos.spot}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="pb-6">
-                    {isLoading && (
-                      <p className="loading">
-                        Loading countries. Please wait...
-                      </p>
-                    )}
-                    <p className="text-gray-700 text-lg font-medium mr-7">
-                      Country:{" "}
-                    </p>
-                    <select
-                      className="p-3 w-full"
-                      as="select"
-                      name="country"
-                      value={selectedCountry}
-                      onChange={(event) =>
-                        setSelectedCountry(event.target.value)
-                      }
-                    >
-                      {countries.map(({ isoCode, name }) => (
-                        <option value={isoCode} key={isoCode}>
-                          {name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="pb-6">
-                    <p className="text-gray-700 text-lg font-medium mr-14">
-                      State:
-                    </p>
-                    <select
-                      className="p-3 w-full"
-                      as="select"
-                      name="state"
-                      value={selectedState}
-                      onChange={(event) => setSelectedState(event.target.value)}
-                    >
-                      {states.length > 0 ? (
-                        states.map(({ isoCode, name }) => (
-                          <option value={isoCode} key={isoCode}>
-                            {name}
-                          </option>
-                        ))
-                      ) : (
-                        <option value="" key="">
-                          No state found
-                        </option>
-                      )}
-                    </select>
-                  </div>
-                  <div>
-                    <p className="text-gray-700 text-lg font-medium mb-3">
-                      City:
-                    </p>
-                    <select
-                      className="p-3 w-full"
-                      as="select"
-                      name="city"
-                      value={selectedCity}
-                      onChange={(event) => setSelectedCity(event.target.value)}
-                    >
-                      {cities.length > 0 ? (
-                        cities.map(({ name }) => (
-                          <option value={name} key={name}>
-                            {name}
-                          </option>
-                        ))
-                      ) : (
-                        <option value="">No cities found</option>
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <button className="btn mt-6 btn--primary" type="submit">
-                  Register
-                </button>
-              </motion.div>
-            </form>
+                {countries.map(({ isoCode, name }) => (
+                  <option value={isoCode} key={isoCode}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="pb-6">
+              <p className="text-gray-800 font-bold text-lg underline">
+                State:
+              </p>
+              <select
+                className="p-3 w-full bg-secondaryColor rounded-md"
+                as="select"
+                name="state"
+                value={selectedState}
+                onChange={(event) => setSelectedState(event.target.value)}
+              >
+                {states.length > 0 ? (
+                  states.map(({ isoCode, name }) => (
+                    <option value={isoCode} key={isoCode}>
+                      {name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="" key="">
+                    No state found
+                  </option>
+                )}
+              </select>
+            </div>
+            <div>
+              <p className="text-gray-800 font-bold text-lg underline">City:</p>
+              <select
+                className="p-3 w-full bg-secondaryColor rounded-md"
+                as="select"
+                name="city"
+                value={selectedCity}
+                onChange={(event) => setSelectedCity(event.target.value)}
+              >
+                {cities.length > 0 ? (
+                  cities.map(({ name }) => (
+                    <option value={name} key={name}>
+                      {name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No cities found</option>
+                )}
+              </select>
+            </div>
           </div>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="address"
-            id="address"
-            value={positionInfos.address}
-            onChange={handleSearch}
-          />
-          <button type="submit">search</button>
+          <button className="btn mt-6 btn--primary" type="submit">
+            Register
+          </button>
         </form>
+      </motion.div>
+      <div>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossOrigin=""
+        />
+        <MapContainer center={[33.778175, 76.576172]} zoom={10}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+        </MapContainer>
       </div>
     </>
   );

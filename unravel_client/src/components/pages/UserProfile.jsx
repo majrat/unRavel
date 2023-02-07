@@ -7,6 +7,7 @@ import { auth } from "../../services/firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 export default function UserProfile() {
   const [groups, setGroups] = useState([]);
@@ -24,9 +25,12 @@ export default function UserProfile() {
             })
             .catch(function (error) {
               if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                Swal.fire({
+                  icon: "error",
+                  title: error.response.data,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
               }
             });
           if (req.data) {
@@ -35,27 +39,49 @@ export default function UserProfile() {
         }
       });
     } catch (err) {
-      console.error("User might be logged out --" + err);
+      Swal.fire({
+        icon: "error",
+        title: "User might be logged out --" + err,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
-
   const get_groups = async () => {
-    await axios
-      .get("http://localhost:8080/api/user/user_group_info")
-      .then((res) => {
-        if (res?.data) {
-          setGroups(res?.data);
-          console.log(res.data);
-        } else {
-          Swal.fire({
-            title: "No trips found in the database",
-            text: "No trips data found. Database empty",
-            icon: "warning",
-            allowOutsideClick: false,
-            confirmButtonColor: "#3085d6",
-          });
+    try {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const token = await getIdToken(user);
+          await axios
+            .get("http://localhost:8080/api/user/user_group_info", {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            })
+            .then((res) => {
+              if (res?.data) {
+                setGroups(res?.data);
+                console.log(res.data);
+              } else {
+                Swal.fire({
+                  title: "No trips found in the database",
+                  text: "No trips data found. Database empty",
+                  icon: "warning",
+                  allowOutsideClick: false,
+                  confirmButtonColor: "#3085d6",
+                });
+              }
+            });
         }
       });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "User might be logged out --" + err,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   console.log(groups);

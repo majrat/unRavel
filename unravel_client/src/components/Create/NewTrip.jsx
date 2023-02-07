@@ -53,76 +53,92 @@ const NewTrip = () => {
   const [selectedFood, setSelectedFood] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDesc, setSelectedDesc] = useState("");
-
   const [user, setUser] = useState({});
 
   const check_data = async () => {
-    await axios
-      .get("http://localhost:8080/api/user/get_group_info")
-      .then(async (res) => {
-        if (res.data) {
-          setAllGroupsInfo(res.data);
-          onAuthStateChanged(auth, async (user) => {
-            if (user) {
-              const token = await getIdToken(user);
-              const req = await axios
-                .get("http://localhost:8080/api/user", {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                })
-                .catch(function (error) {
-                  if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+    try {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const token = await getIdToken(user);
+          await axios
+            .get("http://localhost:8080/api/user/user_group_info", {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            })
+            .then(async (res) => {
+              if (res?.data.length !== 0) {
+                console.log(res);
+                setAllGroupsInfo(res.data);
+                onAuthStateChanged(auth, async (user) => {
+                  if (user) {
+                    const token = await getIdToken(user);
+                    const req = await axios
+                      .get("http://localhost:8080/api/user", {
+                        headers: {
+                          authorization: `Bearer ${token}`,
+                        },
+                      })
+                      .catch(function (error) {
+                        if (error.response) {
+                          Swal.fire({
+                            icon: "error",
+                            title: error.response.data,
+                            showConfirmButton: false,
+                            timer: 1500,
+                          });
+                        }
+                      });
+                    if (req.data) {
+                      setUser(req.data);
+                    }
                   }
                 });
-              if (req.data) {
-                setUser(req.data);
+              } else {
+                Swal.fire({
+                  title: "You don't have a group",
+                  text: "Group is required for starting a trip.",
+                  icon: "warning",
+                  allowOutsideClick: false,
+                  confirmButtonColor: "#3085d6",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    navigate("/");
+                  }
+                });
               }
-            }
-          });
+            });
+          await axios
+            .get("http://localhost:8080/api/user/get_all_location")
+            .then((res) => {
+              if (res.data) {
+                setAllLocations(res.data);
+              } else {
+                Swal.fire({
+                  title: "No locations found in the database",
+                  text: "No location data found. Database empty",
+                  icon: "warning",
+                  allowOutsideClick: false,
+                  confirmButtonColor: "#3085d6",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    navigate("/");
+                  }
+                });
+              }
+            });
         }
       });
-    await axios
-      .get("http://localhost:8080/api/user/get_all_location")
-      .then((res) => {
-        console.log(res);
-        if (res.data) {
-          setAllLocations(res.data);
-        } else {
-          Swal.fire({
-            title: "No locations found in the database",
-            text: "No location data found. Database empty",
-            icon: "warning",
-            allowOutsideClick: false,
-            confirmButtonColor: "#3085d6",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate("/");
-            }
-          });
-        }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "User might be logged out --" + err,
+        showConfirmButton: false,
+        timer: 1500,
       });
+    }
   };
-  if (
-    !user._id &&
-    !allGroupsInfo.group_admin &&
-    user._id !== allGroupsInfo.group_admin
-  ) {
-    Swal.fire({
-      title: "You don't have a group",
-      text: "Group is required for starting a trip.",
-      icon: "warning",
-      allowOutsideClick: false,
-      confirmButtonColor: "#3085d6",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-      }
-    });
-  }
+  console.log(user?._id + "---------------" + allGroupsInfo?.group_admin);
 
   const newTrip = {};
 
@@ -179,42 +195,34 @@ const NewTrip = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-12 overflow-hidden mt-16">
+      <div className="grid grid-cols-12 bg-[url('/create_trip_bg.jpg')] my-full-bg-image bg-cover bg-center">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
-          className="col-span-5 justify-center items-center flex flex-col"
+          className="sm:col-span-5 col-span-12 shadow-xl backdrop-blur-lg rounded sm:mx-0 mx-6 sm:ml-16 sm:mb-8 pb-8 sm:pb-0 mt-28 justify-center items-center flex flex-col"
         >
-          <div className="text-center">
-            <p className="text-gray-700">Invite the community</p>
-            <p className="text-gray-700">Explore the world together</p>
+          <div className="text-center text-lightColor">
+            <h1>Create new Trip</h1>
+            <p>Invite the community</p>
+            <p>Explore the world together</p>
           </div>
-          <img
-            className="w-96 rounded-md"
-            src="/42070-travel-is-fun.gif"
-            alt="bg_img"
-          />
         </motion.div>
-        <div className="col-span-7">
-          <h1>Create new Trip</h1>
+        <div className="sm:col-span-7 col-span-12 shadow-xl sm:mr-16 mb-8 sm:mx-0 mx-6 sm:mt-28 backdrop-blur-sm bg-secondaryColor/80 rounded overflow-y-scroll">
           {/* <Header {...props} router={{ location }} /> */}
-          <form
-            className="pb-20 pt-6 justify-center flex"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="px-14 py-4" onSubmit={handleSubmit(onSubmit)}>
             <motion.div
               initial={{ x: "100vw" }}
               animate={{ x: 0 }}
               transition={{ stiffness: 100 }}
             >
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">
+                <p className="text-gray-700 text-lg mr-7 underline font-bold">
                   Trip Location:
                 </p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("trip_location")}
                   value={selectedLocation}
@@ -230,10 +238,10 @@ const NewTrip = () => {
                 </select>
               </div>
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">Group:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">Group:</p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("group_id", {})}
                   value={selectedGroup}
@@ -249,12 +257,12 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
                   Trip Type:
                 </p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("trip_type", {})}
                   value={selectedTripType}
@@ -269,12 +277,12 @@ const NewTrip = () => {
                 </select>
               </div>
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
                   Expected Expense:
                 </p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("expected_expense", {})}
                   value={selectedExpense}
@@ -290,12 +298,12 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
                   Travel Mode:
                 </p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("travel_mode", {})}
                   value={selectedTravelMode}
@@ -313,10 +321,10 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">Stay:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">Stay:</p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("stay", {})}
                   value={selectedStay}
@@ -332,10 +340,10 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">Food:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">Food:</p>
                 <select
                   required
-                  className="p-3 w-full text-accentColor"
+                  className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
                   as="select"
                   {...register("food", {})}
                   value={selectedFood}
@@ -351,11 +359,11 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg font-medium mr-7">
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
                   Planned Date:
                 </p>
                 <input
-                  className="p-3 w-full"
+                  className="p-3 w-full bg-secondaryColor text-gray-700 rounded"
                   type="date"
                   as="select"
                   {...register("date", {})}
@@ -365,9 +373,9 @@ const NewTrip = () => {
               </div>
 
               <div className="mt-6">
-                <p className="mb-3">Other Details</p>
+                <p className="text-gray-700 mb-3 underline font-bold">Other Details: </p>
                 <textarea
-                  className="h-40 w-full"
+                  className="h-40 w-full bg-secondaryColor rounded"
                   {...register("other_details", {})}
                   type="text"
                   placeholder="eg: A group focused on party trips...."

@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", authenticate, userInfoController.user_data);
 router.get("/get_all_location", locationController.get_all_locations);
-router.get("/user_group_info", groupController.user_group_info);
+router.get("/user_group_info", authenticate, groupController.user_group_info);
 router.get("/get_all_trips", tripController.get_all_trips);
 
 router.post("/", signupController.sign_up);

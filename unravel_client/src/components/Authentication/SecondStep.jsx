@@ -24,7 +24,6 @@ const SecondStep = (props) => {
   const onSubmit = (data) => {
     props.updateUser(data);
     navigate("/signup/3");
-    console.log(data);
   };
 
   return (
@@ -67,7 +66,7 @@ const SecondStep = (props) => {
                         message: "Email is not valid.",
                       },
                     })}
-                    className={`form--input ${
+                    className={`form--input mr-56 ${
                       errors.email ? "input-error" : ""
                     }`}
                   />
@@ -89,7 +88,7 @@ const SecondStep = (props) => {
                         message: "Password should have at-least 6 characters.",
                       },
                     })}
-                    className={`form--input ${
+                    className={`form--input mr-56 ${
                       errors.password ? "input-error" : ""
                     }`}
                   />

@@ -2,13 +2,9 @@ import groupModel from "../model/group.mjs";
 
 export default {
   create_group: (req, res) => {
-    console.log("reached");
-    console.log(req.user);
+    console.log("reached create group");
 
     const { grpName, grpDesc, token } = req.body;
-
-    console.log(grpName);
-    console.log(grpDesc);
 
     if (!grpName || !grpDesc || token) {
       return res.status(400).json({
@@ -35,10 +31,9 @@ export default {
             .json({ success: "Group created successfully." });
         })
         .catch((err) => {
-          console.log(err);
           return res
             .status(500)
-            .json({ error: "Something went wrong. Please try again" });
+            .json({ error: "Something went wrong. Please try again", err });
         });
     } catch (error) {
       console.log(error);
@@ -48,7 +43,7 @@ export default {
 
   user_group_info: async (req, res) => {
     await groupModel
-      .find()
+      .find({ members: req.user._id })
       .then((all_group) => {
         res.status(200).json(all_group);
       })
