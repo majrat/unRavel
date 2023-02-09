@@ -7,9 +7,9 @@ export default {
   },
   update_user: async (req, res) => {
     console.log("reached update_user");
-
+    // console.log(req.body);
     const {
-      // profile_photo,
+      profile_photo,
       twitter,
       facebook,
       instagram,
@@ -22,7 +22,7 @@ export default {
 
     const user = await userModel.findOne({ _id: id });
     if (
-      // profile_photo ||
+      profile_photo === user?.profile_photo &&
       twitter === user?.social_media?.twitter &&
       facebook === user?.social_media?.facebook &&
       instagram === user?.social_media?.instagram &&
@@ -41,7 +41,7 @@ export default {
             { _id: id },
             {
               $set: {
-                // profile_photo,
+                profile_photo,
                 "social_media.twitter": twitter,
                 "social_media.facebook": facebook,
                 "social_media.instagram": instagram,

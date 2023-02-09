@@ -51,15 +51,27 @@ export default {
         });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: `Server error.${error}, Please try again` });
+      return res
+        .status(500)
+        .json({ error: `Server error.${error}, Please try again` });
     }
   },
   get_all_trips: async (req, res) => {
-    console.log("inside get_all_trips");
-    const all_trips = await tripsModel
-      .find()
-      .populate("trip_location")
-      .populate({ path: "group_id", populate: { path: "group_admin" } });
-    res.status(200).json(all_trips);
+    try {
+      console.log("inside get_all_trips", req.query.groupIds);
+      const group_ids = await req.query.groupIds;
+      await tripsModel
+        .find({ group_id: { $in: group_ids } })
+        .populate("trip_location")
+        .populate({ path: "group_id", populate: { path: "group_admin" } })
+        .then((all_trips) => {
+          res.status(200).json(all_trips);
+        })
+        .catch((err) => {
+          res.status(500).json(`No trips found or ${err}`);
+        });
+    } catch (error) {
+      res.status(500).json(`No trips found or ${error}`);
+    }
   },
 };

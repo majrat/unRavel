@@ -195,7 +195,7 @@ const NewTrip = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-12 bg-[url('/create_trip_bg.jpg')] my-full-bg-image bg-cover bg-center">
+      <div className="grid grid-cols-12 bg-[url('/create_trip_bg.jpg')] h-screen bg-cover bg-center">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}

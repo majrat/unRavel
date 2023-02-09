@@ -9,7 +9,9 @@ const app = express();
 db(config.MONGO_URI);
 
 app.use(cors({ origin: true }));
-app.use(express.json());
+app.use(express.json({ limit: "200mb" }));
 app.use("/api/user", userRouter);
 
-app.listen(config.PORT, () => console.log(`App listening on PORT ${config.PORT}`));
+app.listen(config.PORT, () =>
+  console.log(`App listening on PORT ${config.PORT}`)
+);

@@ -68,7 +68,7 @@ const NewGroup = (props) => {
   return (
     <>
       <Navbar />
-      <div className="bg-[url('/create_group_bg.jpg')] my-full-bg-image bg-cover sm:bg-center bg-right">
+      <div className="bg-[url('/create_group_bg.jpg')] h-screen bg-cover sm:bg-center bg-right">
         <div className="sm:left-28 sm:top-28 top-36 sm:mx-0 mx-3 backdrop-blur-sm bg-secondaryColor/50 shadow-lg shadow-black/70 rounded-md absolute">
           <motion.div
             initial={{ x: "-100vw" }}
@@ -108,7 +108,7 @@ const NewGroup = (props) => {
                     {...register("grpName", {
                       required: "Group name is required.",
                       pattern: {
-                        value: /^[a-zA-Z ]+$/,
+                        value: /^[a-zA-Z' ]+$/,
                         message: "Name should contain only characters.",
                       },
                     })}

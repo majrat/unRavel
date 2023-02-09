@@ -44,6 +44,8 @@ export default {
   user_group_info: async (req, res) => {
     await groupModel
       .find({ members: req.user._id })
+      .populate({ path: "members" })
+      .populate("group_admin")
       .then((all_group) => {
         res.status(200).json(all_group);
       })
@@ -53,6 +55,17 @@ export default {
           .json(
             `whether user is not in any group or something else gone wrong ${err}`
           );
+      });
+  },
+  get_all_groups: async (req, res) => {
+    console.log("getting all groups...");
+    await groupModel
+      .find()
+      .then((all_groups) => {
+        res.status(200).json(all_groups);
+      })
+      .catch((err) => {
+        res.status(500).json(`No groups found or ${err}`);
       });
   },
 };

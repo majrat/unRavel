@@ -13,9 +13,16 @@ canvas {
   display: block;
 }
 
-/* Socail media connect button  */
-
-/* Socail media connect button  */
+/* Snap on scroll */
+.snap-parent {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+.snap-child {
+  scroll-snap-align: start;
+}
+/* Snap on scroll */
 
 .nav-btn {
   text-decoration: none;
@@ -104,7 +111,11 @@ canvas {
 }
 
 .my-full-bg-image {
-  height: 100vh;
+  height: 120vh;
+}
+
+.text-shadow {
+  text-shadow: 0px 0px 12px #658864;
 }
 
 .waves {

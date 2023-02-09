@@ -11,8 +11,6 @@ const groups = new Schema({
   created_date: Date,
   group_profile: String,
   description: String,
-  completed_trips: [{ type: Schema.Types.ObjectId, ref: "trips" }],
-  planned_trips: [{ type: Schema.Types.ObjectId, ref: "trips" }],
   members: [{ type: Schema.Types.ObjectId, ref: "users" }],
   join_requirements: {
     min_user_followers: Number,
