@@ -294,10 +294,44 @@ export default function Banner() {
           {trips.map((trip) => (
             <div
               key={trip?._id}
-              className="relative z-10 min-w-max bg-secondaryColor/60 backdrop-blur-sm mx-4 rounded shadow-lightColor/40 shadow-md hover:shadow-lg hover:shadow-lightColor/60 hover:bg-secondaryColor/90 cursor-pointer"
+              className="relative transition-all z-10 min-w-max bg-secondaryColor/60 backdrop-blur-sm mx-4 rounded shadow-lightColor/40 shadow-md hover:shadow-lg hover:shadow-lightColor/60 hover:bg-secondaryColor/90"
             >
               <div className="flex px-3 justify-end">
-                <div className="w-10 h-10 my-4 bg-accentColor rounded-full absolute left-4"></div>
+                <Link
+                  to="/group"
+                  state={{ link_group_id: trip?.group_id?._id }}
+                >
+                  <img
+                    className="w-10 h-10 my-4 rounded-full absolute left-4"
+                    src={
+                      trip?.group_id?.group_profile ||
+                      "/group_default_profile.jpg"
+                    }
+                    alt="dp"
+                  />
+
+                  <div className="mt-3 mr-4 ml-2 text-gray-800 flex-col flex absolute left-14">
+                    <span className="text-sm font-semibold">
+                      {trip?.group_id?.name}
+                    </span>
+
+                    {trip?.group_id?.members.length ? (
+                      trip?.group_id?.members.length === 1 ? (
+                        <span className="text-sm">
+                          {trip?.group_id?.members.length} member
+                        </span>
+                      ) : (
+                        <span className="text-sm">
+                          {trip?.group_id?.members.length} members
+                        </span>
+                      )
+                    ) : (
+                      <span className="text-xs mt-3">
+                        group no longer exists !!
+                      </span>
+                    )}
+                  </div>
+                </Link>
                 {trip?.expected_expense === "luxury" ? (
                   <>
                     <div className="premium-symbol absolute left-0"></div>
@@ -327,27 +361,6 @@ export default function Banner() {
                     </span>
                   </>
                 )}
-                <div className="mt-3 mr-4 ml-2 flex-col flex absolute left-14">
-                  <span className="text-sm font-semibold">
-                    {trip?.group_id?.name}
-                  </span>
-
-                  {trip?.group_id?.members.length ? (
-                    trip?.group_id?.members.length === 1 ? (
-                      <span className="text-sm">
-                        {trip?.group_id?.members.length} member
-                      </span>
-                    ) : (
-                      <span className="text-sm">
-                        {trip?.group_id?.members.length} members
-                      </span>
-                    )
-                  ) : (
-                    <span className="text-xs mt-3">
-                      group no longer exists !!
-                    </span>
-                  )}
-                </div>
 
                 {userFollowingGroups?.find(
                   (followingGroup) => followingGroup === trip?.group_id?._id
@@ -355,7 +368,7 @@ export default function Banner() {
                   <div
                     key={trip?.group_id?._id}
                     onClick={() => unFollowGroup(trip?.group_id?._id)}
-                    className="w-28 h-8 my-4 relative bg-lightColor/60 rounded"
+                    className="w-28 h-8 my-4 relative cursor-pointer bg-lightColor/60 rounded"
                   >
                     <span className="left-0 ml-1 mt-1 absolute">following</span>
                     <span className="right-0 mr-1 mt-1 absolute">
@@ -445,7 +458,7 @@ export default function Banner() {
             {groups.map((group) => (
               <div
                 key={group?._id}
-                className="relative z-10 min-w-max bg-lightColor/60 backdrop-blur-sm mx-4 rounded shadow-lightColor/40 shadow-md hover:shadow-lg hover:shadow-lightColor/60 hover:bg-secondaryColor/90 cursor-pointer"
+                className="relative z-10 transition-all min-w-max bg-lightColor/60 backdrop-blur-sm mx-4 rounded shadow-lightColor/40 shadow-md hover:shadow-lg hover:shadow-lightColor/60 hover:bg-secondaryColor/90 cursor-pointer"
               >
                 <div className="flex px-3 justify-end">
                   <Link to="/group" state={{ link_group_id: group?._id }}>
