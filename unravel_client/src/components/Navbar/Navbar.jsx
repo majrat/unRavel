@@ -36,17 +36,17 @@ export default function Navbar() {
               },
             })
             .catch(function (error) {
-              if (error.response) {
+              if (error?.response) {
                 Swal.fire({
                   icon: "error",
-                  title: error.response.data,
+                  title: error?.response.data,
                   showConfirmButton: false,
                   timer: 1500,
                 });
               }
             });
-          if (req.data) {
-            setUser(req.data);
+          if (req?.data) {
+            setUser(req?.data);
           }
         }
       });
@@ -141,6 +141,19 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
+                                to={authorized ? "/add/location" : "/signin"}
+                                className={classNames(
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
+                                )}
+                              >
+                                New Location
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
                                 to={authorized ? "/create/group" : "/signin"}
                                 className={classNames(
                                   active ? "bg-primaryColor" : "",
@@ -177,19 +190,6 @@ export default function Navbar() {
                               </Link>
                             )}
                           </Menu.Item> */}
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                to={authorized ? "/add/location" : "/signin"}
-                                className={classNames(
-                                  active ? "bg-primaryColor" : "",
-                                  "block px-4 py-2 text-sm text-accentColor cursor-pointer hover:text-lightColor"
-                                )}
-                              >
-                                New Location
-                              </Link>
-                            )}
-                          </Menu.Item>
                         </Menu.Items>
                       </Menu>
                     </div>
@@ -214,7 +214,7 @@ export default function Navbar() {
                           <img
                             className="h-8 w-8 object-cover rounded-full"
                             src={user?.profile_photo}
-                            alt="user_profile"
+                            alt="dp"
                           />
                         </Menu.Button>
                       </div>
@@ -235,7 +235,7 @@ export default function Navbar() {
                                 "block px-4 py-2 text-lg text-accentColor cursor-default"
                               )}
                             >
-                              Hi, {user.last_name}
+                              Hi, {user.first_name}
                             </span>
                           </Menu.Item>
                           <Menu.Item>

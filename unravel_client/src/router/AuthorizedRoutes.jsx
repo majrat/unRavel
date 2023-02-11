@@ -12,12 +12,17 @@ import NewTrip from "../components/Create/NewTrip";
 import LocationsPage from "../components/pages/Locations";
 import UserProfile from "../components/pages/UserProfile/UserProfile";
 import EditProfile from "../components/pages/UserProfile/EditProfile";
-import UserGroup from "../components/pages/groupSettings/UserGroup";
+import UserGroup from "../components/pages/Groups/UserGroup";
+import Group from "../components/pages/Groups/Group";
+import EditGroup from "../components/pages/Groups/EditGroup";
+
 export default function AuthorizedRoutes() {
   return (
     <Router>
       <Routes>
+        <Route path="/group" element={<Group />} />
         <Route path="/user/group" element={<UserGroup />} />
+        <Route path="/user/edit/group" element={<EditGroup />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/edit/profile" element={<EditProfile />} />
         <Route path="/locations" element={<LocationsPage />} />

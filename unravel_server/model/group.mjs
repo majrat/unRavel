@@ -9,8 +9,10 @@ const groups = new Schema({
   },
   group_admin: { type: Schema.Types.ObjectId, ref: "users" },
   created_date: Date,
+  updated_date: Date,
   group_profile: String,
   description: String,
+  followers: [{ type: Schema.Types.ObjectId, ref: "users" }],
   members: [{ type: Schema.Types.ObjectId, ref: "users" }],
   join_requirements: {
     min_user_followers: Number,

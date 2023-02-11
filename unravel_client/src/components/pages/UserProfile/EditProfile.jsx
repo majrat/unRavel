@@ -10,7 +10,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export default function EditProfile() {
   let navigate = useNavigate();
-  // const [file, setFile] = useState("");
   const [groups, setGroups] = useState([]);
   const [user, setUser] = useState("");
   const [twitter, setTwitter] = useState("");
@@ -101,10 +100,6 @@ export default function EditProfile() {
   };
   const handleBio = (e) => {
     setBio(e.target.value);
-  };
-  const handleProfilePhoto = (e) => {
-    // setLogo(e.target.logo.files[0]);
-    // console.log(...e.target.files);
   };
 
   function refreshPage() {

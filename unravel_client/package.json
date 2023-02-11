@@ -2,8 +2,7 @@
   "name": "unravel_client",
   "private": true,
   "proxy": [
-    "http://localhost:8080",
-    "https://geokeo.com/geocode/v1/"
+    "http://localhost:8080"
   ],
   "version": "0.0.0",
   "type": "module",

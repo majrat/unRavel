@@ -24,16 +24,15 @@ export default async function (req, res, next) {
       return res.sendStatus(401);
     }
 
-    
     const user = await userModel.findOne({
       firebase_id: firebaseUser.user_id,
     });
-    
+
     if (!user) {
       // Unauthorized
       return res.sendStatus(401);
     }
-    
+
     req.user = user;
     console.log("node authorized");
 

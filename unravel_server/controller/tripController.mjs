@@ -58,7 +58,7 @@ export default {
   },
   get_all_trips: async (req, res) => {
     try {
-      console.log("inside get_all_trips", req.query.groupIds);
+      console.log("inside get_all_trips");
       const group_ids = await req.query.groupIds;
       await tripsModel
         .find({ group_id: { $in: group_ids } })
