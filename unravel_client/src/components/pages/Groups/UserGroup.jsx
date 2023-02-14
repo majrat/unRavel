@@ -338,7 +338,7 @@ export default function UserGroup() {
         </div>
       </div>
       <img
-        className="object-center sm:h-full h-screen object-cover blur-md z-0"
+        className="object-center h-screen object-cover w-screen blur-md z-0"
         src={currentGroup[0]?.group_profile || groups[0]?.group_profile || "/group_default_profile.jpg"}
         alt=""
       />

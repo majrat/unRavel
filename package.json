@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "unRavel - MERN app",
   "scripts": {
-    "start": "concurrently \"cd ./unravel_server && npm run dev\" \"cd ./unravel_client && npm run dev\""
+    "start": "concurrently \"cd ./unravel_server && npm run dev\" \"cd ./unravel_client && npm run dev\"",
+    "host": "concurrently \"cd ./unravel_server && npm run dev\" \"cd ./unravel_client && npm run host\""
   },
   "author": "Mohammed Jauharali",
   "license": "ISC",

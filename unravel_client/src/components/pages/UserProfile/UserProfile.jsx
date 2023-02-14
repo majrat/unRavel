@@ -285,7 +285,7 @@ export default function UserProfile() {
         </div>
       </div>
       <img
-        className="object-center sm:h-full h-screen object-cover blur-sm z-0"
+        className="object-center h-screen object-cover w-screen blur-md z-0"
         src={user?.profile_photo}
         alt=""
       />

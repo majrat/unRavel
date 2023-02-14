@@ -1,4 +1,5 @@
 import tripsModel from "../model/trips.mjs";
+import { createClient } from "pexels";
 
 export default {
   create_new_trip: (req, res) => {
@@ -58,6 +59,14 @@ export default {
   },
   get_all_trips: async (req, res) => {
     try {
+      const client = createClient(
+        "O3jlUZw7ePHeUxBEMnOEfCW9nomV6q98my9bTkzzrfc7dXsmORBhG9QA"
+      );
+      const query = "taj mahal";
+      client.photos
+        .search({ query, per_page: 1 })
+        .then((photos) => console.log(photos));
+
       console.log("inside get_all_trips");
       const group_ids = await req.query.groupIds;
       await tripsModel

@@ -28,23 +28,23 @@ const SecondStep = (props) => {
 
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
-          className="col-span-5 justify-center items-center flex flex-col"
+          className="sm:col-span-5 justify-center items-center flex flex-col"
         >
-          <img className="w-36" src="/unravel.svg" alt="icon_img" />
+          <img className="sm:w-36" src="/unravel.svg" alt="icon_img" />
           <p className="text-gray-700">Join the community</p>
           <p className="text-gray-700">Explore the world together</p>
-          <img className="w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+          <img className="sm:w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
         </motion.div>
-        <div className="col-span-7">
+        <div className="sm:col-span-7">
           <Header {...props} router={{ location }} />
 
           <form
-            className="p-24 justify-center flex"
+            className="sm:p-20 pt-20 sm:pt-0 justify-center flex"
             onSubmit={handleSubmit(onSubmit)}
           >
             <motion.div
@@ -52,7 +52,7 @@ const SecondStep = (props) => {
               animate={{ x: 0 }}
               transition={{ stiffness: 100 }}
             >
-              <div className="group relative">
+              <div className="group relative sm:mt-24">
                 <div>
                   <label className="absolute form--label">Email</label>
                   <input
@@ -66,7 +66,7 @@ const SecondStep = (props) => {
                         message: "Email is not valid.",
                       },
                     })}
-                    className={`form--input mr-56 ${
+                    className={`form--input sm:mr-56 ${
                       errors.email ? "input-error" : ""
                     }`}
                   />
@@ -88,7 +88,7 @@ const SecondStep = (props) => {
                         message: "Password should have at-least 6 characters.",
                       },
                     })}
-                    className={`form--input mr-56 ${
+                    className={`form--input sm:mr-56 ${
                       errors.password ? "input-error" : ""
                     }`}
                   />

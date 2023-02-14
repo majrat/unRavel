@@ -67,22 +67,32 @@ export default function SignInPage(props) {
 
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
-          className="col-span-5 justify-center items-center flex flex-col"
+          className="sm:col-span-5 col-span-12 mt-11 justify-center items-center flex flex-col"
         >
-          <img className="w-36" src="/unravel.svg" alt="icon_img" />
+          <Link className="items-center nav-btn flex flex-col cursor-pointer" to="/">
+            <img
+              className="sm:w-36 hover:shadow-lg rounded-lg transition-all"
+              src="/unravel.svg"
+              alt="icon_img"
+            />
+          </Link>
           <p className="text-gray-700">Join the community</p>
           <p className="text-gray-700">Explore the world together</p>
-          <img className="w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+          <img
+            className="sm:w-96"
+            src="/undraw_navigator_a479.svg"
+            alt="bg_img"
+          />
         </motion.div>
-        <div className="col-span-7">
+        <div className="sm:col-span-7 col-span-12">
           <Header {...props} router={{ location }} />
           <motion.div
-            className="p-24 justify-center flex"
+            className="sm:p-24 justify-center flex"
             initial={{ x: "100vw" }}
             animate={{ x: 0 }}
             transition={{ stiffness: 100 }}
@@ -100,7 +110,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input mr-56"
+                      className="form--input sm:mr-56"
                       type="email"
                       name="email"
                       value={fields.email}
@@ -117,7 +127,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input mr-56"
+                      className="form--input sm:mr-56"
                       type="password"
                       name="password"
                       value={fields.password}

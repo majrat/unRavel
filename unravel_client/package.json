@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "host": "vite --host"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
@@ -25,6 +26,7 @@
     "leaflet-control-geocoder": "^2.4.0",
     "moment": "^2.29.4",
     "node-sass": "^8.0.0",
+    "pexels": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",

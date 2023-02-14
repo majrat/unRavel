@@ -10,11 +10,15 @@ const Header = (props) => {
     <div>
       {!isSigninPage ? (
         <>
-          <h1 className="text-gray-600 font-bold text-3xl mb-5">Create an unRavel Account</h1>
+          <h1 className="text-gray-600 font-bold sm:text-3xl mb-5">
+            Create an unRavel Account
+          </h1>
           <Progress {...props} />
         </>
       ) : (
-        <h1 className="font-bold text-3xl mb-5 mt-11 text-gray-600">Sign In to unRavel</h1>
+        <h1 className="font-bold text-3xl mb-5 mt-11 text-gray-600">
+          Sign In to unRavel
+        </h1>
       )}
     </div>
   );

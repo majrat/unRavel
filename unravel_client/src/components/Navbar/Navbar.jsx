@@ -93,12 +93,12 @@ export default function Navbar() {
                   <div className="flex flex-shrink-0 items-center">
                     <Link to="/">
                       <img
-                        className="block h-8 w-auto lg:hidden"
+                        className="block h-8 w-auto lg:hidden hover:shadow-lg rounded-lg transition-all hover:shadow-primaryColor"
                         src={unravel_logo}
                         alt="Your Company"
                       />
                       <img
-                        className="hidden h-8 w-auto lg:block"
+                        className="hidden h-8 w-auto lg:block hover:shadow-lg rounded-lg transition-all hover:shadow-primaryColor"
                         src={unravel_logo}
                         alt="Your Company"
                       />

@@ -157,17 +157,17 @@ const ThirdStep = (props) => {
 
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
-          className="col-span-5 justify-center items-center flex flex-col"
+          className="sm:col-span-5 justify-center items-center flex flex-col"
         >
-          <img className="w-36" src="/unravel.svg" alt="icon_img" />
+          <img className="sm:w-36" src="/unravel.svg" alt="icon_img" />
           <p className="text-gray-700">Join the community</p>
           <p className="text-gray-700">Explore the world together</p>
-          <img className="w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+          <img className="sm:w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
         </motion.div>
         <div className="col-span-7">
           <Header {...props} router={{ location }} />
@@ -182,11 +182,11 @@ const ThirdStep = (props) => {
                   {isLoading && (
                     <p className="loading">Loading countries. Please wait...</p>
                   )}
-                  <p className="text-gray-700 text-lg font-medium mr-7">
+                  <p className="text-gray-700 text-lg font-medium sm:mr-7">
                     Country:{" "}
                   </p>
                   <select
-                    className="p-3 w-full mr-56"
+                    className="p-3 w-full sm:mr-56"
                     as="select"
                     name="country"
                     value={selectedCountry}
@@ -200,11 +200,11 @@ const ThirdStep = (props) => {
                   </select>
                 </div>
                 <div className="pb-6">
-                  <p className="text-gray-700 text-lg font-medium mr-14">
+                  <p className="text-gray-700 text-lg font-medium sm:mr-14">
                     State:
                   </p>
                   <select
-                    className="p-3 w-full mr-56"
+                    className="p-3 w-full sm:mr-56"
                     as="select"
                     name="state"
                     value={selectedState}
@@ -228,7 +228,7 @@ const ThirdStep = (props) => {
                     City:
                   </p>
                   <select
-                    className="p-3 w-full mr-56"
+                    className="p-3 w-full sm:mr-56"
                     as="select"
                     name="city"
                     value={selectedCity}
@@ -246,7 +246,7 @@ const ThirdStep = (props) => {
                   </select>
                 </div>
               </div>
-              <button className="btn mt-6 btn--primary" type="submit">
+              <button className="btn mt-6 btn--primary w-full" type="submit">
                 Register
               </button>
             </motion.div>
