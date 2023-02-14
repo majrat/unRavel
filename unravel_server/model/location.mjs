@@ -6,7 +6,7 @@ const locations = new Schema({
   latitude: Number,
   longitude: Number,
   time_zone: String,
-  images: [String],
+  images: Object,
   address: {
     spot: String,
     city: String,

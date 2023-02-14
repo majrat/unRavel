@@ -2,13 +2,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../../Navbar/Navbar";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../services/firebase";
+import { auth } from "../../../services/firebase";
 
 const expected_expenses = ["luxury", "budget", "Unknown"];
 const trip_types = [

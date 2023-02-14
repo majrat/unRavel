@@ -8,7 +8,7 @@ import HomePage from "../components/pages/Home";
 import Error404 from "../components/pages/404";
 import NewLocation from "../components/Create/NewLocation";
 import NewGroup from "../components/Create/NewGroup";
-import NewTrip from "../components/Create/NewTrip";
+import NewTrip from "../components/Create/NewTrip/GetInput";
 import LocationsPage from "../components/pages/Locations";
 import UserProfile from "../components/pages/UserProfile/UserProfile";
 import EditProfile from "../components/pages/UserProfile/EditProfile";

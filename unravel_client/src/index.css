@@ -327,7 +327,6 @@ canvas {
 /* Section - Parallax */
 /**************************/
 .parallax-world-of-ugg .parallax-one {
-  padding-top: 200px;
   padding-bottom: 200px;
   overflow: hidden;
   position: relative;

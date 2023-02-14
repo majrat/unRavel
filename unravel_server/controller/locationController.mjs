@@ -1,8 +1,9 @@
 import locationModel from "../model/location.mjs";
+import { createClient } from "pexels";
+import config from "../config/index.mjs";
 
 export default {
-  add_location: (req, res) => {
-
+  add_location: async (req, res) => {
     const { spot, country, city, state } = req.body;
 
     if (!spot || !country) {
@@ -12,6 +13,10 @@ export default {
     }
 
     try {
+      const client = createClient(config.PEXELS_API);
+      const query = spot;
+      const photos = await client.photos.search({ query, per_page: 10 });
+      console.log(photos);
       const created_date = Date.now();
       const user = req.user._id;
 
@@ -24,6 +29,7 @@ export default {
         },
         created_date,
         location_added_by: user,
+        images: photos,
       })
         .save()
         .then(() => {

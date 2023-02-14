@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { useEffect } from "react";
 import { HeartIcon, ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
@@ -8,13 +8,154 @@ import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import Swal from "sweetalert2";
 
+console.clear();
+
+const slides = [
+  {
+    title: "Machu Picchu",
+    subtitle: "Peru",
+    description: "Adventure is never far away",
+    image:
+      "https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=800&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
+  },
+  {
+    title: "Chamonix",
+    subtitle: "France",
+    description: "Let your dreams come true",
+    image:
+      "https://images.unsplash.com/photo-1581836499506-4a660b39478a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=800&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
+  },
+  {
+    title: "Mimisa Rocks",
+    subtitle: "Australia",
+    description: "A piece of heaven",
+    image:
+      "https://images.unsplash.com/photo-1566522650166-bd8b3e3a2b4b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=800&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
+  },
+  {
+    title: "Four",
+    subtitle: "Australia",
+    description: "A piece of heaven",
+    image:
+      "https://images.unsplash.com/flagged/photo-1564918031455-72f4e35ba7a6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=800&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
+  },
+  {
+    title: "Five",
+    subtitle: "Australia",
+    description: "A piece of heaven",
+    image:
+      "https://images.unsplash.com/photo-1579130781921-76e18892b57b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=800&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
+  },
+];
+
+function useTilt(active) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!ref.current || !active) {
+      return;
+    }
+
+    const state = {
+      rect: undefined,
+      mouseX: undefined,
+      mouseY: undefined,
+    };
+
+    let el = ref.current;
+
+    const handleMouseMove = (e) => {
+      if (!el) {
+        return;
+      }
+      if (!state.rect) {
+        state.rect = el.getBoundingClientRect();
+      }
+      state.mouseX = e.clientX;
+      state.mouseY = e.clientY;
+      const px = (state.mouseX - state.rect.left) / state.rect.width;
+      const py = (state.mouseY - state.rect.top) / state.rect.height;
+
+      el.style.setProperty("--px", px);
+      el.style.setProperty("--py", py);
+    };
+
+    el.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [active]);
+
+  return ref;
+}
+
+const initialState = {
+  slideIndex: 0,
+};
+
+const slidesReducer = (state, event) => {
+  if (event.type === "NEXT") {
+    return {
+      ...state,
+      slideIndex: (state.slideIndex + 1) % slides.length,
+    };
+  }
+  if (event.type === "PREV") {
+    return {
+      ...state,
+      slideIndex:
+        state.slideIndex === 0 ? slides.length - 1 : state.slideIndex - 1,
+    };
+  }
+};
+
+function Slide({ slide, offset }) {
+  const active = offset === 0 ? true : null;
+  const ref = useTilt(active);
+
+  return (
+    <div
+      ref={ref}
+      className="slide"
+      data-active={active}
+      style={{
+        "--offset": offset,
+        "--dir": offset === 0 ? 0 : offset > 0 ? 1 : -1,
+      }}
+    >
+      <div
+        className="slideBackground"
+        style={{
+          backgroundImage: `url('${slide.image}')`,
+        }}
+      />
+      <div
+        className="slideContent sm:h-[70vh] w-[70vw] h-[40vh]"
+        style={{
+          backgroundImage: `url('${slide.image}')`,
+        }}
+      >
+        <div className="slideContentInner">
+          <h2 className="slideTitle">{slide.title}</h2>
+          <h3 className="slideSubtitle">{slide.subtitle}</h3>
+          <p className="slideDescription">{slide.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Banner() {
+  const [state, dispatch] = useReducer(slidesReducer, initialState);
+
   const [trips, setTrips] = useState([]);
   const [reRender, setReRender] = useState(false);
   const [groups, setGroups] = useState([]);
   const [groupIds, setGroupIds] = useState([]);
   const [user, setUser] = useState("");
   const [userFollowingGroups, setUserFollowingGroups] = useState([]);
+  const [locationsWithPhotos, setLocationsWithPhotos] = useState([]);
 
   const getUser = async () => {
     try {
@@ -183,7 +324,43 @@ export default function Banner() {
     setUserFollowingGroups(user?.connections?.following?.groups);
   }
 
+  async function getLocationsWithPhotos() {
+    await axios
+      .get("http://localhost:8080/api/user/get_all_location")
+      .then((res) => {
+        if (res.data) {
+          setLocationsWithPhotos(
+            res.data.filter(
+              (location) =>
+                location &&
+                location?.images &&
+                location?.images?.photos &&
+                location?.images?.photos.length != 0
+            )
+          );
+        } else {
+          Swal.fire({
+            title: "No locations found in the database",
+            text: "No location data found. Database empty",
+            icon: "warning",
+            allowOutsideClick: false,
+            confirmButtonColor: "#3085d6",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/");
+            }
+          });
+        }
+      });
+  }
+
+  const photo =
+    "https://images.unsplash.com/photo-1415018255745-0ec3f7aee47b?dpr=1&auto=format&fit=crop&w=1500&h=938&q=80&cs=tinysrgb&crop=";
+
+  console.log(locationsWithPhotos);
+
   useEffect(() => {
+    getLocationsWithPhotos();
     getGroups();
   }, []);
 
@@ -214,72 +391,16 @@ export default function Banner() {
             </div>
           </div>
         </section>
-        <section
-          id="carouselDarkVariant"
-          className="carousel slide carousel-fade carousel-dark relative"
-        >
-          {/* <!-- Indicators --> */}
-          <div className="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
-            <button
-              data-bs-target="#carouselDarkVariant"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              data-bs-target="#carouselDarkVariant"
-              data-bs-slide-to="1"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              data-bs-target="#carouselDarkVariant"
-              data-bs-slide-to="2"
-              aria-label="Slide 1"
-            ></button>
-          </div>
+        <section className="slideBody slideHtml h-[60vh] sm:h-[80vh]">
+          <div className="slides">
+            <button onClick={() => dispatch({ type: "PREV" })}>‹</button>
 
-          {/* <!-- Inner --> */}
-          <div className="carousel-inner relative w-full overflow-hidden">
-            {/* <!-- Single item--> */}
-            <div className="carousel-item active relative float-left parallax-one bg-[url('https://images.unsplash.com/photo-1415018255745-0ec3f7aee47b?dpr=1&auto=format&fit=crop&w=1500&h=938&q=80&cs=tinysrgb&crop=')]">
-              <h2>SOUTHERN CALIFORNIA</h2>
-              <div className="carousel-caption hidden md:block absolute text-center">
-                <h5 className="text-xl">First slide label</h5>
-                <p>
-                  Some representative placeholder content for the first slide.
-                </p>
-              </div>
-            </div>
-            {/* <!-- Single item END--> */}
+            {[...slides, ...slides, ...slides].map((slide, i) => {
+              let offset = slides.length + (state.slideIndex - i);
+              return <Slide slide={slide} offset={offset} key={i} />;
+            })}
+            <button onClick={() => dispatch({ type: "NEXT" })}>›</button>
           </div>
-          {/* <!-- Inner END -->*/}
-
-          {/* <!-- Controls --> */}
-          <button
-            className="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-            type="button"
-            data-bs-target="#carouselDarkVariant"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon inline-block bg-no-repeat"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-            type="button"
-            data-bs-target="#carouselDarkVariant"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon inline-block bg-no-repeat"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
         </section>
       </div>
       <div className="snap-child">
@@ -392,7 +513,9 @@ export default function Banner() {
                   </div>
                 )}
               </div>
-              {trip?.trip_location?.images.length === 0 || null || undefined ? (
+              {trip?.trip_location?.images?.photos.length === 0 ||
+              trip?.trip_location?.images?.photos.length === null ||
+              trip?.trip_location?.images?.photos.length === undefined ? (
                 <img
                   src="/no-image.gif"
                   alt="img"
@@ -400,8 +523,8 @@ export default function Banner() {
                 />
               ) : (
                 <img
-                  src={trip?.trip_location?.images[0]}
-                  alt="img"
+                  src={trip?.trip_location?.images?.photos[0].src.medium}
+                  alt={trip?.trip_location?.images?.photos[0].alt}
                   className="w-96 px-3 h-64 object-cover"
                 />
               )}
