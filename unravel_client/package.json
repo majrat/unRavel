@@ -14,7 +14,7 @@
     "host": "vite --host"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.7",
+    "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.13",
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.2",
@@ -31,7 +31,8 @@
     "react-hook-form": "^7.41.5",
     "react-leaflet": "^4.2.0",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.6.2",
+    "react-router-dom": "^6.8.1",
+    "socket.io-client": "^4.6.0",
     "sweetalert2": "^11.7.0",
     "tw-elements": "^1.0.0-alpha13"
   },

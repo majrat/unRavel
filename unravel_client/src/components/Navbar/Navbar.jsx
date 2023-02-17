@@ -241,7 +241,7 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to="/profile"
+                                to="/user/profile"
                                 className={classNames(
                                   active ? "bg-primaryColor" : "",
                                   "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
@@ -261,6 +261,19 @@ export default function Navbar() {
                                 )}
                               >
                                 My Groups
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/user/trips"
+                                className={classNames(
+                                  active ? "bg-primaryColor" : "",
+                                  "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"
+                                )}
+                              >
+                                My Trips
                               </Link>
                             )}
                           </Menu.Item>

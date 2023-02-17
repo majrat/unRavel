@@ -32,7 +32,8 @@ const trips = new Schema({
     type: String,
     default: "Not Specified",
   },
-  supervisor: { type: Schema.Types.ObjectId, ref: "users" },
+  participants: [{ type: Schema.Types.ObjectId, ref: "users" }],
+  created_by: { type: Schema.Types.ObjectId, ref: "users" },
   other_details: String,
 });
 

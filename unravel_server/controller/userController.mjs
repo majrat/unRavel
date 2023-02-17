@@ -75,7 +75,7 @@ export default {
     console.log("joining new group...");
     const userId = req.user._id;
     console.log(userId);
-    const groupId = req?.body?.link_group_id?.link_group_id;
+    const groupId = req?.body?.link_group_id;
     console.log(groupId);
 
     await groupModel
@@ -86,7 +86,7 @@ export default {
       });
   },
 
-  left_group: async (req, res) => {
+  exit_group: async (req, res) => {
     console.log("joining new group...");
     const userId = req.user._id;
     console.log(userId);

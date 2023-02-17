@@ -14,6 +14,7 @@ const locations = new Schema({
     country: String,
   },
   created_date: Date,
+  posted_by: { type: Schema.Types.ObjectId, ref: "users" },
   location_added_by: Schema.Types.ObjectId,
 });
 

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import { getCurrentGroup } from "../../../helpers/groupHelper";
 import { auth } from "../../../services/firebase";
 import Navbar from "../../Navbar/Navbar";
 
@@ -56,36 +57,6 @@ const Group = () => {
       });
     }
   };
-
-  async function getCurrentGroup() {
-    try {
-      await axios
-        .get("http://localhost:8080/api/user/get_group", {
-          params: link_group_id,
-        })
-        .then((res) => {
-          if (res?.data) {
-            setGroup(res?.data);
-            setMembers(res?.data?.members);
-          } else {
-            Swal.fire({
-              title: "No group found in the database",
-              text: "No group data found. Database empty",
-              icon: "warning",
-              allowOutsideClick: false,
-              confirmButtonColor: "#3085d6",
-            });
-          }
-        });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  }
 
   const followGroup = async (selectedGroupId) => {
     console.log("follow Group..." + selectedGroupId);
@@ -222,8 +193,12 @@ const Group = () => {
   }, [reRender]);
 
   useEffect(() => {
-    getCurrentGroup();
-  }, [reRender]);
+    console.log(getCurrentGroup(link_group_id));
+    getCurrentGroup(link_group_id).then((data) => {
+      setGroup(data);
+      setMembers(data?.members);
+    });
+  }, [reRender, link_group_id]);
 
   useEffect(() => {
     getUserFollowingGroups();
@@ -260,7 +235,7 @@ const Group = () => {
                 </div>
               )}
               <div
-                onClick={() => joinGroup(group?._id)}
+                onClick={() => joinGroup()}
                 className="w-28 h-8 my-4 text-center cursor-pointer bg-accentColor/60 rounded"
               >
                 <span>Join</span>

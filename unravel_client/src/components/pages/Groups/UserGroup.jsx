@@ -187,7 +187,9 @@ export default function UserGroup() {
               <img
                 className="rounded-full h-20 w-20 sm:w-28 sm:h-28 object-cover mt-6 sm:mt-5"
                 src={
-                  currentGroup[0]?.group_profile || groups[0]?.group_profile || "/group_default_profile.jpg"
+                  currentGroup[0]?.group_profile ||
+                  groups[0]?.group_profile ||
+                  "/group_default_profile.jpg"
                 }
                 alt="user_profile"
               />
@@ -287,9 +289,12 @@ export default function UserGroup() {
                     <div key={trip?._id} className="flex mb-3">
                       <p className="m-1">{i + 1}.</p>
                       <img
-                        src={trip?.profile_photo || "/profile-setup.gif"}
+                        src={
+                          trip?.trip_location?.images?.photos[0].src
+                            ?.original || "/profile-setup.gif"
+                        }
                         alt="dp"
-                        className="rounded-full w-9 h-9 mx-4"
+                        className="rounded-full w-9 h-9 mx-4 object-cover"
                       />
                       <p className="mt-1 truncate">
                         {trip?.trip_location?.address?.spot +
@@ -308,9 +313,12 @@ export default function UserGroup() {
                     <div key={trip?._id} className="flex mb-3">
                       <p className="m-1">{i + 1}.</p>
                       <img
-                        src={trip?.profile_photo || "/profile-setup.gif"}
+                        src={
+                          trip?.trip_location?.images?.photos[0].src
+                            ?.original || "/profile-setup.gif"
+                        }
                         alt="dp"
-                        className="rounded-full w-9 h-9 mx-4"
+                        className="rounded-full w-9 h-9 mx-4 object-cover"
                       />
                       <p className="mt-1 truncate">
                         {trip?.trip_location?.address?.spot +
@@ -339,7 +347,11 @@ export default function UserGroup() {
       </div>
       <img
         className="object-center h-screen object-cover w-screen blur-md z-0"
-        src={currentGroup[0]?.group_profile || groups[0]?.group_profile || "/group_default_profile.jpg"}
+        src={
+          currentGroup[0]?.group_profile ||
+          groups[0]?.group_profile ||
+          "/group_default_profile.jpg"
+        }
         alt=""
       />
     </>

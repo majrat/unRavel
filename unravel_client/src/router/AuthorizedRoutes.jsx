@@ -15,16 +15,22 @@ import EditProfile from "../components/pages/UserProfile/EditProfile";
 import UserGroup from "../components/pages/Groups/UserGroup";
 import Group from "../components/pages/Groups/Group";
 import EditGroup from "../components/pages/Groups/EditGroup";
+import Trips from "../components/pages/Trips/Trips";
+import UserTrips from "../components/pages/Trips/Usertrips";
+import ChatPage from "../components/GroupChat/ChatPage";
 
 export default function AuthorizedRoutes() {
   return (
     <Router>
       <Routes>
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/user/trips" element={<UserTrips />} />
+        <Route path="/trips" element={<Trips />} />
         <Route path="/group" element={<Group />} />
         <Route path="/user/group" element={<UserGroup />} />
         <Route path="/user/edit/group" element={<EditGroup />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/edit/profile" element={<EditProfile />} />
+        <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/edit/user/profile" element={<EditProfile />} />
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/add/location" element={<NewLocation />} />
         <Route path="/create/group" element={<NewGroup />} />
