@@ -1,15 +1,13 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 import config from "./config/index.mjs";
-import db from "./config/db.mjs";
 import userRouter from "./api/user.mjs";
 import http from "http";
 // import { Server } from "socket.io";
 
 const app = express();
 const server = http.createServer(app);
-
-db(config.MONGO_ATLAS_URI);
 
 app.use(cors({}));
 
@@ -33,6 +31,26 @@ app.use(express.json({ limit: "20mb" }));
 // api routes
 app.use("/api/user", userRouter);
 
-server.listen(config.PORT, () => {
-  console.log(`App listening on PORT ${config.PORT}`);
-});
+mongoose
+  .connect(config.MONGO_ATLAS_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    mongoose.set("strictQuery", false);
+
+    const db = mongoose.connection;
+
+    db.on("connected", function () {
+      console.log("Success: MongDB Connected");
+    });
+    db.on(
+      "error",
+      console.error.bind(console, "Error: MongoDB connection error:")
+    );
+  })
+  .then(() =>
+    server.listen(config.PORT, () => {
+      console.log(`App listening on PORT ${config.PORT}`);
+    })
+  );
