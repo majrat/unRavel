@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ChatBody = () => {
   const navigate = useNavigate();
@@ -13,9 +14,9 @@ const ChatBody = () => {
     <>
       <header className="chat__mainHeader">
         <p>Hangout with Colleagues</p>
-        <button className="leaveChat__btn" onClick={handleLeaveChat}>
+        <Link to="/" className="leaveChat__btn" onClick={handleLeaveChat}>
           LEAVE CHAT
-        </button>
+        </Link>
       </header>
 
       {/*This shows messages sent from you*/}

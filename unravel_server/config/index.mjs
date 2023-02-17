@@ -7,6 +7,7 @@ export default {
   PEXELS_API: process.env.PEXELS_API,
   PORT: process.env.PORT,
   MONGO_URI: process.env.MONGO_URI,
+  MONGO_ATLAS_URI: process.env.MONGO_ATLAS_URI,
   TYPE: process.env.TYPE,
   PROJECT_ID: process.env.PROJECT_ID,
   PRIVATE_KEY_ID: process.env.PRIVATE_KEY_ID,

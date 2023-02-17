@@ -4,31 +4,31 @@ import config from "./config/index.mjs";
 import db from "./config/db.mjs";
 import userRouter from "./api/user.mjs";
 import http from "http";
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 
 const app = express();
 const server = http.createServer(app);
 
-db(config.MONGO_URI);
+db(config.MONGO_ATLAS_URI);
 
 app.use(cors({ origin: true }));
 
 // fixing "413 Request Entity Too Large" errors
 app.use(express.json({ limit: "20mb" }));
 //Socket IO
-const socketIO = new Server(server, {
-  cors: {
-    origin: "*",
-    credentials: true,
-  },
-});
+// const socketIO = new Server(server, {
+//   cors: {
+//     origin: "*",
+//     credentials: true,
+//   },
+// });
 
-socketIO.on("connection", (socket) => {
-  console.log(`${socket.id} user just connected!`);
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-});
+// socketIO.on("connection", (socket) => {
+//   console.log(`${socket.id} user just connected!`);
+//   socket.on("disconnect", () => {
+//     console.log("A user disconnected");
+//   });
+// });
 
 // api routes
 app.use("/api/user", userRouter);

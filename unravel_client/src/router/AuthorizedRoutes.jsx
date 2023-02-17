@@ -29,8 +29,8 @@ export default function AuthorizedRoutes() {
         <Route path="/group" element={<Group />} />
         <Route path="/user/group" element={<UserGroup />} />
         <Route path="/user/edit/group" element={<EditGroup />} />
-        <Route path="/user/profile" element={<UserProfile />} />
-        <Route path="/edit/user/profile" element={<EditProfile />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/edit/profile" element={<EditProfile />} />
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/add/location" element={<NewLocation />} />
         <Route path="/create/group" element={<NewGroup />} />

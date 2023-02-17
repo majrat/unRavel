@@ -241,7 +241,7 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to="/user/profile"
+                                to="/profile"
                                 className={classNames(
                                   active ? "bg-primaryColor" : "",
                                   "block px-4 py-2 text-sm text-accentColor hover:text-lightColor"

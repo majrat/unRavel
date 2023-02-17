@@ -6,7 +6,7 @@ const ChatFooter = () => {
 //   console.log("userName ===", userName);
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log({ userName: localStorage.getItem("userName"), message });
+    // console.log({ userName: localStorage.getItem("userName"), message });
     setMessage("");
   };
   return (
