@@ -4,6 +4,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Navbar/Navbar";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { useState } from "react";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -61,7 +62,7 @@ const NewTrip = () => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get("http://localhost:8080/api/user/user_group_info", {
+            .get(`${config.VITE_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -74,7 +75,7 @@ const NewTrip = () => {
                   if (user) {
                     const token = await getIdToken(user);
                     const req = await axios
-                      .get("http://localhost:8080/api/user", {
+                      .get(config.VITE_SERVER_API, {
                         headers: {
                           authorization: `Bearer ${token}`,
                         },
@@ -109,7 +110,7 @@ const NewTrip = () => {
               }
             });
           await axios
-            .get("http://localhost:8080/api/user/get_all_location")
+            .get(`${config.VITE_SERVER_API}/get_all_location`)
             .then((res) => {
               if (res.data) {
                 setAllLocations(res.data);
@@ -163,7 +164,7 @@ const NewTrip = () => {
           const token = await getIdToken(user);
           console.log(token);
           await axios
-            .post("http://localhost:8080/api/user/create_new_trip", {
+            .post(`${config.VITE_SERVER_API}/create_new_trip`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -238,7 +239,9 @@ const NewTrip = () => {
                 </select>
               </div>
               <div className="pb-6">
-                <p className="text-gray-700 text-lg underline font-bold mr-7">Group:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
+                  Group:
+                </p>
                 <select
                   required
                   className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
@@ -321,7 +324,9 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg underline font-bold mr-7">Stay:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
+                  Stay:
+                </p>
                 <select
                   required
                   className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
@@ -340,7 +345,9 @@ const NewTrip = () => {
               </div>
 
               <div className="pb-6">
-                <p className="text-gray-700 text-lg underline font-bold mr-7">Food:</p>
+                <p className="text-gray-700 text-lg underline font-bold mr-7">
+                  Food:
+                </p>
                 <select
                   required
                   className="p-3 w-full text-gray-700 bg-secondaryColor rounded"
@@ -373,7 +380,9 @@ const NewTrip = () => {
               </div>
 
               <div className="mt-6">
-                <p className="text-gray-700 mb-3 underline font-bold">Other Details: </p>
+                <p className="text-gray-700 mb-3 underline font-bold">
+                  Other Details:{" "}
+                </p>
                 <textarea
                   className="h-40 w-full bg-secondaryColor rounded"
                   {...register("other_details", {})}

@@ -9,7 +9,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
-
+import config from "../../utils/constants";
 const navigation = [
   { name: "Search", to: "/", current: false },
   { name: "Locations", to: "/locations", current: false },
@@ -30,7 +30,7 @@ export default function Navbar() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

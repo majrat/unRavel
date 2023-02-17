@@ -4,6 +4,7 @@ import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import config from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTimerActivatorOff,
@@ -20,7 +21,7 @@ function VerifyEmail() {
   const dispatch = useDispatch();
 
   async function updateVerifiedInDB() {
-    await axios.post("http://localhost:8080/api/user/verify_email", {
+    await axios.post(`${config.VITE_SERVER_API}/verify_email`, {
       userUid: currentUser.uid,
     });
   }

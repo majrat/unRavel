@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../../../utils/constants";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -26,7 +27,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -66,7 +67,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch("http://localhost:8080/api/user/follow/group", {
+            .patch(`${config.VITE_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -108,7 +109,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .delete("http://localhost:8080/api/user/follow/group", {
+            .delete(`${config.VITE_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -149,7 +150,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch("http://localhost:8080/api/user/join/group", {
+            .patch(`${config.VITE_SERVER_API}/join/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -190,7 +191,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch("http://localhost:8080/api/user/join/trip", {
+            .patch(`${config.VITE_SERVER_API}/join/trip`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

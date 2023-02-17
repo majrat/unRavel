@@ -4,6 +4,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -40,7 +41,7 @@ export default function EditGroup() {
           e.preventDefault();
           // console.log(token);
           await axios
-            .patch("http://localhost:8080/api/user/group", {
+            .patch(`${config.VITE_SERVER_API}/group`, {
               name,
               link_group_id,
               description,
@@ -87,7 +88,7 @@ export default function EditGroup() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get("http://localhost:8080/api/user/group", {
+            .get(`${config.VITE_SERVER_API}/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

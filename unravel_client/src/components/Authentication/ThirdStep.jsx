@@ -3,6 +3,7 @@ import { Country, State, City } from "country-state-city";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import config from "../../utils/constants";
 import { setTimerActivatorOn } from "../../features/timerAvtivator/timerActivatorSlice";
 import Header from "./Header";
 import LoginWave from "./Loginwave";
@@ -114,7 +115,7 @@ const ThirdStep = (props) => {
             .then(async () => {
               dispatch(setCurrentUserInfo(auth.currentUser));
               let uid = auth.currentUser.uid;
-              await axios.post("http://localhost:8080/api/user", {
+              await axios.post(config.VITE_SERVER_API, {
                 uid,
                 ...user,
                 ...updatedData,
@@ -167,7 +168,11 @@ const ThirdStep = (props) => {
           <img className="sm:w-36" src="/unravel.svg" alt="icon_img" />
           <p className="text-gray-700">Join the community</p>
           <p className="text-gray-700">Explore the world together</p>
-          <img className="sm:w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+          <img
+            className="sm:w-96"
+            src="/undraw_navigator_a479.svg"
+            alt="bg_img"
+          />
         </motion.div>
         <div className="col-span-7">
           <Header {...props} router={{ location }} />

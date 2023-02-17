@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
+import config from "../../utils/constants";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import Swal from "sweetalert2";
@@ -30,7 +31,7 @@ const NewGroup = (props) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .post("http://localhost:8080/api/user/create_group", {
+            .post(`${config.VITE_SERVER_API}/create_group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -93,7 +94,9 @@ const NewGroup = (props) => {
                 transition={{ stiffness: 100 }}
               >
                 <div className="mt-1">
-                  <label className="text-gray-800 font-bold underline">Group Name</label>
+                  <label className="text-gray-800 font-bold underline">
+                    Group Name
+                  </label>
                   <input
                     className={`h-10 mt-2 px-5 w-full rounded-md ${
                       errors.grpName ? "input-error" : ""
@@ -116,7 +119,9 @@ const NewGroup = (props) => {
                 </div>
 
                 <div className="mt-6">
-                  <p className="mb-3 text-gray-800 font-bold underline">Group Description</p>
+                  <p className="mb-3 text-gray-800 font-bold underline">
+                    Group Description
+                  </p>
                   <textarea
                     className={`h-40 px-5 w-full rounded-md ${
                       errors.grpDesc ? "input-error" : ""

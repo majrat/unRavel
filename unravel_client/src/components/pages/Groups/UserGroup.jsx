@@ -4,6 +4,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -30,7 +31,7 @@ export default function UserGroup() {
 
   const get_trips = async () => {
     await axios
-      .get("http://localhost:8080/api/user/get_all_trips", {
+      .get(`${config.VITE_SERVER_API}/get_all_trips`, {
         params: {
           groupIds: groupIds,
         },
@@ -56,7 +57,7 @@ export default function UserGroup() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -91,7 +92,7 @@ export default function UserGroup() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get("http://localhost:8080/api/user/user_group_info", {
+            .get(`${config.VITE_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

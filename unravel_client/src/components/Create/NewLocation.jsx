@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Country, State, City } from "country-state-city";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import config from "../../utils/constants";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar/Navbar";
@@ -112,7 +113,7 @@ export default function NewLocation() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .post("http://localhost:8080/api/user/add_location", {
+            .post(`${config.VITE_SERVER_API}/add_location`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

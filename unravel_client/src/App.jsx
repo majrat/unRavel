@@ -11,6 +11,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
+  console.log(import.meta.env.VITE_API_KEY);
   const [loading, setLoading] = useState(true);
   const authorized = useSelector((state) => state.authorizer.authorized);
   const dispatch = useDispatch();

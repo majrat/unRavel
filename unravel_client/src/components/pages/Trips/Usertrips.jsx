@@ -4,6 +4,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import GoToChatWidget from "../../GroupChat/GoToChatWidget";
@@ -44,7 +45,7 @@ export default function UserTrips() {
           // setProfilePhoto(e.target.logo.files[0]);
 
           await axios
-            .patch("http://localhost:8080/api/user/change/trip/status", {
+            .patch(`${config.VITE_SERVER_API}/change/trip/status`, {
               tripStatus,
               headers: {
                 authorization: `Bearer ${token}`,
@@ -78,7 +79,7 @@ export default function UserTrips() {
       if (user) {
         const token = await getIdToken(user);
         await axios
-          .get("http://localhost:8080/api/user/get_user_trips", {
+          .get(`${config.VITE_SERVER_API}/get_user_trips`, {
             params: {
               userid: user?._id,
             },
@@ -109,7 +110,7 @@ export default function UserTrips() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -138,8 +139,6 @@ export default function UserTrips() {
       });
     }
   };
-
-  console.log(filteredTripStatus);
 
   useEffect(() => {
     getUser();

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -26,7 +27,7 @@ export default function EditProfile() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -60,7 +61,7 @@ export default function EditProfile() {
       if (user) {
         const token = await getIdToken(user);
         await axios
-          .get("http://localhost:8080/api/user/user_group_info", {
+          .get(`${config.VITE_SERVER_API}/user_group_info`, {
             headers: {
               authorization: `Bearer ${token}`,
             },
@@ -116,7 +117,7 @@ export default function EditProfile() {
           e.preventDefault();
           // console.log(token);
           await axios
-            .post("http://localhost:8080/api/user/update_user", {
+            .post(`${config.VITE_SERVER_API}/update_user`, {
               first_name,
               last_name,
               bio,

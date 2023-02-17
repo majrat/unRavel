@@ -1,8 +1,9 @@
 import axios from "axios";
+import config from "../utils/constants";
 import Swal from "sweetalert2";
 
 export const getAllGroups = async () => {
-  const res = await axios.get("http://localhost:8080/api/user/get_all_groups");
+  const res = await axios.get(`${config.VITE_SERVER_API}/get_all_groups`);
   if (res?.data) {
     return res?.data;
   } else {
@@ -18,7 +19,7 @@ export const getAllGroups = async () => {
 
 export async function getCurrentGroup(link_group_id) {
   try {
-    const res = await axios.get("http://localhost:8080/api/user/get_group", {
+    const res = await axios.get(`${config.VITE_SERVER_API}/get_group`, {
       params: link_group_id,
     });
 

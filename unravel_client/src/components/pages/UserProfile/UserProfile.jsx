@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
+import config from "../../../utils/constants";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -18,7 +18,7 @@ export default function UserProfile() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get("http://localhost:8080/api/user", {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -53,7 +53,7 @@ export default function UserProfile() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get("http://localhost:8080/api/user/user_group_info", {
+            .get(`${config.VITE_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -180,12 +180,6 @@ export default function UserProfile() {
                 <span className="font-light">Last Name:</span>{" "}
                 <span className="text-gray-800 font-semibold sm:text-lg">
                   {user?.last_name}
-                </span>
-              </p>
-              <p className="flex m-5 justify-between">
-                <span className="font-light">Phone no:</span>{" "}
-                <span className="text-gray-800 font-semibold sm:text-lg">
-                  {user?.phone_no ? user?.phone_no : "---"}
                 </span>
               </p>
               <p className="flex m-5 justify-between">

@@ -1,8 +1,9 @@
 import axios from "axios";
+import config from "../utils/constants";
 import Swal from "sweetalert2";
 
 export const getTheTrip = async (link_trip_id) => {
-  const res = await axios.get("http://localhost:8080/api/user/get_the_trip", {
+  const res = await axios.get(`${config.VITE_SERVER_API}/get_the_trip`, {
     params: {
       tripId: link_trip_id,
     },
@@ -21,7 +22,7 @@ export const getTheTrip = async (link_trip_id) => {
 };
 
 export const getAllTrips = async (groupIds) => {
-  const res = await axios.get("http://localhost:8080/api/user/get_all_trips", {
+  const res = await axios.get(`${config.VITE_SERVER_API}/get_all_trips`, {
     params: {
       groupIds: groupIds,
     },

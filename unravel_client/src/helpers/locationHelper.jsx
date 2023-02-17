@@ -1,9 +1,8 @@
 import axios from "axios";
+import config from "../utils/constants";
 
 export async function getLocationsWithPhotos() {
-  const res = await axios.get(
-    "http://localhost:8080/api/user/get_all_location"
-  );
+  const res = await axios.get(`${config.VITE_SERVER_API}/get_all_location`);
 
   if (res.data) {
     return res.data.filter(

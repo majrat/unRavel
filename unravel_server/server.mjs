@@ -11,7 +11,7 @@ const server = http.createServer(app);
 
 db(config.MONGO_ATLAS_URI);
 
-app.use(cors({ origin: true }));
+app.use(cors({}));
 
 // fixing "413 Request Entity Too Large" errors
 app.use(express.json({ limit: "20mb" }));
