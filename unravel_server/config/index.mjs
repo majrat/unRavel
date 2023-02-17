@@ -2,6 +2,7 @@
 import dotenv from "dotenv";
 
 dotenv.config();
+const { privateKey } = JSON.parse(process.env.PRIVATE_KEY);
 
 export default {
   PEXELS_API: process.env.PEXELS_API,
@@ -11,7 +12,7 @@ export default {
   TYPE: process.env.TYPE,
   PROJECT_ID: process.env.PROJECT_ID,
   PRIVATE_KEY_ID: process.env.PRIVATE_KEY_ID,
-  PRIVATE_KEY: process.env.PRIVATE_KEY,
+  PRIVATE_KEY: privateKey,
   CLIENT_EMAIL: process.env.CLIENT_EMAIL,
   CLIENT_ID: process.env.CLIENT_ID,
   AUTH_URI: process.env.AUTH_URI,
