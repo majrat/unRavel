@@ -46,7 +46,6 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-react": "^7.32.1",
-    "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "postcss": "^8.4.21",
     "postcss-lit": "^1.0.1",
