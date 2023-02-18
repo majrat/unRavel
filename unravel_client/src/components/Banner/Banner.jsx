@@ -164,8 +164,8 @@ export default function Banner() {
                 });
               }
             });
-          if (req.data) {
-            setUser(req.data);
+          if (req?.data) {
+            setUser(req?.data);
           }
         }
       });

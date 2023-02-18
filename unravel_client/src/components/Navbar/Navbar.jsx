@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
 import config from "../../utils/constants";
 const navigation = [
@@ -213,7 +213,7 @@ export default function Navbar() {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 object-cover rounded-full"
-                            src={user?.profile_photo}
+                            src={user?.profile_photo || "/profile-setup.gif"}
                             alt="dp"
                           />
                         </Menu.Button>

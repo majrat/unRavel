@@ -213,7 +213,7 @@ export default function UserGroup() {
               (link_group_id === undefined ? (
                 <Link
                   to="/user/edit/group"
-                  className="sm:col-span-7 col-span-4 relative"
+                  className="left-0"
                   state={{ link_group_id: groups[0]?._id }}
                 >
                   <PencilSquareIcon
@@ -224,7 +224,7 @@ export default function UserGroup() {
               ) : (
                 <Link
                   to="/user/edit/group"
-                  className="sm:col-span-7 col-span-4 relative"
+                  className="left-0"
                   state={link_group_id}
                 >
                   {" "}
@@ -248,7 +248,7 @@ export default function UserGroup() {
                         <img
                           src={member?.profile_photo || "/profile-setup.gif"}
                           alt="dp"
-                          className="rounded-full mr-6 w-9 h-9"
+                          className="rounded-full mr-6 w-9 h-9 object-cover"
                         />
                         <p className="mt-1 mr-9 truncate">
                           {member?.first_name + " " + member?.last_name}
@@ -266,7 +266,7 @@ export default function UserGroup() {
                         <img
                           src={member?.profile_photo || "/profile-setup.gif"}
                           alt="dp"
-                          className="rounded-full mr-6 w-9 h-9"
+                          className="rounded-full mr-6 w-9 h-9 object-cover"
                         />
                         <p className="mt-1 mr-9 truncate">
                           {member?.first_name + " " + member?.last_name}

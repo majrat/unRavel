@@ -161,6 +161,12 @@ export default function EditGroup() {
         >
           <div className="sm:col-span-4 col-span-12 pt-6 sm:pt-0 bg-secondaryColor/50 backdrop-blur-md rounded">
             <div className="flex justify-center relative">
+              <label
+                htmlFor="profile_photo"
+                className="cursor-pointer opacity-100 bg-black/60 sm:opacity-0 sm:hover:opacity-100 absolute hover:bg-black/60 flex justify-center items-center font-bold text-3xl text-lightColor rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6"
+              >
+                Edit
+              </label>
               <img
                 className="rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6"
                 src={
@@ -169,11 +175,12 @@ export default function EditGroup() {
                 alt="dp"
               />
               <input
-                accept="image/*"
+                accept="image/png, image/gif, image/jpeg"
                 onChange={onUpload}
                 type="file"
+                id="profile_photo"
                 name="group_profile"
-                className="absolute sm:bottom-6 bottom-1 inset-x-1/2 file:rounded-full file:bg-primaryColor cursor-pointer text-truncate hover:file:bg-secondaryColor xl:w-44 w-20"
+                className="hidden"
               />
             </div>
             <div className="text-center">

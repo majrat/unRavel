@@ -136,7 +136,7 @@ const NewGroup = (props) => {
                     {...register("grpDesc", {
                       required: "username is required.",
                       pattern: {
-                        value: /^[a-zA-Z0-9 ]+$/,
+                        value: /^[a-zA-Z0-9'. ]+$/,
                         message:
                           "username should contain only characters and number.",
                       },

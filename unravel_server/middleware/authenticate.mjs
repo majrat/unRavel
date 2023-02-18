@@ -23,6 +23,7 @@ export default async function (req, res, next) {
       console.log("Unauthorized - no firebase user FOUND");
       return res.sendStatus(401);
     }
+    console.log(firebaseUser);
 
     const user = await userModel.findOne({
       firebase_id: firebaseUser.user_id,
@@ -30,6 +31,7 @@ export default async function (req, res, next) {
 
     if (!user) {
       // Unauthorized
+      console.log("inside !user ");
       return res.sendStatus(401);
     }
 

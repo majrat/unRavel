@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function EditProfile() {
   let navigate = useNavigate();
   const [groups, setGroups] = useState([]);
+  const [reRender, setReRender] = useState(false);
   const [user, setUser] = useState("");
   const [twitter, setTwitter] = useState("");
   const [facebook, setFacebook] = useState("");
@@ -103,10 +104,6 @@ export default function EditProfile() {
     setBio(e.target.value);
   };
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
   const profileUpdate = async (e) => {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -179,6 +176,7 @@ export default function EditProfile() {
   const onUpload = async (e) => {
     const base64 = await converToBase64(e.target.files[0]);
     setProfilePhoto(base64);
+    setReRender(!reRender);
   };
 
   useEffect(() => {
@@ -195,17 +193,19 @@ export default function EditProfile() {
         >
           <div className="p-4 md:col-span-4 col-span-12 relative bg-accentColor/30 backdrop-blur-md shadow-2xl">
             <div className="flex justify-center relative">
+              <label htmlFor="profile_photo" className="cursor-pointer opacity-0 hover:opacity-100 absolute hover:bg-black/60 flex justify-center items-center font-bold text-3xl text-lightColor rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6">Edit</label>
               <img
                 className="rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6"
-                src={user?.profile_photo || "/profile-setup.gif"}
+                src={profile_photo || user?.profile_photo || "/profile-setup.gif"}
                 alt="user_profile"
               />
               <input
-                accept="image/*"
+                accept="image/png, image/gif, image/jpeg"
                 onChange={onUpload}
                 type="file"
+                id="profile_photo"
                 name="profile_photo"
-                className="absolute bottom-6 inset-x-1/2 file:rounded-full file:bg-primaryColor cursor-pointer text-truncate hover:file:bg-secondaryColor xl:w-44 w-20"
+                className="hidden"
               />
             </div>
             <div className="text-center">
