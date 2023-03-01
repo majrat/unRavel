@@ -1,45 +1,51 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-const ChatBody = () => {
+const ChatBody = ({ messages, userName, lastMessageRef, group }) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
-    localStorage.removeItem("userName");
     navigate("/");
     window.location.reload();
   };
 
   return (
     <>
-      <header className="chat__mainHeader">
-        <p>Hangout with Colleagues</p>
-        <Link to="/" className="leaveChat__btn" onClick={handleLeaveChat}>
+      <header className="chat__mainHeader bg-primaryColor/50 rounded-md">
+        <div className="flex">
+          <img
+            src={group.group_profile}
+            className="w-12 rounded-full h-12"
+            alt=""
+          />
+          <p className="text-xl font-bold text-accentColor self-center ml-3">{group?.name}</p>
+        </div>
+        <button
+          className="leaveChat__btn rounded bg-orange-600/60 hover:bg-orange-600"
+          onClick={handleLeaveChat}
+        >
           LEAVE CHAT
-        </Link>
+        </button>
       </header>
 
-      {/*This shows messages sent from you*/}
       <div className="message__container">
-        <div className="message__chats">
-          <p className="sender__name">You</p>
-          <div className="message__sender">
-            <p>Hello there</p>
-          </div>
-        </div>
-
-        {/*This shows messages received by you*/}
-        <div className="message__chats">
-          <p>Other</p>
-          <div className="message__recipient">
-            <p>Hey, I'm good, you?</p>
-          </div>
-        </div>
-
-        {/*This is triggered when a user is typing*/}
-        <div className="message__status">
-          <p>Someone is typing...</p>
-        </div>
+        {messages.map((message) =>
+          message?.name === userName ? (
+            <div className="message__chats" key={message?.id}>
+              <p className="sender__name">You</p>
+              <div className="message__sender bg-accentColor text-lightColor">
+                <p>{message?.text}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="message__chats" key={message?.id}>
+              <p>{message?.name}</p>
+              <div className="message__recipient bg-secondaryColor">
+                <p>{message?.text}</p>
+              </div>
+            </div>
+          )
+        )}
+        <div ref={lastMessageRef} />
       </div>
     </>
   );

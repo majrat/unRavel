@@ -10,54 +10,17 @@ import { getCurrentGroup } from "../../../helpers/groupHelper";
 import { auth } from "../../../services/firebase";
 import Navbar from "../../Navbar/Navbar";
 
-const Group = () => {
+const Group = ({ user }) => {
   const [group, setGroup] = useState("");
   const [members, setMembers] = useState([]);
   const [reRender, setReRender] = useState(false);
   const [userFollowingGroups, setUserFollowingGroups] = useState([]);
-  const [user, setUser] = useState("");
 
   const location = useLocation();
   let link_group_id;
   if (location?.state !== null) {
     link_group_id = location?.state;
   }
-
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error?.response) {
-                Swal.fire({
-                  icon: "error",
-                  title: error.response.data,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-          if (req?.data) {
-            setUser(req?.data);
-          }
-        }
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  };
 
   const followGroup = async (selectedGroupId) => {
     console.log("follow Group..." + selectedGroupId);
@@ -189,9 +152,6 @@ const Group = () => {
     setUserFollowingGroups(user?.connections?.following?.groups);
   }
   console.log(userFollowingGroups);
-  useEffect(() => {
-    getUser();
-  }, [reRender]);
 
   useEffect(() => {
     console.log(getCurrentGroup(link_group_id));
@@ -207,7 +167,6 @@ const Group = () => {
 
   return (
     <>
-      <Navbar />
       <div className="absolute z-10 mt-24 w-full">
         <div className="grid h-96 grid-cols-12 sm:mx-16 mx-5 mt-1">
           <div className="sm:hidden sm:mt-0 mt-1 col-span-12 bg-lightColor/50 backdrop-blur-md rounded">

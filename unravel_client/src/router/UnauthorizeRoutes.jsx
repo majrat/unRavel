@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import HomePage from "../components/pages/Home";
+import HomePage from "../components/HomePage/HomePage";
 import VerifyEmailPage from "../components/Authentication/VerifyEmail";
 import Error404 from "../components/pages/404";
 import SignInPage from "../components/Authentication/SignIn";
@@ -13,6 +13,7 @@ import SecondStep from "../components/Authentication/SecondStep";
 import ThirdStep from "../components/Authentication/ThirdStep";
 import { useState } from "react";
 import LocationsPage from "../components/pages/Locations";
+import Navbar from "../components/Navbar/Navbar";
 
 export default function UnauthorizedRoutes(props) {
   const [user, setUser] = useState({});
@@ -26,6 +27,7 @@ export default function UnauthorizedRoutes(props) {
   };
   return (
     <Router>
+      <Navbar user={user} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/locations" element={<LocationsPage />} />
@@ -67,6 +69,6 @@ export default function UnauthorizedRoutes(props) {
         <Route path="/profile" element={<Navigate replace to="/signin" />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
-    </Router>      
+    </Router>
   );
 }

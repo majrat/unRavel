@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
@@ -9,8 +7,8 @@ import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import GoToChatWidget from "../../GroupChat/GoToChatWidget";
 
-export default function UserTrips() {
-  const [user, setUser] = useState("");
+export default function UserTrips({ user }) {
+  const [reRender, setReRender] = useState(false);
   const [currentTrip, setCurrentTrip] = useState([]);
   const [trips, setTrips] = useState([]);
   const [tripStatus, setTripStatus] = useState("");
@@ -30,23 +28,21 @@ export default function UserTrips() {
   if (location?.state !== null) {
     link_trip_id = location?.state.link_trip_id;
   }
-  console.log(link_trip_id);
-  console.log(tripStatus);
 
   const handleTripStatus = (e) => {
     setTripStatus(e.target.value);
   };
-
+  console.log(tripStatus);
   async function changeStatus() {
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          // setProfilePhoto(e.target.logo.files[0]);
 
           await axios
             .patch(`${config.VITE_SERVER_API}/change/trip/status`, {
               tripStatus,
+              tripId: currentTrip[0]?._id || trips[0]?._id,
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -60,7 +56,6 @@ export default function UserTrips() {
                 timer: 1500,
               });
               setReRender(!reRender);
-              // console.log("success");
             });
         }
       });
@@ -104,46 +99,6 @@ export default function UserTrips() {
     });
   };
 
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error.response) {
-                Swal.fire({
-                  icon: "error",
-                  title: error.response.data,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-          if (req.data) {
-            setUser(req.data);
-          }
-        }
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   useEffect(() => {
     SetIsTripCreatedUser(
       currentTrip[0]?.created_by?._id === user?._id ||
@@ -156,21 +111,21 @@ export default function UserTrips() {
           trips[0]?.trip_status !== filteredStatus
       )
     );
-  }, [currentTrip, trips]);
+  }, [currentTrip, trips, reRender, link_trip_id]);
 
   useEffect(() => {
     get_trips();
-  }, [user]);
+  }, [reRender, link_trip_id]);
 
-  console.log(currentTrip);
   useEffect(() => {
     setCurrentTrip(trips.filter((trip) => trip?._id === link_trip_id));
   }, [link_trip_id]);
 
   return (
     <>
-      <Navbar />
-      <GoToChatWidget userName={user?.first_name + " " + user?.last_name} />
+      <GoToChatWidget
+        group={currentTrip[0]?.group_id || trips[0]?.group_id}
+      />
 
       <div className="absolute z-10 w-full">
         <p className="Oswald-font mt-20 pt-1 bg-primaryColor/30 backdrop-blur-md sm:mx-16 mx-5 rounded font-bold text-center pb-2 text-lightColor ">
@@ -179,9 +134,9 @@ export default function UserTrips() {
         <div className="mx-5 rounded sm:mx-16 overflow-x-scroll flex backdrop-blur-xl bg-secondaryColor/30">
           {trips.map((trip) => (
             <Link
-              key={trip?._id}
+              key={trip._id}
               to="/user/trips"
-              state={{ link_trip_id: trip?._id }}
+              state={{ link_trip_id: trip._id }}
               className="w-32 m-2 flex flex-col justify-center rounded cursor-pointer hover:shadow-md hover:shadow-gray-600/50 shadow shadow-lightColor/10 h-12 bg-lightColor/50"
             >
               <p className="text-xs font-semibold pl-2 py-4 w-32 truncate hover:text-clip backdrop-blur-lg rounded text-gray-600">
@@ -194,7 +149,7 @@ export default function UserTrips() {
         <div className="sm:hidden flex col-span-7 w-44 lg:max-w-sm">
           Status:
           <select
-            onSelect={handleTripStatus}
+            onChange={handleTripStatus}
             className="h-8 w-52 mx-5 px-2 bg-accentColor/20 text-gray-600 mt-3 cursor-pointer rounded-md"
           >
             <option selected disabled>
@@ -243,25 +198,28 @@ export default function UserTrips() {
               </div>
             </div>
             <div className="hidden sm:block col-span-7 w-44 lg:max-w-sm">
-              <select
-                onSelect={handleTripStatus}
-                className="h-8 w-52 px-2 bg-accentColor/20 text-gray-600 absolute m-3 cursor-pointer rounded-md right-20 bottom-0"
-              >
-                <option selected disabled>
-                  {currentTrip[0]?.trip_status || trips[0]?.trip_status}
-                </option>
-                {IsTripCreatedUser &&
-                  filteredTripStatus?.map((status) => (
-                    <option value={status}>{status}</option>
-                  ))}
-              </select>
-              {IsTripCreatedUser && (
-                <p
-                  onClick={changeStatus}
-                  className="h-8 px-2 bg-accentColor/20 text-gray-600 absolute m-3 cursor-pointer rounded-md right-0 bottom-0"
-                >
-                  Save
-                </p>
+              {IsTripCreatedUser ? (
+                <>
+                  <select
+                    defaultValue={
+                      currentTrip[0]?.trip_status || trips[0]?.trip_status
+                    }
+                    onChange={handleTripStatus}
+                    className="h-8 w-52 px-2 bg-accentColor/20 text-gray-600 absolute m-3 cursor-pointer rounded-md right-20 bottom-0"
+                  >
+                    {filteredTripStatus?.map((status) => (
+                      <option value={status}>{status}</option>
+                    ))}
+                  </select>
+                  <p
+                    onClick={changeStatus}
+                    className="h-8 px-2 bg-accentColor/20 text-gray-600 absolute m-3 cursor-pointer rounded-md right-0 bottom-0"
+                  >
+                    Save
+                  </p>
+                </>
+              ) : (
+                <p>{currentTrip[0]?.trip_status || trips[0]?.trip_status}</p>
               )}
             </div>
           </div>

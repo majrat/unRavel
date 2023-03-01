@@ -1,4 +1,4 @@
-export default function HomePage() {
+export default function Locations() {
   return (
     <>
       <div id="parallax-world-of-ugg">

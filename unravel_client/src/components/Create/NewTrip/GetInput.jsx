@@ -39,7 +39,7 @@ const modes_of_travel = [
 const stays = ["Hotel", "Apartment", "Tent", "Not decided"];
 const foods = ["self cook", "restaurent", "Not decided"];
 
-const NewTrip = () => {
+const NewTrip = ({ user }) => {
   let navigate = useNavigate();
   let location = useLocation();
 
@@ -54,7 +54,6 @@ const NewTrip = () => {
   const [selectedFood, setSelectedFood] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDesc, setSelectedDesc] = useState("");
-  const [user, setUser] = useState({});
 
   const check_data = async () => {
     try {
@@ -69,32 +68,7 @@ const NewTrip = () => {
             })
             .then(async (res) => {
               if (res?.data.length !== 0) {
-                console.log(res);
                 setAllGroupsInfo(res.data);
-                onAuthStateChanged(auth, async (user) => {
-                  if (user) {
-                    const token = await getIdToken(user);
-                    const req = await axios
-                      .get(config.VITE_SERVER_API, {
-                        headers: {
-                          authorization: `Bearer ${token}`,
-                        },
-                      })
-                      .catch(function (error) {
-                        if (error.response) {
-                          Swal.fire({
-                            icon: "error",
-                            title: error.response.data,
-                            showConfirmButton: false,
-                            timer: 1500,
-                          });
-                        }
-                      });
-                    if (req.data) {
-                      setUser(req.data);
-                    }
-                  }
-                });
               } else {
                 Swal.fire({
                   title: "You don't have a group",
@@ -139,7 +113,6 @@ const NewTrip = () => {
       });
     }
   };
-  console.log(user?._id + "---------------" + allGroupsInfo?.group_admin);
 
   const newTrip = {};
 
@@ -156,7 +129,6 @@ const NewTrip = () => {
       other_details: newTrip?.other_details,
     },
   });
-  console.log(newTrip);
   const onSubmit = async (data) => {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -195,7 +167,6 @@ const NewTrip = () => {
   }, []);
   return (
     <>
-      <Navbar />
       <div className="grid grid-cols-12 bg-[url('/create_trip_bg.jpg')] h-screen bg-cover bg-center">
         <motion.div
           initial={{ x: "-100vw" }}

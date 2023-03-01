@@ -21,7 +21,6 @@ export default function EditGroup() {
   if (location?.state !== null) {
     link_group_id = location?.state;
   }
-  console.log(link_group_id);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -141,7 +140,6 @@ export default function EditGroup() {
     setGroupProfile(base64);
     setReRender(!reRender);
   };
-  console.log(group);
 
   useEffect(() => {
     getCurrentGroup();
@@ -149,7 +147,6 @@ export default function EditGroup() {
 
   return (
     <>
-      <Navbar />
       <div className="absolute z-10 w-full">
         <p className="Oswald-font mt-24 pt-1 bg-primaryColor/50 backdrop-blur-md sm:mx-16 mx-5 rounded text-center pb-2 text-lightColor ">
           <span className="font-bold link-warning cursor-pointer">Edit</span>

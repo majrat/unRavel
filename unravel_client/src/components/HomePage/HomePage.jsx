@@ -12,7 +12,7 @@ import { getLocationsWithPhotos } from "../../helpers/locationHelper";
 import { getAllGroups } from "../../helpers/groupHelper";
 import { getAllTrips } from "../../helpers/tripsHelper";
 
-export default function Banner() {
+export default function HomePage() {
   const [trips, setTrips] = useState([]);
   const [reRender, setReRender] = useState(false);
   const [groups, setGroups] = useState([]);
@@ -101,7 +101,6 @@ export default function Banner() {
   function Slide({ slide, offset }) {
     const active = offset === 0 ? true : null;
     const ref = useTilt(active);
-    console.log(slide);
 
     return (
       <div
@@ -575,7 +574,7 @@ export default function Banner() {
                     />
                   ) : (
                     <img
-                      src={trip?.trip_location?.images?.photos[0].src.medium}
+                      src={trip?.trip_location?.images?.photos[0].src.original}
                       alt={trip?.trip_location?.images?.photos[0].alt}
                       className="w-96 px-3 h-64 object-cover"
                     />

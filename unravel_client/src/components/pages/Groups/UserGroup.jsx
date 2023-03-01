@@ -8,9 +8,8 @@ import config from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function UserGroup() {
+export default function UserGroup({ user }) {
   const [groups, setGroups] = useState([]);
-  const [user, setUser] = useState("");
   const [currentGroup, setCurrentGroup] = useState([]);
   const [currentTrip, setCurrentTrip] = useState([]);
   const [firstGroupTrip, setFirstGroupTrip] = useState([]);
@@ -23,7 +22,6 @@ export default function UserGroup() {
   if (location?.state !== null) {
     link_group_id = location?.state;
   }
-  console.log(link_group_id);
 
   function get_groups_ids() {
     setGroupIds(groups.map((group) => group._id));
@@ -51,41 +49,6 @@ export default function UserGroup() {
       });
   };
 
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error.response) {
-                Swal.fire({
-                  icon: "error",
-                  title: error.response.data,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-          if (req.data) {
-            setUser(req.data);
-          }
-        }
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  };
   const get_groups = async () => {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -123,11 +86,9 @@ export default function UserGroup() {
   };
 
   useEffect(() => {
-    getUser();
     get_groups();
   }, []);
 
-  console.log(groups);
 
   useEffect(() => {
     get_groups_ids();
@@ -163,7 +124,6 @@ export default function UserGroup() {
 
   return (
     <>
-      <Navbar />
       <div className="absolute z-10 w-full">
         <p className="Oswald-font mt-20 pt-1 bg-primaryColor/30 backdrop-blur-md sm:mx-16 mx-5 rounded font-bold text-center pb-2 text-lightColor ">
           My groups

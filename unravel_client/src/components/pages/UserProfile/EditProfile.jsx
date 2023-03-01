@@ -9,81 +9,16 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export default function EditProfile() {
+export default function EditProfile({ user }) {
   let navigate = useNavigate();
-  const [groups, setGroups] = useState([]);
   const [reRender, setReRender] = useState(false);
-  const [user, setUser] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [bio, setBio] = useState("");
-  const [profile_photo, setProfilePhoto] = useState("");
-
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              }
-            });
-          if (req.data) {
-            setUser(req?.data);
-            setTwitter(req?.data?.social_media?.twitter);
-            setFacebook(req?.data?.social_media?.facebook);
-            setInstagram(req?.data?.social_media?.instagram);
-            setFirstName(req?.data?.first_name);
-            setLastName(req?.data?.last_name);
-            setBio(req?.data?.bio);
-            setProfilePhoto(req?.data?.profile_photo);
-          }
-        }
-      });
-    } catch (err) {
-      console.error("User might be logged out --" + err);
-    }
-  };
-
-  const get_groups = async () => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token = await getIdToken(user);
-        await axios
-          .get(`${config.VITE_SERVER_API}/user_group_info`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            if (res?.data) {
-              setGroups(res?.data);
-              console.log(res.data);
-            } else {
-              Swal.fire({
-                title: "No trips found in the database",
-                text: "No trips data found. Database empty",
-                icon: "warning",
-                allowOutsideClick: false,
-                confirmButtonColor: "#3085d6",
-              });
-            }
-          });
-      }
-    });
-  };
+  const [twitter, setTwitter] = useState(user?.social_media?.twitter);
+  const [facebook, setFacebook] = useState(user?.social_media?.facebook);
+  const [instagram, setInstagram] = useState(user?.social_media?.instagram);
+  const [first_name, setFirstName] = useState(user?.first_name);
+  const [last_name, setLastName] = useState(user?.last_name);
+  const [bio, setBio] = useState(user?.bio);
+  const [profile_photo, setProfilePhoto] = useState(user?.profile_photo);
 
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
@@ -179,13 +114,8 @@ export default function EditProfile() {
     setReRender(!reRender);
   };
 
-  useEffect(() => {
-    getUser();
-    get_groups();
-  }, []);
   return (
     <>
-      <Navbar />
       <div className="justify-center flex">
         <form
           className="md:m-24 pt-24 sm:pt-0 sm:h-0 h-screen mx-2 grid grid-cols-12 sm:w-10/12 absolute z-10"
@@ -193,10 +123,17 @@ export default function EditProfile() {
         >
           <div className="p-4 md:col-span-4 col-span-12 relative bg-accentColor/30 backdrop-blur-md shadow-2xl">
             <div className="flex justify-center relative">
-              <label htmlFor="profile_photo" className="cursor-pointer opacity-0 hover:opacity-100 absolute hover:bg-black/60 flex justify-center items-center font-bold text-3xl text-lightColor rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6">Edit</label>
+              <label
+                htmlFor="profile_photo"
+                className="cursor-pointer opacity-0 hover:opacity-100 absolute hover:bg-black/60 flex justify-center items-center font-bold text-3xl text-lightColor rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6"
+              >
+                Edit
+              </label>
               <img
                 className="rounded-full w-32 h-40 object-cover sm:m-6 sm:mx-0 mx-6"
-                src={profile_photo || user?.profile_photo || "/profile-setup.gif"}
+                src={
+                  profile_photo || user?.profile_photo || "/profile-setup.gif"
+                }
                 alt="user_profile"
               />
               <input

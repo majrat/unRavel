@@ -1,15 +1,11 @@
 import unravel_logo from "/unravel.svg";
-import { useEffect, useState } from "react";
 import { auth } from "../../services/firebase";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getIdToken, onAuthStateChanged, signOut } from "firebase/auth";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Swal from "sweetalert2";
-import config from "../../utils/constants";
+import { signOut } from "firebase/auth";
 const navigation = [
   { name: "Search", to: "/", current: false },
   { name: "Locations", to: "/locations", current: false },
@@ -20,53 +16,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   const authorized = useSelector((state) => state.authorizer.authorized);
-  const [user, setUser] = useState("");
-
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error?.response) {
-                Swal.fire({
-                  icon: "error",
-                  title: error?.response.data,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-          if (req?.data) {
-            setUser(req?.data);
-          }
-        }
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  };
 
   const logUserOut = async () => {
     await signOut(auth);
   };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <div className="justify-center flex">

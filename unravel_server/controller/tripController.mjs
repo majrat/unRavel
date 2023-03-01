@@ -146,12 +146,12 @@ export default {
 
   change_status: async (req, res) => {
     const tripStatus = req?.body?.tripStatus;
-    const userId = req.user._id;
+    const tripId = req?.body?.tripId;
 
-    console.log(tripStatus);
+    console.log("tripStatus-----", tripStatus);
 
     await tripsModel
-      .updateOne({ created_by: userId }, { $set: { trip_status: tripStatus } })
+      .updateOne({ _id: tripId }, { $set: { trip_status: tripStatus } })
       .then(
         res.status(200).json({ success: "successfully changed trip status" })
       )

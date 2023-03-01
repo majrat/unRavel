@@ -8,13 +8,52 @@ import {
   setAuthorized,
   setUnauthorized,
 } from "./features/authorizer/authorizerSlice";
-import { onAuthStateChanged } from "firebase/auth";
+import { getIdToken, onAuthStateChanged } from "firebase/auth";
+import axios from "axios";
+import Swal from "sweetalert2";
+import config from "./utils/constants";
 
 function App() {
-  console.log(import.meta.env.VITE_API_KEY);
   const [loading, setLoading] = useState(true);
   const authorized = useSelector((state) => state.authorizer.authorized);
   const dispatch = useDispatch();
+  const [user, setUser] = useState("");
+
+  const getUser = async () => {
+    try {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const token = await getIdToken(user);
+          const req = await axios
+            .get(config.VITE_SERVER_API, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            })
+            .catch(function (error) {
+              if (error?.response) {
+                Swal.fire({
+                  icon: "error",
+                  title: error?.response.data,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
+            });
+          if (req?.data) {
+            setUser(req?.data);
+          }
+        }
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "User might be logged out --" + err,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
 
   const authStateListener = () => {
     onAuthStateChanged(auth, (user) => {
@@ -30,6 +69,10 @@ function App() {
   };
 
   useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
     authStateListener();
   }, [authStateListener]);
 
@@ -38,7 +81,7 @@ function App() {
       {loading ? (
         <div className="circle-ripple unravel_loading"></div>
       ) : authorized ? (
-        <AuthorizedRoutes />
+        <AuthorizedRoutes user={user} />
       ) : (
         <UnauthorizedRoutes />
       )}

@@ -67,14 +67,17 @@ export default function SignInPage(props) {
 
   return (
     <>
-      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12 mt-24 sm:mt-11 h-[70vh]">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
           className="sm:col-span-5 col-span-12 mt-11 justify-center items-center flex flex-col"
         >
-          <Link className="items-center nav-btn flex flex-col cursor-pointer" to="/">
+          <Link
+            className="items-center nav-btn flex flex-col cursor-pointer"
+            to="/"
+          >
             <img
               className="sm:w-36 hover:shadow-lg rounded-lg transition-all"
               src="/unravel.svg"
@@ -110,7 +113,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input sm:mr-56"
+                      className="form--input"
                       type="email"
                       name="email"
                       value={fields.email}
@@ -127,7 +130,7 @@ export default function SignInPage(props) {
                   </div>
                   <div>
                     <input
-                      className="form--input sm:mr-56"
+                      className="form--input"
                       type="password"
                       name="password"
                       value={fields.password}

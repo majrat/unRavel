@@ -1,3 +1,4 @@
+import chatModel from "../model/chat.mjs";
 import groupModel from "../model/group.mjs";
 
 export default {
@@ -138,5 +139,13 @@ export default {
         console.log(err);
         res.status(500).json(`No groups found or ${err}`);
       });
+  },
+  groupChat: async (req, res) => {
+    try {
+      const result = await chatModel.findOne({ groupId: req.query.room });
+      res.send(result);
+    } catch (e) {
+      res.status(500).send({ message: e.message });
+    }
   },
 };

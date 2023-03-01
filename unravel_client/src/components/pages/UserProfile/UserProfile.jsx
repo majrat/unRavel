@@ -9,44 +9,8 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
 
-export default function UserProfile() {
+export default function UserProfile({ user }) {
   const [groups, setGroups] = useState([]);
-  const [user, setUser] = useState("");
-  const getUser = async () => {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const token = await getIdToken(user);
-          const req = await axios
-            .get(config.VITE_SERVER_API, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .catch(function (error) {
-              if (error.response) {
-                Swal.fire({
-                  icon: "error",
-                  title: error.response.data,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
-          if (req.data) {
-            setUser(req.data);
-          }
-        }
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "User might be logged out --" + err,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  };
   const get_groups = async () => {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -61,7 +25,6 @@ export default function UserProfile() {
             .then((res) => {
               if (res?.data) {
                 setGroups(res?.data);
-                console.log(res.data);
               } else {
                 Swal.fire({
                   title: "No trips found in the database",
@@ -84,15 +47,11 @@ export default function UserProfile() {
     }
   };
 
-  console.log(groups);
-
   useEffect(() => {
-    getUser();
     get_groups();
   }, []);
   return (
     <>
-      <Navbar />
       <div className="justify-center flex">
         <div className="md:m-24 mt-24 mx-2 grid grid-cols-12 w-10/12 absolute z-10">
           <div className="p-4 md:col-span-4 col-span-12 relative bg-accentColor/30 backdrop-blur-md shadow-2xl">

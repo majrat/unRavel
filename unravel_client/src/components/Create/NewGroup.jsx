@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import Swal from "sweetalert2";
 
-const NewGroup = (props) => {
+const NewGroup = () => {
   let navigate = useNavigate();
 
   const group = {};
@@ -68,7 +68,6 @@ const NewGroup = (props) => {
   };
   return (
     <>
-      <Navbar />
       <div className="bg-[url('/create_group_bg.jpg')] h-screen bg-cover sm:bg-center bg-right">
         <div className="sm:left-28 sm:top-28 top-36 sm:mx-0 mx-3 backdrop-blur-sm bg-secondaryColor/50 shadow-lg shadow-black/70 rounded-md absolute">
           <motion.div

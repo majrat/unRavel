@@ -241,7 +241,6 @@ export default function Trips() {
 
   return (
     <>
-      <Navbar />
       <section className="sm:mx-16 mx-5 mt-20">
         <div className="relative">
           {" "}
@@ -254,7 +253,9 @@ export default function Trips() {
             <div className="absolute sm:flex sm:items-end sm:text-left text-center p-2 sm:bottom-0">
               <img
                 className="w-20 rounded-full ml-7 h-20"
-                src={trip?.group_id?.group_profile}
+                src={
+                  trip?.group_id?.group_profile || "/group_default_profile.jpg"
+                }
                 alt="dp"
               />
               <div className="cursor-default sm:m-2 text-lg">
@@ -269,6 +270,31 @@ export default function Trips() {
                 </span>
               </div>
             </div>
+
+            {trip?.group_id?.members?.find((member) => user?._id === member) ===
+            user?._id ? (
+              trip?.participants?.some(
+                (participant) => user?._id === participant?._id
+              ) ? (
+                <p className="absolute cursor-default sm:left-auto left-0 -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md opacity-60 px-5 py-1 bg-secondaryColor">
+                  You joined the trip
+                </p>
+              ) : (
+                <p
+                  onClick={() => joinTrip()}
+                  className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-28 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                >
+                  Join Trip
+                </p>
+              )
+            ) : (
+              <p
+                onClick={() => joinGroup(trip?.group_id?._id)}
+                className="absolute cursor-pointer right-0 bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+              >
+                join Group
+              </p>
+            )}
             {userFollowingGroups?.find(
               (followingGroup) => followingGroup === trip?.group_id?._id
             ) === trip?.group_id?._id ? (
@@ -284,30 +310,6 @@ export default function Trips() {
                 className="absolute right-0 cursor-pointer bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
               >
                 Follow
-              </p>
-            )}
-            {trip?.group_id?.members?.find((member) => user?._id === member) ===
-            user?._id ? (
-              trip?.participants?.some(
-                (participant) => user?._id === participant?._id
-              ) ? (
-                <p className="absolute cursor-default sm:left-[31rem] left-0 -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md opacity-60 px-5 py-1 bg-secondaryColor">
-                  You joined the trip
-                </p>
-              ) : (
-                <p
-                  onClick={() => joinTrip()}
-                  className="absolute cursor-pointer left-0 -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
-                >
-                  Join Trip
-                </p>
-              )
-            ) : (
-              <p
-                onClick={() => joinGroup(trip?.group_id?._id)}
-                className="absolute cursor-pointer right-0 bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
-              >
-                join Group
               </p>
             )}
           </div>

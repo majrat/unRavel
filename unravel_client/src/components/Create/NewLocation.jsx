@@ -62,7 +62,6 @@ export default function NewLocation() {
           isoCode,
           name,
         }));
-        console.log({ allStates });
         const [{ isoCode: firstState = "" } = {}] = allStates;
         setCities([]);
         setSelectedCity("");
@@ -152,7 +151,6 @@ export default function NewLocation() {
 
   return (
     <>
-      <Navbar />
       <motion.div
         initial={{ x: "100vw" }}
         animate={{ x: 0 }}

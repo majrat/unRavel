@@ -16,6 +16,7 @@ router.get("/get_all_trips", tripController.get_all_trips);
 router.get("/get_the_trip", tripController.get_the_trip);
 router.get("/get_user_trips", authenticate, tripController.get_user_trips);
 router.get("/get_group", groupController.get_group);
+router.get("/chats", groupController.groupChat);
 
 router.post("/", signupController.sign_up);
 router.post("/update_user", authenticate, userController.update_user);
