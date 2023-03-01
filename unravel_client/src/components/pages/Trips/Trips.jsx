@@ -282,7 +282,7 @@ export default function Trips() {
               ) : (
                 <p
                   onClick={() => joinTrip()}
-                  className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-28 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                  className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
                 >
                   Join Trip
                 </p>
@@ -290,7 +290,7 @@ export default function Trips() {
             ) : (
               <p
                 onClick={() => joinGroup(trip?.group_id?._id)}
-                className="absolute cursor-pointer right-0 bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
               >
                 join Group
               </p>

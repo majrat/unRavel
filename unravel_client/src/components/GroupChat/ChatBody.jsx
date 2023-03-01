@@ -5,7 +5,6 @@ const ChatBody = ({ messages, userName, lastMessageRef, group }) => {
 
   const handleLeaveChat = () => {
     navigate("/");
-    window.location.reload();
   };
 
   return (

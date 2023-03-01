@@ -310,7 +310,7 @@ export default function EditProfile({ user }) {
         </form>
       </div>
       <img
-        className="object-center h-screen object-cover w-screen blur-md z-0"
+        className="object-center h-[110vh] object-cover w-screen blur-md z-0"
         src={user?.profile_photo}
         alt=""
       />

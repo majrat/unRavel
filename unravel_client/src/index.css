@@ -531,9 +531,9 @@ canvas {
   background-repeat: no-repeat;
   background-position: center;
   align-items: center;
-  display: flex;
+  /* display: flex; */
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-y: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
