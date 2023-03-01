@@ -225,11 +225,10 @@ export default function Trips() {
       }
     }
   }
-  console.log(trip);
 
   useEffect(() => {
     getTheTrip(link_trip_id).then((data) => setTrip(data));
-  }, [link_trip_id, reRender]);
+  }, [link_trip_id, location, reRender]);
 
   useEffect(() => {
     getUser();
@@ -241,132 +240,144 @@ export default function Trips() {
 
   return (
     <>
-      <section className="sm:mx-16 mx-5 mt-20">
-        <div className="relative">
-          {" "}
-          <img
-            className="absolute h-48 w-screen object-cover"
-            src={trip?.trip_location?.images?.photos[0]?.src?.original}
-            alt="img"
-          />
-          <div className="relative h-48 flex justify-center sm:justify-start backdrop-blur-sm bg-primaryColor/60">
-            <div className="absolute sm:flex sm:items-end sm:text-left text-center p-2 sm:bottom-0">
+      {!trip || trip.length === 0 ? (
+        <div className="circle-ripple unravel_loading"></div>
+      ) : (
+        <>
+          <section className="sm:mx-16 mx-5 mt-20">
+            <div className="relative">
+              {" "}
               <img
-                className="w-20 rounded-full ml-7 h-20"
-                src={
-                  trip?.group_id?.group_profile || "/group_default_profile.jpg"
-                }
-                alt="dp"
+                className="absolute h-48 w-screen object-cover"
+                src={trip?.trip_location?.images?.photos[0]?.src?.original}
+                alt="img"
               />
-              <div className="cursor-default sm:m-2 text-lg">
-                <p> {trip?.group_id?.name}</p>
-                <span className="text-xs">
-                  {" "}
-                  {trip?.group_id?.members.length + " members"}
-                </span>
-                <span className="text-xs">
-                  {" "}
-                  {trip?.group_id?.followers.length + " followers"}
-                </span>
+              <div className="relative h-48 flex justify-center sm:justify-start backdrop-blur-sm bg-primaryColor/60">
+                <div className="absolute sm:flex sm:items-end sm:text-left text-center p-2 sm:bottom-0">
+                  <img
+                    className="w-20 rounded-full ml-7 h-20"
+                    src={
+                      trip?.group_id?.group_profile ||
+                      "/group_default_profile.jpg"
+                    }
+                    alt="dp"
+                  />
+                  <div className="cursor-default sm:m-2 text-lg">
+                    <p> {trip?.group_id?.name}</p>
+                    <span className="text-xs">
+                      {" "}
+                      {trip?.group_id?.members.length + " members"}
+                    </span>
+                    <span className="text-xs">
+                      {" "}
+                      {trip?.group_id?.followers.length + " followers"}
+                    </span>
+                  </div>
+                </div>
+
+                {trip?.group_id?.members?.find(
+                  (member) => user?._id === member
+                ) === user?._id ? (
+                  trip?.participants?.some(
+                    (participant) => user?._id === participant?._id
+                  ) ? (
+                    <p className="absolute cursor-default sm:left-auto left-0 -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md opacity-60 px-5 py-1 bg-secondaryColor">
+                      You joined the trip
+                    </p>
+                  ) : (
+                    <p
+                      onClick={() => joinTrip()}
+                      className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                    >
+                      Join Trip
+                    </p>
+                  )
+                ) : (
+                  <p
+                    onClick={() => joinGroup(trip?.group_id?._id)}
+                    className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                  >
+                    join Group
+                  </p>
+                )}
+                {userFollowingGroups?.find(
+                  (followingGroup) => followingGroup === trip?.group_id?._id
+                ) === trip?.group_id?._id ? (
+                  <p
+                    onClick={() => unFollowGroup(trip?.group_id?._id)}
+                    className="absolute right-0 cursor-pointer bottom-0 m-4 rounded-md hover:bg-lightColor opacity-60 px-5 py-1 bg-gray-400"
+                  >
+                    Following
+                  </p>
+                ) : (
+                  <p
+                    onClick={() => followGroup(trip?.group_id?._id)}
+                    className="absolute right-0 cursor-pointer bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
+                  >
+                    Follow
+                  </p>
+                )}
               </div>
             </div>
-
-            {trip?.group_id?.members?.find((member) => user?._id === member) ===
-            user?._id ? (
-              trip?.participants?.some(
-                (participant) => user?._id === participant?._id
-              ) ? (
-                <p className="absolute cursor-default sm:left-auto left-0 -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md opacity-60 px-5 py-1 bg-secondaryColor">
-                  You joined the trip
-                </p>
-              ) : (
-                <p
-                  onClick={() => joinTrip()}
-                  className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
-                >
-                  Join Trip
-                </p>
-              )
-            ) : (
-              <p
-                onClick={() => joinGroup(trip?.group_id?._id)}
-                className="absolute cursor-pointer left-0 sm:left-auto -bottom-1 sm:right-32 sm:bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
-              >
-                join Group
+            <div className="cursor-default px-3 font-mono md:text-2xl sm:px-20 py-10 rounded-md bg-primaryColor/30 shadow-lg">
+              <p className="text-gray-500 flex justify-between ">
+                <span className="text-lg text-gray-400 ">Created by: </span>
+                {trip?.created_by?.first_name +
+                  " " +
+                  trip?.created_by?.last_name}
               </p>
-            )}
-            {userFollowingGroups?.find(
-              (followingGroup) => followingGroup === trip?.group_id?._id
-            ) === trip?.group_id?._id ? (
-              <p
-                onClick={() => unFollowGroup(trip?.group_id?._id)}
-                className="absolute right-0 cursor-pointer bottom-0 m-4 rounded-md hover:bg-lightColor opacity-60 px-5 py-1 bg-gray-400"
-              >
-                Following
+              <p className="text-gray-500 flex justify-between ">
+                <span className="text-lg text-gray-400 ">Type: </span>
+                {trip?.trip_type}
+              </p>{" "}
+              <p className="text-gray-500 flex justify-between ">
+                <span className="text-lg text-gray-400 "> trip location: </span>
+                {trip?.trip_location?.address?.spot}
+              </p>{" "}
+              <p className="text-gray-500 flex justify-between ">
+                <span className="text-lg text-gray-400 "> Date: </span>
+                {moment(trip?.starting_date).format("MMM Do YY")}
               </p>
-            ) : (
-              <p
-                onClick={() => followGroup(trip?.group_id?._id)}
-                className="absolute right-0 cursor-pointer bottom-0 m-4 rounded-md hover:bg-secondaryColor opacity-60 px-5 py-1 bg-lightColor"
-              >
-                Follow
+              <p className="text-gray-500 flex justify-between ">
+                <span className="text-lg text-gray-400 ">Mode of travel: </span>{" "}
+                {trip?.mode_of_travel}{" "}
               </p>
-            )}
-          </div>
-        </div>
-        <div className="cursor-default px-3 font-mono md:text-2xl sm:px-20 py-10 rounded-md bg-primaryColor/30 shadow-lg">
-          <p className="text-gray-500 flex justify-between ">
-            <span className="text-lg text-gray-400 ">Created by: </span>
-            {trip?.created_by?.first_name + " " + trip?.created_by?.last_name}
-          </p>
-          <p className="text-gray-500 flex justify-between ">
-            <span className="text-lg text-gray-400 ">Type: </span>
-            {trip?.trip_type}
-          </p>{" "}
-          <p className="text-gray-500 flex justify-between ">
-            <span className="text-lg text-gray-400 "> trip location: </span>
-            {trip?.trip_location?.address?.spot}
-          </p>{" "}
-          <p className="text-gray-500 flex justify-between ">
-            <span className="text-lg text-gray-400 "> Date: </span>
-            {moment(trip?.starting_date).format("MMM Do YY")}
-          </p>
-          <p className="text-gray-500 flex justify-between ">
-            <span className="text-lg text-gray-400 ">Mode of travel: </span>{" "}
-            {trip?.mode_of_travel}{" "}
-          </p>
-          <p className="flex justify-between">
-            <span className="text-lg text-gray-400 ">status: </span>{" "}
-            <span className="text-gray-500"> {trip?.trip_status}</span>
-          </p>
-        </div>
-        <div className="cursor-default font-mono sm:px-20 my-3 py-10 px-3 rounded-md bg-primaryColor/30 shadow-lg">
-          <h2 className="underline mb-2 text-lg text-gray-600">Trip members</h2>
-          <div className="max-h-36 overflow-y-scroll">
-            {trip?.participants?.map((participant, i) => (
-              <p
-                key={participant?._id}
-                className="text-gray-500 flex justify-between "
-              >
-                {i + 1 + " "}
-                {participant?.first_name + " " + participant?.last_name}
+              <p className="flex justify-between">
+                <span className="text-lg text-gray-400 ">status: </span>{" "}
+                <span className="text-gray-500"> {trip?.trip_status}</span>
               </p>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="bg-accentColor/30 sm:mx-16 mx-5 my-2 mb-10 rounded">
-        <div className="flex overflow-x-scroll overflow-y-hidden h-full rounded-lg">
-          {trip?.trip_location?.images?.photos.map((photo) => (
-            <img
-              key={photo?.src?.original}
-              src={photo?.src?.original}
-              className="w-96 h-96 object-cover m-3 rounded-xl"
-              alt="img"
-            />
-          ))}
-        </div>
-      </section>
+            </div>
+            <div className="cursor-default font-mono sm:px-20 my-3 py-10 px-3 rounded-md bg-primaryColor/30 shadow-lg">
+              <h2 className="underline mb-2 text-lg text-gray-600">
+                Trip members
+              </h2>
+              <div className="max-h-36 overflow-y-scroll">
+                {trip?.participants?.map((participant, i) => (
+                  <p
+                    key={participant?._id}
+                    className="text-gray-500 flex justify-between "
+                  >
+                    {i + 1 + " "}
+                    {participant?.first_name + " " + participant?.last_name}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section className="bg-accentColor/30 sm:mx-16 mx-5 my-2 mb-10 rounded">
+            <div className="flex overflow-x-scroll overflow-y-hidden h-full rounded-lg">
+              {trip?.trip_location?.images?.photos.map((photo) => (
+                <img
+                  key={photo?.src?.original}
+                  src={photo?.src?.original}
+                  className="w-96 h-96 object-cover m-3 rounded-xl"
+                  alt="img"
+                />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
     </>
   );
 }
