@@ -125,9 +125,6 @@ export default {
   },
 
   get_group: async (req, res) => {
-    console.log("Getting group data...");
-
-    // const updated_date = Date.now();
     const groupId = req?.query?.link_group_id;
     await groupModel
       .findOne({ _id: groupId })

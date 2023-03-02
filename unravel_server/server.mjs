@@ -27,12 +27,11 @@ io.on("connection", (socket) => {
 
   //sends the message to all the users on the server
   socket.on("message", async (data) => {
-    console.log("data===>>", data);
     const IsNewChat = await chatModel.findOne({ groupId: data.groupId });
-
+    const timestamp = Date.now();
     if (!IsNewChat) {
       const saveMsg = new chatModel({
-        messages: [{ from: data.from, message: data.text }],
+        messages: [{ from: data.from, message: data.text, timestamp }],
         groupId: data.groupId,
       });
       await saveMsg
@@ -51,6 +50,7 @@ io.on("connection", (socket) => {
             messages: {
               message: data.text,
               from: data.from,
+              timestamp,
             },
           },
         }

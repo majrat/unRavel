@@ -28,7 +28,7 @@ const ChatPage = ({ user }) => {
           params: { groupId: group._id },
         })
         .then((res) => {
-          setMessages(res.data.messages);
+          setMessages(res?.data?.messages);
         });
     }
   }
@@ -50,7 +50,7 @@ const ChatPage = ({ user }) => {
           userId={userId}
           lastMessageRef={lastMessageRef}
         />
-        <ChatFooter socket={socket} userId={userId} group={group} />
+        <ChatFooter socket={socket} messages={messages} userId={userId} group={group} />
       </div>
     </div>
   );

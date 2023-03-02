@@ -252,7 +252,7 @@ export default function UserTrips({ user }) {
                                 "/profile-setup.gif"
                               }
                               alt="dp"
-                              className="rounded-full mr-6 w-9 h-9"
+                              className="rounded-full mr-6 w-9 h-9 object-cover"
                             />
                             <p className="mt-1 mr-9 truncate">
                               {participant?.first_name +

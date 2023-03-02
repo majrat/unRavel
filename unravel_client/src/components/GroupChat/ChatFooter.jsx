@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ChatFooter = ({ socket, userId, group }) => {
+const ChatFooter = ({ socket, userId, group, messages }) => {
   const [message, setMessage] = useState("");
 
   const handleSendMessage = (e) => {
@@ -15,6 +15,9 @@ const ChatFooter = ({ socket, userId, group }) => {
       });
     }
     setMessage("");
+    if (!messages) {
+      window.location.reload();
+    }
   };
   return (
     <div className="chat__footer sm:h-[10vh] h-[7vh] rounded-md">
