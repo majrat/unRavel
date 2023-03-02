@@ -7,7 +7,6 @@ import axios from "axios";
 import config from "../../utils/constants";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import Navbar from "../Navbar/Navbar";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../services/firebase";
 
@@ -18,7 +17,6 @@ export default function NewLocation() {
   });
   const handleChange = (e) => {
     setPositionInfos({ ...positionInfos, [e.target.name]: e.target.value });
-    console.log(positionInfos);
   };
 
   let navigate = useNavigate();

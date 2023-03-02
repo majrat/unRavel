@@ -58,11 +58,11 @@ function App() {
   const authStateListener = () => {
     onAuthStateChanged(auth, (user) => {
       if (!user || !user.emailVerified) {
-        console.log("==================Unauthorized=============");
+        console.log("User Unauthorized");
         setLoading(false);
         return dispatch(setUnauthorized());
       }
-      console.log("==================Authorized=============");
+      console.log("User Authorized");
       setLoading(false);
       return dispatch(setAuthorized());
     });

@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
@@ -38,7 +36,6 @@ export default function EditGroup() {
           // setProfilePhoto(e.target.logo.files[0]);
 
           e.preventDefault();
-          // console.log(token);
           await axios
             .patch(`${config.VITE_SERVER_API}/group`, {
               name,
@@ -57,7 +54,6 @@ export default function EditGroup() {
                 showConfirmButton: false,
                 timer: 1500,
               }).then(setReRender(!reRender));
-              // console.log("success");
             })
             .catch((error) =>
               Swal.fire({
@@ -76,7 +72,6 @@ export default function EditGroup() {
           title: "Oops...",
           text: err.response.data,
         });
-        console.log("error", err.response.data);
       }
     }
   };

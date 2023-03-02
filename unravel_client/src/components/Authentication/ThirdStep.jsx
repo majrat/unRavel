@@ -60,7 +60,6 @@ const ThirdStep = (props) => {
           isoCode,
           name,
         }));
-        console.log({ allStates });
         const [{ isoCode: firstState = "" } = {}] = allStates;
         setCities([]);
         setSelectedCity("");

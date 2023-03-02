@@ -15,7 +15,6 @@ function VerifyEmail() {
   const [time, setTime] = useState(60);
   const [userUid, setUserUid] = useState("");
   const currentUser = useSelector((state) => state.currentUser.currentUserInfo);
-  console.log("currentUser ===> " + JSON.stringify(currentUser));
   const timeActive = useSelector((state) => state.timerActivator.timerActive);
   const navigate = useNavigate();
   const dispatch = useDispatch();

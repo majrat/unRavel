@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import config from "../../utils/constants";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";

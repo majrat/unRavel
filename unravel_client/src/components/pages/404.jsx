@@ -1,4 +1,3 @@
-import Navbar from "../Navbar/Navbar";
 
 export default function Error404({ login }) {
   return (

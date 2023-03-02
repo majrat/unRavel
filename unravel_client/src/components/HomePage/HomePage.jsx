@@ -179,7 +179,6 @@ export default function HomePage() {
     }
   };
   const followGroup = async (selectedGroupId) => {
-    console.log("follow Group..." + selectedGroupId);
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {

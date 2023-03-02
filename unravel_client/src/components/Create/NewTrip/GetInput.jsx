@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Navbar from "../../Navbar/Navbar";
 import axios from "axios";
 import config from "../../../utils/constants";
 import { useState } from "react";
@@ -134,7 +133,6 @@ const NewTrip = ({ user }) => {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          console.log(token);
           await axios
             .post(`${config.VITE_SERVER_API}/create_new_trip`, {
               headers: {
@@ -144,10 +142,8 @@ const NewTrip = ({ user }) => {
             })
             .then(() => {
               navigate("/");
-              console.log("success");
             })
             .catch((err) => alert(err.message));
-          console.log(data);
         }
       });
     } catch (err) {
@@ -157,7 +153,6 @@ const NewTrip = ({ user }) => {
           title: "Oops...",
           text: err.response.data,
         });
-        console.log("error", err.response.data);
       }
     }
   };

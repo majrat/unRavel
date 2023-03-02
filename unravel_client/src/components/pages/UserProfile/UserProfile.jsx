@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";

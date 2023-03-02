@@ -24,7 +24,6 @@ const FirstStep = (props) => {
   const onSubmit = (data) => {
     props.updateUser(data);
     navigate("/signup/2");
-    console.log(data);
   };
   return (
     <>

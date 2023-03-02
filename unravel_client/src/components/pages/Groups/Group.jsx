@@ -8,7 +8,6 @@ import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getCurrentGroup } from "../../../helpers/groupHelper";
 import { auth } from "../../../services/firebase";
-import Navbar from "../../Navbar/Navbar";
 
 const Group = ({ user }) => {
   const [group, setGroup] = useState("");
@@ -23,7 +22,6 @@ const Group = ({ user }) => {
   }
 
   const followGroup = async (selectedGroupId) => {
-    console.log("follow Group..." + selectedGroupId);
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -65,7 +63,6 @@ const Group = ({ user }) => {
   };
 
   const unFollowGroup = async (selectedGroupId) => {
-    console.log("follow Group..." + selectedGroupId);
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -107,7 +104,6 @@ const Group = ({ user }) => {
   };
 
   const joinGroup = async () => {
-    console.log("worked....");
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -151,10 +147,8 @@ const Group = ({ user }) => {
   function getUserFollowingGroups() {
     setUserFollowingGroups(user?.connections?.following?.groups);
   }
-  console.log(userFollowingGroups);
 
   useEffect(() => {
-    console.log(getCurrentGroup(link_group_id));
     getCurrentGroup(link_group_id).then((data) => {
       setGroup(data);
       setMembers(data?.members);

@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
-import { useSelector } from "react-redux";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import axios from "axios";
 import config from "../../../utils/constants";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile({ user }) {
   let navigate = useNavigate();
@@ -44,10 +42,8 @@ export default function EditProfile({ user }) {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const token = await getIdToken(user);
-          // setProfilePhoto(e.target.logo.files[0]);
 
           e.preventDefault();
-          // console.log(token);
           await axios
             .post(`${config.VITE_SERVER_API}/update_user`, {
               first_name,
@@ -69,7 +65,6 @@ export default function EditProfile({ user }) {
                 showConfirmButton: false,
                 timer: 1500,
               }).then(navigate("/profile"));
-              // console.log("success");
             })
             .catch((error) =>
               Swal.fire({
@@ -88,7 +83,6 @@ export default function EditProfile({ user }) {
           title: "Oops...",
           text: err.response.data,
         });
-        console.log("error", err.response.data);
       }
     }
   };
