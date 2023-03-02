@@ -32,7 +32,6 @@ export default function UserTrips({ user }) {
   const handleTripStatus = (e) => {
     setTripStatus(e.target.value);
   };
-  console.log(tripStatus);
   async function changeStatus() {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -150,31 +149,36 @@ export default function UserTrips({ user }) {
               ))}
             </div>
 
-            <div className="sm:hidden flex col-span-7 w-44 lg:max-w-sm">
+            <div className="sm:hidden flex justify-center bg-primaryColor/30 mx-5 text-gray-800 my-2">
               Status:
-              <select
-                onChange={handleTripStatus}
-                className="h-8 w-52 mx-5 px-2 bg-accentColor/20 text-gray-600 mt-3 cursor-pointer rounded-md"
-              >
-                <option selected disabled>
-                  {currentTrip[0]?.trip_status || trips[0]?.trip_status}
-                </option>
-                {IsTripCreatedUser &&
-                  filteredTripStatus?.map((status) => (
-                    <option value={status}>{status}</option>
-                  ))}
-              </select>
-              {IsTripCreatedUser && (
-                <p
-                  onClick={changeStatus}
-                  className="h-8 px-2 bg-accentColor/20 text-gray-600 mt-3 cursor-pointer rounded-md"
-                >
-                  Save
-                </p>
+              {IsTripCreatedUser ? (
+                <>
+                  <select
+                    defaultValue={
+                      currentTrip[0]?.trip_status || trips[0]?.trip_status
+                    }
+                    onChange={handleTripStatus}
+                    className="h-8 w-52 px-2 bg-lightColor/60 text-gray-600 absolute m-3 cursor-pointer rounded-md right-20 bottom-0"
+                  >
+                    {filteredTripStatus?.map((status) => (
+                      <option key={status + Math.random()} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                  <p
+                    onClick={changeStatus}
+                    className="h-8 px-2 pt-1 bg-lightColor/60 text-gray-600 absolute m-3 cursor-pointer rounded-md right-0 bottom-0"
+                  >
+                    Save
+                  </p>
+                </>
+              ) : (
+                <p>{currentTrip[0]?.trip_status || trips[0]?.trip_status || "not defined"}</p>
               )}
             </div>
             <div className="grid grid-cols-12">
-              <div className="bg-lightColor/50 backdrop-blur-xl  grid grid-cols-12 col-span-12 sm:h-24 h-20 mt-4 sm:mx-16 mx-5 z-10 rounded-md">
+              <div className="bg-lightColor/50 backdrop-blur-xl grid grid-cols-12 col-span-12 sm:h-24 h-20 sm:mx-16 mx-5 z-10 rounded-md">
                 <div className="sm:col-span-2 col-span-4 justify-center flex">
                   <img
                     className="rounded-full h-20 w-20 sm:w-28 sm:h-28 object-cover mt-6 sm:mt-5"
@@ -213,7 +217,7 @@ export default function UserTrips({ user }) {
                         className="h-8 w-52 px-2 bg-lightColor/60 text-gray-600 absolute m-3 cursor-pointer rounded-md right-20 bottom-0"
                       >
                         {filteredTripStatus?.map((status) => (
-                          <option value={status}>{status}</option>
+                          <option key={status + Math.random()} value={status}>{status}</option>
                         ))}
                       </select>
                       <p
@@ -224,8 +228,9 @@ export default function UserTrips({ user }) {
                       </p>
                     </>
                   ) : (
-                    <p>
-                      {currentTrip[0]?.trip_status || trips[0]?.trip_status}
+                    <p className="absolute bottom-4 right-4 text-gray-800">
+                      status:{" "}
+                      {currentTrip[0]?.trip_status || trips[0]?.trip_status || "not defined"}
                     </p>
                   )}
                 </div>

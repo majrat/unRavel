@@ -4,7 +4,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
-import Navbar from "../../Navbar/Navbar";
 import { getTheTrip } from "../../../helpers/tripsHelper";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";

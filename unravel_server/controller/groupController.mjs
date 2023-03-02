@@ -142,10 +142,15 @@ export default {
   },
   groupChat: async (req, res) => {
     try {
-      const result = await chatModel.findOne({ groupId: req.query.room });
-      res.send(result);
+      const groupId = req?.query?.groupId;
+      await chatModel
+        .findOne({ groupId })
+        .populate({ path: "messages.from" })
+        .then((chats) => {
+          res.status(200).json(chats);
+        });
     } catch (e) {
-      res.status(500).send({ message: e.message });
+      res.status(500).json(`No groups found or ${e.message}`);
     }
   },
 };

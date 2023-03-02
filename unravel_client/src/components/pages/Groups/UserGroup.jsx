@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../services/firebase";
@@ -7,6 +6,7 @@ import axios from "axios";
 import config from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import GoToChatWidget from "../../GroupChat/GoToChatWidget";
 
 export default function UserGroup({ user }) {
   const [groups, setGroups] = useState([]);
@@ -127,6 +127,7 @@ export default function UserGroup({ user }) {
         <div className="circle-ripple unravel_loading"></div>
       ) : (
         <>
+          <GoToChatWidget group={currentGroup[0] || groups[0]} />
           <div className="absolute z-10 w-full">
             <p className="Oswald-font mt-20 pt-1 bg-primaryColor/30 backdrop-blur-md sm:mx-16 mx-5 rounded font-bold text-center pb-2 text-lightColor ">
               My groups

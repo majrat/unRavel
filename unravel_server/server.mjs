@@ -26,8 +26,36 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} user just connected!`);
 
   //sends the message to all the users on the server
-  socket.on("message", (data) => {
-    io.emit("messageResponse", data);
+  socket.on("message", async (data) => {
+    console.log("data===>>", data);
+    const IsNewChat = await chatModel.findOne({ groupId: data.groupId });
+
+    if (!IsNewChat) {
+      const saveMsg = new chatModel({
+        messages: [{ from: data.from, message: data.text }],
+        groupId: data.groupId,
+      });
+      await saveMsg
+        .save()
+        .then(() => {
+          console.log("Message saved in db");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await chatModel.updateOne(
+        { groupId: data.groupId },
+        {
+          $push: {
+            messages: {
+              message: data.text,
+              from: data.from,
+            },
+          },
+        }
+      );
+    }
   });
 
   socket.on("disconnect", () => {

@@ -1,7 +1,6 @@
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 const GoToChatWidget = ({ group }) => {
-  console.log(group);
   return (
     <Link
       to="/chat"
