@@ -2,8 +2,6 @@ import tripsModel from "../model/trips.mjs";
 
 export default {
   create_new_trip: (req, res) => {
-    console.log("reached created new trip");
-
     const {
       date,
       group_id,
@@ -61,7 +59,6 @@ export default {
   },
   get_all_trips: async (req, res) => {
     try {
-      console.log("inside get_all_trips");
       const group_ids = await req.query.groupIds;
       const sort = { created_date: -1 };
       await tripsModel
@@ -82,9 +79,7 @@ export default {
   },
   get_the_trip: async (req, res) => {
     try {
-      console.log("inside get_the_trips");
       const trip_id = await req.query.tripId;
-
       await tripsModel
         .findOne({ _id: trip_id })
         .populate("trip_location")
@@ -103,11 +98,8 @@ export default {
   },
   join_the_trip: async (req, res) => {
     try {
-      console.log("inside join_the_trips");
       const trip_id = await req.body.link_trip_id;
       const userId = req.user._id;
-      console.log("userid -----", userId);
-      console.log("trip_id------", trip_id);
 
       await tripsModel
         .updateOne({ _id: trip_id }, { $addToSet: { participants: userId } })
@@ -124,7 +116,6 @@ export default {
 
   get_user_trips: async (req, res) => {
     try {
-      console.log("inside get_user_trips");
       const userId = req.user._id;
 
       await tripsModel
@@ -147,8 +138,6 @@ export default {
   change_status: async (req, res) => {
     const tripStatus = req?.body?.tripStatus;
     const tripId = req?.body?.tripId;
-
-    console.log("tripStatus-----", tripStatus);
 
     await tripsModel
       .updateOne({ _id: tripId }, { $set: { trip_status: tripStatus } })

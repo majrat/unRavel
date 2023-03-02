@@ -7,9 +7,7 @@ export default async function (req, res, next) {
     if (firebaseToken === undefined) {
       firebaseToken = req.body.headers.authorization?.split(" ")[1];
     }
-    console.log(
-      "inside firebase authenticate--------------------------------------------------------------------------"
-    );
+   
     let firebaseUser;
     if (firebaseToken) {
       await firebaseAdmin.auth
@@ -23,7 +21,6 @@ export default async function (req, res, next) {
       console.log("Unauthorized - no firebase user FOUND");
       return res.sendStatus(401);
     }
-    // console.log(firebaseUser);
 
     const user = await userModel.findOne({
       firebase_id: firebaseUser.user_id,
@@ -31,12 +28,11 @@ export default async function (req, res, next) {
 
     if (!user) {
       // Unauthorized
-      console.log("inside !user ");
       return res.sendStatus(401);
     }
 
     req.user = user;
-    console.log("node authorized");
+    console.log("user authorized");
 
     next();
   } catch (err) {

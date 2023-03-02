@@ -7,8 +7,6 @@ export default {
     res.status(200).json(req.user);
   },
   update_user: async (req, res) => {
-    console.log("reached update_user");
-    // console.log(req.body);
     const {
       profile_photo,
       twitter,
@@ -72,11 +70,8 @@ export default {
   },
 
   join_group: async (req, res) => {
-    console.log("joining new group...");
     const userId = req.user._id;
-    console.log(userId);
     const groupId = req?.body?.link_group_id;
-    console.log(groupId);
 
     await groupModel
       .updateOne({ _id: groupId }, { $addToSet: { members: userId } })
@@ -87,11 +82,8 @@ export default {
   },
 
   exit_group: async (req, res) => {
-    console.log("joining new group...");
     const userId = req.user._id;
-    console.log(userId);
     const groupId = req?.body?.link_group_id?.link_group_id;
-    console.log(groupId);
 
     await groupModel
       .updateOne({ _id: groupId }, { $pull: { members: userId } })
@@ -104,9 +96,6 @@ export default {
   follow_group: async (req, res) => {
     const userId = req.user._id;
     const groupId = req?.body?.selectedGroupId;
-    // console.log(
-    //   "Following a group..." , "userId---" , userId , "-------groupId" , groupId
-    // );
 
     await userModel
       .updateOne(
@@ -128,14 +117,6 @@ export default {
   unfollow_group: async (req, res) => {
     const userId = req.user._id;
     const groupId = req?.body?.groupId;
-
-    console.log(
-      "UnFollowing a group...",
-      "userId---",
-      userId,
-      "-------groupId",
-      groupId
-    );
 
     await userModel
       .updateOne(

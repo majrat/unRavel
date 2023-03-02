@@ -16,7 +16,6 @@ export default {
       const client = createClient(config.PEXELS_API);
       const query = spot;
       const photos = await client.photos.search({ query, per_page: 10 });
-      console.log(photos);
       const created_date = Date.now();
       const user = req.user._id;
 
@@ -51,7 +50,6 @@ export default {
   },
 
   get_all_locations: async (req, res) => {
-    console.log("inside get-all-loc");
     const all_locations = await locationModel.find();
     res.status(200).json(all_locations);
   },

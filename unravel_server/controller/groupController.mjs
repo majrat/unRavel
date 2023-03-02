@@ -3,8 +3,6 @@ import groupModel from "../model/group.mjs";
 
 export default {
   create_group: (req, res) => {
-    console.log("reached create group");
-
     const { grpName, grpDesc, token } = req.body;
 
     if (!grpName || !grpDesc || token) {
@@ -59,7 +57,6 @@ export default {
       });
   },
   get_all_groups: async (req, res) => {
-    console.log("getting all groups...");
     await groupModel
       .find()
       .then((all_groups) => {
@@ -70,12 +67,9 @@ export default {
       });
   },
   edit_group_page: async (req, res) => {
-    console.log("Getting group data for edit...");
-
     // const updated_date = Date.now();
     const userId = req?.user?._id;
     const groupId = req?.query?.link_group_id;
-    console.log("dasssssss");
     await groupModel
       .findOne({ _id: groupId, group_admin: userId })
       .populate({ path: "members" })
@@ -89,15 +83,12 @@ export default {
   },
 
   save_group_edit: async (req, res) => {
-    console.log("Getting group data for edit...");
-
     // const updated_date = Date.now();
     const userId = req?.user?._id;
     const groupId = req?.body?.link_group_id?.link_group_id;
     const name = req?.body?.name;
     const description = req?.body?.description;
     const group_profile = req?.body?.groupProfile;
-    console.log("userId---", userId, "----description", description);
 
     const group = await groupModel.findOne({ _id: groupId });
     if (

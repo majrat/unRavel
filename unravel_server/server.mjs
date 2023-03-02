@@ -23,8 +23,6 @@ app.use(express.json({ limit: "20mb" }));
 app.use("/api/user", userRouter);
 
 io.on("connection", (socket) => {
-  console.log(`${socket.id} user just connected!`);
-
   //sends the message to all the users on the server
   socket.on("message", async (data) => {
     const IsNewChat = await chatModel.findOne({ groupId: data.groupId });
