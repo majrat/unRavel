@@ -114,7 +114,7 @@ const ThirdStep = (props) => {
             .then(async () => {
               dispatch(setCurrentUserInfo(auth.currentUser));
               let uid = auth.currentUser.uid;
-              await axios.post(config.UNRAVEL_SERVER_API, {
+              await axios.post(config.VITE_SERVER_API, {
                 uid,
                 ...user,
                 ...updatedData,

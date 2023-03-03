@@ -26,7 +26,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get(config.UNRAVEL_SERVER_API, {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -66,7 +66,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.UNRAVEL_SERVER_API}/follow/group`, {
+            .patch(`${config.VITE_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -108,7 +108,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .delete(`${config.UNRAVEL_SERVER_API}/follow/group`, {
+            .delete(`${config.VITE_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -149,7 +149,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.UNRAVEL_SERVER_API}/join/group`, {
+            .patch(`${config.VITE_SERVER_API}/join/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -190,7 +190,7 @@ export default function Trips() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.UNRAVEL_SERVER_API}/join/trip`, {
+            .patch(`${config.VITE_SERVER_API}/join/trip`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

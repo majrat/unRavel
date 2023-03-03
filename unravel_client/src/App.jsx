@@ -25,7 +25,7 @@ function App() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get(config.UNRAVEL_SERVER_API, {
+            .get(config.VITE_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

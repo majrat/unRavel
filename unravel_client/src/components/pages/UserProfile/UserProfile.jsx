@@ -16,7 +16,7 @@ export default function UserProfile({ user }) {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get(`${config.UNRAVEL_SERVER_API}/user_group_info`, {
+            .get(`${config.VITE_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

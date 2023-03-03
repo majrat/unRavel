@@ -29,7 +29,7 @@ export default function UserGroup({ user }) {
 
   const get_trips = async () => {
     await axios
-      .get(`${config.UNRAVEL_SERVER_API}/get_all_trips`, {
+      .get(`${config.VITE_SERVER_API}/get_all_trips`, {
         params: {
           groupIds: groupIds,
         },
@@ -55,7 +55,7 @@ export default function UserGroup({ user }) {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get(`${config.UNRAVEL_SERVER_API}/user_group_info`, {
+            .get(`${config.VITE_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

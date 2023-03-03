@@ -39,7 +39,7 @@ export default function UserTrips({ user }) {
           const token = await getIdToken(user);
 
           await axios
-            .patch(`${config.UNRAVEL_SERVER_API}/change/trip/status`, {
+            .patch(`${config.VITE_SERVER_API}/change/trip/status`, {
               tripStatus,
               tripId: currentTrip[0]?._id || trips[0]?._id,
               headers: {
@@ -73,7 +73,7 @@ export default function UserTrips({ user }) {
       if (user) {
         const token = await getIdToken(user);
         await axios
-          .get(`${config.UNRAVEL_SERVER_API}/get_user_trips`, {
+          .get(`${config.VITE_SERVER_API}/get_user_trips`, {
             params: {
               userid: user?._id,
             },

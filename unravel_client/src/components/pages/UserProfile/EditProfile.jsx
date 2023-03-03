@@ -45,7 +45,7 @@ export default function EditProfile({ user }) {
 
           e.preventDefault();
           await axios
-            .post(`${config.UNRAVEL_SERVER_API}/update_user`, {
+            .post(`${config.VITE_SERVER_API}/update_user`, {
               first_name,
               last_name,
               bio,
