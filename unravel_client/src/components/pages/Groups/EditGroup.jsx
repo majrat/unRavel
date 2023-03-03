@@ -37,7 +37,7 @@ export default function EditGroup() {
 
           e.preventDefault();
           await axios
-            .patch(`${config.VITE_SERVER_API}/group`, {
+            .patch(`${config.UNRAVEL_SERVER_API}/group`, {
               name,
               link_group_id,
               description,
@@ -82,7 +82,7 @@ export default function EditGroup() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get(`${config.VITE_SERVER_API}/group`, {
+            .get(`${config.UNRAVEL_SERVER_API}/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

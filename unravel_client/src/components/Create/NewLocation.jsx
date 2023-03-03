@@ -110,7 +110,7 @@ export default function NewLocation() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .post(`${config.VITE_SERVER_API}/add_location`, {
+            .post(`${config.UNRAVEL_SERVER_API}/add_location`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

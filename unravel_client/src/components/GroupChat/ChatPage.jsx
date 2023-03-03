@@ -6,7 +6,7 @@ import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
 import config from "../../utils/constants";
 
-const socket = socketIO.connect("https://t-ravel.site");
+const socket = socketIO.connect(config.UNRAVEL_SERVER);
 // import { useLocation } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
@@ -24,7 +24,7 @@ const ChatPage = ({ user }) => {
   async function getChats() {
     if (user) {
       await axios
-        .get(`${config.VITE_SERVER_API}/chats`, {
+        .get(`${config.UNRAVEL_SERVER_API}/chats`, {
           params: { groupId: group._id },
         })
         .then((res) => {

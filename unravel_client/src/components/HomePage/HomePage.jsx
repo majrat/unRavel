@@ -149,7 +149,7 @@ export default function HomePage() {
         if (user) {
           const token = await getIdToken(user);
           const req = await axios
-            .get(config.VITE_SERVER_API, {
+            .get(config.UNRAVEL_SERVER_API, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -184,7 +184,7 @@ export default function HomePage() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.VITE_SERVER_API}/follow/group`, {
+            .patch(`${config.UNRAVEL_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -226,7 +226,7 @@ export default function HomePage() {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .delete(`${config.VITE_SERVER_API}/follow/group`, {
+            .delete(`${config.UNRAVEL_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

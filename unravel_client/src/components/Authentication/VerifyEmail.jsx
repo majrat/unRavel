@@ -20,7 +20,7 @@ function VerifyEmail() {
   const dispatch = useDispatch();
 
   async function updateVerifiedInDB() {
-    await axios.post(`${config.VITE_SERVER_API}/verify_email`, {
+    await axios.post(`${config.UNRAVEL_SERVER_API}/verify_email`, {
       userUid: currentUser.uid,
     });
   }

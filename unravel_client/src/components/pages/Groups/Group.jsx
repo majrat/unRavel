@@ -27,7 +27,7 @@ const Group = ({ user }) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.VITE_SERVER_API}/follow/group`, {
+            .patch(`${config.UNRAVEL_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -68,7 +68,7 @@ const Group = ({ user }) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .delete(`${config.VITE_SERVER_API}/follow/group`, {
+            .delete(`${config.UNRAVEL_SERVER_API}/follow/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -109,7 +109,7 @@ const Group = ({ user }) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .patch(`${config.VITE_SERVER_API}/join/group`, {
+            .patch(`${config.UNRAVEL_SERVER_API}/join/group`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

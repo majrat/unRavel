@@ -60,7 +60,7 @@ const NewTrip = ({ user }) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .get(`${config.VITE_SERVER_API}/user_group_info`, {
+            .get(`${config.UNRAVEL_SERVER_API}/user_group_info`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },
@@ -83,7 +83,7 @@ const NewTrip = ({ user }) => {
               }
             });
           await axios
-            .get(`${config.VITE_SERVER_API}/get_all_location`)
+            .get(`${config.UNRAVEL_SERVER_API}/get_all_location`)
             .then((res) => {
               if (res.data) {
                 setAllLocations(res.data);
@@ -134,7 +134,7 @@ const NewTrip = ({ user }) => {
         if (user) {
           const token = await getIdToken(user);
           await axios
-            .post(`${config.VITE_SERVER_API}/create_new_trip`, {
+            .post(`${config.UNRAVEL_SERVER_API}/create_new_trip`, {
               headers: {
                 authorization: `Bearer ${token}`,
               },

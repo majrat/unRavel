@@ -1,4 +1,4 @@
 export default {
-  VITE_SERVER_API: import.meta.env.VITE_SERVER_API,
-  
+  UNRAVEL_SERVER_API: import.meta.env.UNRAVEL_SERVER_API,
+  UNRAVEL_SERVER: import.meta.env.UNRAVEL_SERVER,
 };
