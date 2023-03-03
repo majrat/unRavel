@@ -6,7 +6,7 @@ import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
 import config from "../../utils/constants";
 
-const socket = socketIO.connect("http://localhost:8080");
+const socket = socketIO.connect("https://t-ravel.site");
 // import { useLocation } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
