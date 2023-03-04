@@ -50,9 +50,11 @@ export default {
   },
 
   get_all_locations: async (req, res) => {
+    const sort = { created_date: -1 };
     const all_locations = await locationModel
       .find()
-      .populate("location_added_by");
+      .populate("location_added_by")
+      .sort(sort);
     res.status(200).json(all_locations);
   },
 };
