@@ -9,7 +9,7 @@ const Progress = (props) => {
 
   return (
     <React.Fragment>
-      <div className="steps">
+      <div className="steps ">
         <div className={`${isFirstStep ? "step active" : "step"}`}>
           <div>1</div>
           <div>

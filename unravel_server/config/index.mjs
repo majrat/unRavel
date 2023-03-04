@@ -5,6 +5,9 @@ dotenv.config();
 const { privateKey } = JSON.parse(process.env.PRIVATE_KEY);
 
 export default {
+  CLOUD_NAME: process.env.CLOUD_NAME,
+  API_KEY: process.env.API_KEY,
+  API_SECRET: process.env.API_SECRET,
   PEXELS_API: process.env.PEXELS_API,
   PORT: process.env.PORT,
   MONGO_URI: process.env.MONGO_URI,

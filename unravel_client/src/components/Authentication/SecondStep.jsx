@@ -28,23 +28,35 @@ const SecondStep = (props) => {
 
   return (
     <>
-      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12 mt-16">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
           className="sm:col-span-5 justify-center items-center flex flex-col"
         >
-          <img className="sm:w-36" src="/unravel.svg" alt="icon_img" />
-          <p className="text-gray-700">Join the community</p>
-          <p className="text-gray-700">Explore the world together</p>
-          <img className="sm:w-96" src="/undraw_navigator_a479.svg" alt="bg_img" />
+          <img
+            className="sm:w-36 hover:shadow-lg rounded-lg items-center hidden sm:flex flex-col cursor-pointer"
+            src="/unravel.svg"
+            alt="icon_img"
+          />
+          <img
+            className="sm:w-96"
+            src="/undraw_navigator_a479.svg"
+            alt="bg_img"
+          />
+          <p className="text-gray-700 sm:text-base text-sm">
+            Join the community
+          </p>
+          <p className="text-gray-700 sm:text-base text-sm">
+            Explore the world together
+          </p>
         </motion.div>
         <div className="sm:col-span-7">
           <Header {...props} router={{ location }} />
 
           <form
-            className="sm:p-20 pt-20 sm:pt-0 justify-center flex"
+            className="sm:p-20 pt-2 sm:pt-0 justify-center flex"
             onSubmit={handleSubmit(onSubmit)}
           >
             <motion.div
@@ -54,7 +66,6 @@ const SecondStep = (props) => {
             >
               <div className="group relative sm:mt-24">
                 <div>
-                  <label className="absolute form--label">Email</label>
                   <input
                     type="email"
                     placeholder="Enter your email address"
@@ -76,7 +87,6 @@ const SecondStep = (props) => {
                 </div>
 
                 <div className="group relative mt-6 ">
-                  <label className="absolute form--label">Password</label>
                   <input
                     type="password"
                     placeholder="Choose a password"

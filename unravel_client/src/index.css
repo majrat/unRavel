@@ -260,7 +260,7 @@ canvas {
 }
 
 .form--input {
-  @apply focus:ring-2 focus:ring-accentColor focus:outline-none appearance-none w-full text-sm leading-6 text-gray-800 placeholder-slate-400 rounded-md py-2 pl-32 ring-1 ring-secondaryColor shadow-sm;
+  @apply focus:ring-2 focus:ring-accentColor focus:outline-none appearance-none w-full text-sm leading-6 text-gray-800 placeholder-slate-400 rounded-md py-2 pl-3 ring-1 ring-secondaryColor shadow-sm;
 }
 
 .form--label {

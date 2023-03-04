@@ -15,7 +15,7 @@ const locations = new Schema({
   },
   created_date: Date,
   posted_by: { type: Schema.Types.ObjectId, ref: "users" },
-  location_added_by: Schema.Types.ObjectId,
+  location_added_by: { type: Schema.Types.ObjectId, ref: "users" },
 });
 
 export default mongoose.model("locations", locations);

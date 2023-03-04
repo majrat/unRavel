@@ -27,7 +27,7 @@ export default function HomePage() {
     setSlides(
       allLocationSlides.map((slide) => [
         {
-          image: slide?.images?.photos[0].src.original,
+          image: slide?.images?.photos[0].src.landscape,
           title: slide?.address?.spot,
           subtitle: slide?.address?.country,
           photographer: slide?.images?.photos[0].photographer,
@@ -295,7 +295,7 @@ export default function HomePage() {
 
   return (
     <>
-      {!trips || trips.length === 0 ? (
+      {!trips || trips?.length === 0 ? (
         <div className="circle-ripple unravel_loading"></div>
       ) : (
         <>
@@ -582,7 +582,7 @@ export default function HomePage() {
                           <img
                             src={
                               trip?.trip_location?.images?.photos[0].src
-                                .original
+                                .portrait
                             }
                             alt={trip?.trip_location?.images?.photos[0].alt}
                             className="w-96 px-3 h-64 object-cover"
@@ -609,10 +609,10 @@ export default function HomePage() {
                               " " +
                               trip?.trip_location?.address?.country}
                           </span>
-                          <HeartIcon
+                          {/* <HeartIcon
                             className="h-10 w-10 absolute right-5 mt-4 cursor-pointer"
                             aria-hidden="true"
-                          />
+                          /> */}
 
                           <div className="mt-1 text-accentColor mx-4 text-sm justify-between flex mb-3">
                             {/*TODO: <span>3 months trip</span> */}
@@ -715,10 +715,10 @@ export default function HomePage() {
                         </div>
                       </div>
 
-                      <HeartIcon
+                      {/* <HeartIcon
                         className="h-10 w-1/12 absolute right-5 mt-1 cursor-pointer"
                         aria-hidden="true"
-                      />
+                      /> */}
 
                       <div className="hidden sm:flex justify-center ">
                         {/*TODO: <span>3 months trip</span> */}
@@ -734,7 +734,7 @@ export default function HomePage() {
               </section>
             </div>
             <section>
-              <div className="block">das</div>
+              <div className="block"></div>
             </section>
           </section>
         </>

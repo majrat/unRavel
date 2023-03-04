@@ -13,7 +13,7 @@ import { getAllGroups } from "../../helpers/groupHelper";
 
 const navigation = [
   { name: "Locations", to: "/locations", current: false },
-  { name: "Favourites", to: "/", current: false },
+  // { name: "Favourites", to: "/", current: false },
 ];
 
 function classNames(...classes) {
@@ -54,11 +54,11 @@ export default function Navbar({ user }) {
       <div className="justify-center flex">
         <Disclosure
           as="nav"
-          className="bg-secondaryColor top-0 shadow-xl shadow-primaryColor/30 mt-3 w-11/12 fixed z-50 rounded-lg"
+          className="bg-secondaryColor w-[96vw] top-0 shadow-xl shadow-primaryColor/30 mt-3 fixed z-50 rounded-lg"
         >
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <div className="px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                   <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     {/* Mobile menu button*/}
@@ -77,8 +77,12 @@ export default function Navbar({ user }) {
                       )}
                     </Disclosure.Button>
                   </div>
-                  <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                    <div className="flex flex-shrink-0 items-center">
+                  <div
+                    className={`flex flex-1 items-center justify-evenly sm:ml-0 ${
+                      !authorized && "ml-14"
+                    } sm:items-stretch sm:justify-start`}
+                  >
+                    <div className="flex flex-shrink-0">
                       <Link to="/">
                         <img
                           className="block h-8 w-auto lg:hidden hover:shadow-lg rounded-lg transition-all hover:shadow-primaryColor"
@@ -313,11 +317,19 @@ export default function Navbar({ user }) {
                   >
                     Shop
                   </a>
+                  <p
+                    onClick={handleSearchModal}
+                    className={classNames(
+                      "text-accentColor cursor-pointer hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
+                      "block px-3 py-2 rounded-md text-base font-medium"
+                    )}
+                  >
+                    Search
+                  </p>
                   {navigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      to={item.to}
                       className={classNames(
                         item.current
                           ? "bg-accentColor text-lightColor shadow-lg"
@@ -326,7 +338,7 @@ export default function Navbar({ user }) {
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
-                      {item.name}
+                      <Link to={item.to}>{item.name}</Link>
                     </Disclosure.Button>
                   ))}
                   <Menu as="div" className="relative">

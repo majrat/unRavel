@@ -67,15 +67,15 @@ export default function SignInPage(props) {
 
   return (
     <>
-      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12 mt-24 sm:mt-11 h-[70vh]">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12 mt-16 sm:mt-11">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
-          className="sm:col-span-5 col-span-12 mt-11 justify-center items-center flex flex-col"
+          className="sm:col-span-5 col-span-12 mt-2 justify-center items-center flex flex-col"
         >
           <Link
-            className="items-center nav-btn flex flex-col cursor-pointer"
+            className="items-center hidden nav-btn sm:flex flex-col cursor-pointer"
             to="/"
           >
             <img
@@ -84,13 +84,13 @@ export default function SignInPage(props) {
               alt="icon_img"
             />
           </Link>
-          <p className="text-gray-700">Join the community</p>
-          <p className="text-gray-700">Explore the world together</p>
           <img
             className="sm:w-96"
             src="/undraw_navigator_a479.svg"
             alt="bg_img"
           />
+          <p className="text-gray-700 sm:text-base text-sm">Join the community</p>
+          <p className="text-gray-700 sm:text-base text-sm">Explore the world together</p>
         </motion.div>
         <div className="sm:col-span-7 col-span-12">
           <Header {...props} router={{ location }} />
@@ -105,14 +105,10 @@ export default function SignInPage(props) {
                 <p style={{ color: "green" }}>{location.state.message}</p>
               ) : null}
               <form onSubmit={handleSubmit}>
-                <div className="group relative">
-                  <div>
-                    <label className="absolute form--label" htmlFor="email">
-                      Email Address
-                    </label>
-                  </div>
+                <div className="group relative mx-5">
                   <div>
                     <input
+                      placeholder="Email Address"
                       className="form--input"
                       type="email"
                       name="email"
@@ -122,14 +118,10 @@ export default function SignInPage(props) {
                     />
                   </div>
                 </div>
-                <div className="group relative mt-6">
-                  <div style={{ marginTop: "1rem" }}>
-                    <label className="absolute form--label" htmlFor="password">
-                      Password
-                    </label>
-                  </div>
+                <div className="group relative mt-6 mx-5">
                   <div>
                     <input
+                      placeholder="Password"
                       className="form--input"
                       type="password"
                       name="password"

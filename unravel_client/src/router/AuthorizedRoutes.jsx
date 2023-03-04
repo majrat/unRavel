@@ -19,12 +19,14 @@ import Trips from "../components/pages/Trips/Trips";
 import UserTrips from "../components/pages/Trips/Usertrips";
 import ChatPage from "../components/GroupChat/ChatPage";
 import Navbar from "../components/Navbar/Navbar";
+import LocationDetails from "../components/pages/LocationDetails";
 
 export default function AuthorizedRoutes({ user }) {
   return (
       <Router>
         <Navbar user={user} />
         <Routes>
+          <Route path="/location_details" element={<LocationDetails />} />
           <Route path="/chat" element={<ChatPage user={user} />} />
           <Route path="/user/trips" element={<UserTrips user={user} />} />
           <Route path="/trips" element={<Trips />} />

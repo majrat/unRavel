@@ -157,21 +157,29 @@ const ThirdStep = (props) => {
 
   return (
     <>
-      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12">
+      <div className="sm:grid flex flex-col-reverse sm:flex-none sm:grid-cols-12 mt-16">
         <motion.div
           initial={{ x: "-100vw" }}
           animate={{ x: 0 }}
           transition={{ stiffness: 100 }}
           className="sm:col-span-5 justify-center items-center flex flex-col"
         >
-          <img className="sm:w-36" src="/unravel.svg" alt="icon_img" />
-          <p className="text-gray-700">Join the community</p>
-          <p className="text-gray-700">Explore the world together</p>
+          <img
+            className="sm:w-36 hover:shadow-lg rounded-lg items-center hidden sm:flex flex-col cursor-pointer"
+            src="/unravel.svg"
+            alt="icon_img"
+          />
           <img
             className="sm:w-96"
             src="/undraw_navigator_a479.svg"
             alt="bg_img"
           />
+          <p className="text-gray-700 sm:text-base text-sm">
+            Join the community
+          </p>
+          <p className="text-gray-700 sm:text-base text-sm">
+            Explore the world together
+          </p>
         </motion.div>
         <div className="col-span-7">
           <Header {...props} router={{ location }} />

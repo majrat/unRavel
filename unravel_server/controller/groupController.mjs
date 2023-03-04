@@ -1,5 +1,6 @@
 import chatModel from "../model/chat.mjs";
 import groupModel from "../model/group.mjs";
+import fileUploader from "../services/fileUploader.mjs";
 
 export default {
   create_group: (req, res) => {
@@ -57,6 +58,7 @@ export default {
       });
   },
   get_all_groups: async (req, res) => {
+    console.log("inside get all groups");
     await groupModel
       .find()
       .then((all_groups) => {
@@ -88,7 +90,7 @@ export default {
     const groupId = req?.body?.link_group_id?.link_group_id;
     const name = req?.body?.name;
     const description = req?.body?.description;
-    const group_profile = req?.body?.groupProfile;
+    const group_profile = await fileUploader(req?.body?.groupProfile);
 
     const group = await groupModel.findOne({ _id: groupId });
     if (
