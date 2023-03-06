@@ -217,29 +217,10 @@ export default function UserProfile({ user }) {
                               )}
                             </p>
                           </div>
-                          {/* <div className="w-28 sm:w-40 self-center text-sm truncate">
-                      <p className="text-xs"></p>
-                      <p className="mt-2">*****</p>
-                    </div> */}
                         </div>
                       ))}
                     </div>
                   </div>
-                  {/* <div className="sm:m-5 m-2">
-              <span className="font-light">Friends:</span>{" "}
-              <div className="flex overflow-x-auto sm:h-24 w-full shadow-inner rounded bg-accentColor/60 mt-5">
-                {groups.map((group) => (
-                  <div className="mx-7 text-center">
-                    <img
-                      className="rounded-full mt-6 w-16"
-                      src="/profile-setup.gif"
-                      alt=""
-                    />
-                    <p className="mb-4 mt-2 w-11 text-xs truncate">name</p>
-                  </div>
-                ))}
-              </div>
-            </div> */}
                 </div>
               </div>
             </div>

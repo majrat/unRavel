@@ -10,8 +10,8 @@ import { auth } from "../../services/firebase";
 
 export default function LocationDetails() {
   const [reRender, setReRender] = useState(false);
-  const [trip, setTrip] = useState("");
-  const [user, setUser] = useState("");
+  const [trip, setTrip] = useState({});
+  const [user, setUser] = useState({});
   const [userFollowingGroups, setUserFollowingGroups] = useState([]);
 
   const location = useLocation();

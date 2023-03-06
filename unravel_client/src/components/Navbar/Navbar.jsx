@@ -116,19 +116,15 @@ export default function Navbar({ user }) {
                         >
                           Search
                         </p>
-                        {navigation.map((item) => (
-                          <Link
-                            key={item.name}
-                            to={item.to}
-                            className={classNames(
-                              "text-accentColor nav-btn hover:bg-accentColor hover:text-lightColor",
-                              "px-3 py-2 rounded-md text-sm font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
+                        <Link
+                          to="/locations"
+                          className={classNames(
+                            "text-accentColor nav-btn hover:bg-accentColor hover:text-lightColor",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                        >
+                          Locations
+                        </Link>
                         <Menu as="div" className="relative">
                           <div>
                             <Menu.Button
@@ -326,21 +322,15 @@ export default function Navbar({ user }) {
                   >
                     Search
                   </p>
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      className={classNames(
-                        item.current
-                          ? "bg-accentColor text-lightColor shadow-lg"
-                          : "text-accentColor cursor-pointer hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
-                        "block px-3 py-2 rounded-md text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      <Link to={item.to}>{item.name}</Link>
-                    </Disclosure.Button>
-                  ))}
+                  <Disclosure.Button
+                    as="a"
+                    className={classNames(
+                      "text-accentColor cursor-pointer hover:bg-accentColor hover:shadow-lg hover:text-lightColor",
+                      "block px-3 py-2 rounded-md text-base font-medium"
+                    )}
+                  >
+                    <Link to="/locations">Locations</Link>
+                  </Disclosure.Button>
                   <Menu as="div" className="relative">
                     <div>
                       <Menu.Button
