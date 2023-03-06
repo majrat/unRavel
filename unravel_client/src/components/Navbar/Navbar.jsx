@@ -11,11 +11,6 @@ import { setShowSearch } from "../../features/showSearch/showSearchSlice";
 import { getAllTrips } from "../../helpers/tripsHelper";
 import { getAllGroups } from "../../helpers/groupHelper";
 
-const navigation = [
-  { name: "Locations", to: "/locations", current: false },
-  // { name: "Favourites", to: "/", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
